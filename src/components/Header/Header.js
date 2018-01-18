@@ -2,8 +2,13 @@ import React from 'react';
 
 import NavigationItems from './NavigationItems/NavigationItems';
 
+import classes from './Header.css';
+
 const Header = (props) => (
-    <header>
+    <header className={classes.Header}>
+        <div className={classes.Logo}>
+            LOGO
+        </div>
         <div>
             <nav>
                 <NavigationItems />

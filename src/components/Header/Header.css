@@ -1,0 +1,27 @@
+.Header {
+    height: 56px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #E54A59;
+    display: flex;
+    justify-content: space-between;
+    text-align: right;
+    padding: 0 20px;
+    box-sizing: border-box;
+
+}
+
+.Header div {
+    width: 20%;
+}
+.Header nav {
+    height: 100%;
+}
+
+.Logo {
+    display: flex;
+    align-items: center;
+    color: white;
+}

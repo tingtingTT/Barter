@@ -1,6 +1,24 @@
 .NavigationItem {
-    margin: 10px;
-    box-sizing: 'border-box';
+    margin: 0;
+    box-sizing: border-box;
     display: block;
-    width: 100%;
+    height: 100%;
+    width: auto;
+    align-items: center;
+}
+
+.NavigationItem a {
+    box-sizing: border-box;
+    text-decoration: none;
+    color: white;
+    height: 100%;
+    width: auto;
+    padding: 16px 10px;
+    display: block;
+}
+
+.NavigationItem a:hover,
+.NavigationItem a:active,
+.NavigationItem a.active {
+    border-bottom: 4px solid white;
 }
