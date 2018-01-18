@@ -1,0 +1,8 @@
+.AddListingForm {
+    width: 50%;
+    height: 50%;
+    display: flex;
+    flex-flow: column;
+    border: 1px solid #ccc;
+
+}
