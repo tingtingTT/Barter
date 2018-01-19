@@ -8,9 +8,10 @@ const addListingForm = (props) => {
 
     return (
         <div className={classes.AddListingForm}>
+            <p>Add a listing to your inventory</p>
             <form className={classes.Form}>
                 <input type="text" placeholder="Title" />
-                <input type="text" placeholder="Description" />
+                <textarea placeholder="Description" rows="15"></textarea>
                 <Button label="Create"/>
             </form>
 

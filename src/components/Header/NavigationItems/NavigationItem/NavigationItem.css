@@ -3,7 +3,7 @@
     box-sizing: border-box;
     display: block;
     height: 100%;
-    width: auto;
+    width: 100%;
     align-items: center;
 }
 

@@ -22,7 +22,6 @@ class Profile extends Component {
 
 		return (
             <div className={classes.Profile}>
-                <h1>Add a Listing</h1>
                 <AddListingForm />
             </div>
 
