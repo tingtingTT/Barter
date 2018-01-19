@@ -1,18 +1,18 @@
 import React from 'react';
 
 import Header from '../../components/Header/Header';
-import Aux from '../Aux/Aux';
+import Auxiliary from '../Auxiliary/Auxiliary';
 
 import classes from './Layout.css';
 
 const layout = (props) => (
-    <Aux>
+    <Auxiliary>
         <Header />
         <main className={classes.Content}>
             {props.children}
         </main>
 
-    </Aux>
+    </Auxiliary>
 );
 
 export default layout;
