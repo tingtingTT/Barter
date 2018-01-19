@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 
 import AddListingForm from '../../components/AddListingForm/AddListingForm';
 
+import classes from './Profile.css'
+
 import axios from 'axios';
 
-class ClassName extends Component {
+class Profile extends Component {
     state = {
         inventory: null
     }
@@ -19,11 +21,14 @@ class ClassName extends Component {
 	render () {
 
 		return (
+            <div className={classes.Profile}>
+                <h1>Add a Listing</h1>
+                <AddListingForm />
+            </div>
 
-            <AddListingForm />
 		);
     }
 
 }
 
-export default ClassName;
+export default Profile;
