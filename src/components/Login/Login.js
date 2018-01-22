@@ -4,12 +4,12 @@ import GoogleSignInForm from './GoogleSignInForm/GoogleSignInForm';
 
 class Login extends React.Component {
 
-  render() {
 
+  render() {
     return (
-            <div>
-                <GoogleSignInForm title='Log in'/>
-            </div>
+      <div>
+        <GoogleSignInForm title='Log in' onClick={this.renderButton}/>
+      </div>
     );
   }
 
