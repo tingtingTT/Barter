@@ -25,15 +25,18 @@ class Profile extends Component {
     // }
 
     addingItemHandler = () => {
-      this.setState({addingItem: true});
-      console.log("clicked");
+        this.setState({addingItem: true});
     }
 
+    addCancelHandler = () => {
+        this.setState({addingItem: false});
+        console.log("clicked");
+    }
 	render () {
 		return (
       <Auxiliary>
           <Button label="+ ITEM" clicked={this.addingItemHandler}/>
-          <Modal show={this.state.addingItem}>
+          <Modal show={this.state.addingItem} modalClosed={this.addCancelHandler}>
               <div className={classes.Profile}>
                   <AddListingForm />
               </div>
