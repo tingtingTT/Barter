@@ -24,7 +24,9 @@ class Profile extends Component {
 
 		return (
       <Modal>
+        <div className={classes.Profile}>
           <AddListingForm />
+        </div>
       </Modal>
 		);
     }
