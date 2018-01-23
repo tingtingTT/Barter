@@ -1,10 +1,9 @@
 .AddListingForm {
     padding: 20px;
-    width: 50%;
+    width: 100%;
     height: 50%;
     display: flex;
     flex-flow: column;
-    border: 1px solid #ccc;
     align-items: center;
 }
 
