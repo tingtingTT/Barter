@@ -8,6 +8,10 @@
     align-items: center;
 }
 
+.Image img{
+    max-width: 200px;
+}
+
 .Form {
     display: flex;
     flex-flow: column;
@@ -24,5 +28,5 @@
 .Form textarea {
     resize: none;
     border: 1px solid lightgrey;
-    
+
 }
