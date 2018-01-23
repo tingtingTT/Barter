@@ -38,6 +38,37 @@ class GoogleSignInForm extends React.Component {
              </a>
            </div>
          </div>
+         <strong className={classes.lineThrough}>OR</strong>
+          <form method="post">
+            <div className={classes.formGroup}>
+              <label className={classes.label} htmlFor="usernameOrEmail">
+                Username or email address:
+                <input
+                  className={classes.input}
+                  id="usernameOrEmail"
+                  type="text"
+                  name="usernameOrEmail"
+                  autoFocus // eslint-disable-line jsx-a11y/no-autofocus
+                />
+              </label>
+            </div>
+            <div className={classes.formGroup}>
+              <label className={classes.label} htmlFor="password">
+                Password:
+                <input
+                  className={classes.input}
+                  id="password"
+                  type="password"
+                  name="password"
+                />
+              </label>
+            </div>
+            <div className={classes.formGroup}>
+              <button className={classes.button} type="submit">
+                Log in
+              </button>
+            </div>
+          </form>
        </div>
      )
 
