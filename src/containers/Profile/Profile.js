@@ -4,6 +4,7 @@ import AddListingForm from '../../components/AddListingForm/AddListingForm';
 
 import axios from 'axios';
 
+import Modal from '../../components/UI/Modal/Modal';
 class ClassName extends Component {
     state = {
         inventory: null
@@ -19,8 +20,9 @@ class ClassName extends Component {
 	render () {
 
 		return (
-
-            <AddListingForm />
+      <Modal>
+          <AddListingForm />
+      </Modal>
 		);
     }
 
