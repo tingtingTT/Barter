@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import AddListingForm from '../../components/AddListingForm/AddListingForm';
 import Modal from '../../components/UI/Modal/Modal';
+import Button from '../../components/UI/Button/Button';
+import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 
 import classes from './Profile.css'
 
@@ -10,7 +12,8 @@ import axios from 'axios';
 
 class Profile extends Component {
     state = {
-        inventory: null
+        inventory: null,
+        addingItem: false
     }
 
     // componentDidMount () {
@@ -20,14 +23,22 @@ class Profile extends Component {
     //             this.setState({inventory: response.data});
     //         });
     // }
-	render () {
 
+    addingItemHandler = () => {
+      this.setState({addingItem: true});
+      console.log("clicked");
+    }
+
+	render () {
 		return (
-      <Modal>
-        <div className={classes.Profile}>
-          <AddListingForm />
-        </div>
-      </Modal>
+      <Auxiliary>
+          <Button label="+ ITEM" clicked={this.addingItemHandler}/>
+          <Modal show={this.state.addingItem}>
+              <div className={classes.Profile}>
+                  <AddListingForm />
+              </div>
+          </Modal>
+      </Auxiliary>
 		);
     }
 
