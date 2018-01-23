@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 
 import AddListingForm from '../../components/AddListingForm/AddListingForm';
+import Modal from '../../components/UI/Modal/Modal';
+
+import classes from './Profile.css'
 
 import axios from 'axios';
 
-import Modal from '../../components/UI/Modal/Modal';
-class ClassName extends Component {
+
+class Profile extends Component {
     state = {
         inventory: null
     }
@@ -28,4 +31,4 @@ class ClassName extends Component {
 
 }
 
-export default ClassName;
+export default Profile;

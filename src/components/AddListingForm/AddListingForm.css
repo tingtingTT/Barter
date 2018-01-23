@@ -1,8 +1,28 @@
 .AddListingForm {
+    padding: 20px;
     width: 50%;
     height: 50%;
     display: flex;
     flex-flow: column;
     border: 1px solid #ccc;
+    align-items: center;
+}
 
+.Form {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    width: 80%;
+}
+
+.Form input, textarea {
+    margin: 10px;
+    padding: 10px;
+    width:100%;
+}
+
+.Form textarea {
+    resize: none;
+    border: 1px solid lightgrey;
+    
 }
