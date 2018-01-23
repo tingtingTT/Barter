@@ -31,6 +31,27 @@
   cursor: pointer;
 }
 
+.my-signin2 {
+  display: block;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 10px 16px;
+  width: 100%;
+  outline: 0;
+  border: 1px solid #373277;
+  border-radius: 0;
+  background: #E54A59;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 1.3333333;
+  cursor: pointer;
+}
+
+.my-sigin2 > div{
+  margin: 0 auto;
+}
 .formGroup {
   margin-bottom: 15px;
 }
