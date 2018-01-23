@@ -45,7 +45,7 @@ class GoogleSignInForm extends React.Component {
             <div id='my-signin2' className={classes.formGroup}>
            </div>
          <strong className={classes.lineThrough}>OR</strong>
-          <form method="post">
+          <form method="post"> {/* change later to databaseinfo and router */}
             <div className={classes.formGroup}>
               <label className={classes.label} htmlFor="usernameOrEmail">
                 Username or email address:
