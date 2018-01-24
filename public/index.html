@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
+    <meta name="google-signin-client_id" content="183947247889-2egcp1fetoo9586d3n5tu3qcr59ntuld.apps.googleusercontent.com">
     <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
@@ -12,6 +13,18 @@
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
 
     <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto:300" rel="stylesheet">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!--<script src="https://apis.google.com/js/platform.js?onload=onLoadCallback" async defer></script>
+    <script>
+    window.onLoadCallback = function(){
+      gapi.auth2.init({
+          client_id: '183947247889-2egcp1fetoo9586d3n5tu3qcr59ntuld.apps.googleusercontent.com'
+        });
+    }
+  </script> -->
+    <script src="https://apis.google.com/js/api:client.js"></script>
+
+
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
