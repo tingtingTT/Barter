@@ -3,6 +3,7 @@ import firebase from 'firebase';
 import FileUploader from 'react-firebase-file-uploader';
 
 import Button from '../UI/Button/Button';
+import Input from '../UI/Input/Input';
 // import ImageUploader from '../../containers/ImageUploader/ImageUploader'
 
 import classes from './AddListingForm.css';
@@ -50,6 +51,14 @@ class AddListingForm extends Component {
 
 	render () {
 
+        const formElementsArray = [];
+        for (let key in this.state.item) {
+            formElementsArray.push({
+                id: key,
+                config: this.state.item[key]
+            });
+        }
+
         /*Display the image if one has been uploaded*/
         let image = null
         if (this.state.imageURL){
@@ -62,9 +71,7 @@ class AddListingForm extends Component {
 		return (
             <div className={classes.AddListingForm}>
                 <form className={classes.Form}>
-                    {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
-                    {/* {this.state.imageURL && <img className={classes.Image} src={this.state.imageURL} alt=''/> } */}
-                    {image}
+                        {image}
                     <FileUploader
                             accept="image/*"
                             name="item"
@@ -75,8 +82,20 @@ class AddListingForm extends Component {
                             onUploadSuccess={this.handleUploadSuccess}
                             onProgress={this.handleProgress}
                     />
-                    <input type="text" placeholder="Title" />
-                    <textarea placeholder="Description" rows="15"></textarea>
+                    {formElementsArray.map(formElement =>(
+                    <Input
+                        key={formElement.id}
+                        elementType={formElement.config.elementType}
+                        elementConfig={formElement.config.elementConfig}
+                        value={formElement.config.value} />
+                    ))}
+                    {/* {this.state.isUploading && <p>Progress: {this.state.progress}</p>} */}
+                    {/* {this.state.imageURL && <img className={classes.Image} src={this.state.imageURL} alt=''/> } */}
+
+
+                    {/* <input type="text" placeholder="Title" /> */}
+
+                    {/* <textarea placeholder="Description" rows="15"></textarea> */}
                     <Button label="Create" clicked={this.addListingHandler}/>
                 </form>
 

@@ -16,6 +16,7 @@ const input = (props) => {
             inputElement = <textarea
                 className={classes.InputElement}
                 {...props.elementConfig}
+                rows="10"
                 value={props.value}/>;
             break;
         case ('select'):
