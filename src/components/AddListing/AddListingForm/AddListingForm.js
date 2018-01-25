@@ -4,8 +4,8 @@ import FileUploader from 'react-firebase-file-uploader';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom'
 
-import Button from '../UI/Button/Button';
-import Input from '../UI/Input/Input';
+import Button from '../../UI/Button/Button';
+import Input from '../../UI/Input/Input';
 // import ImageUploader from '../../containers/ImageUploader/ImageUploader'
 
 import classes from './AddListingForm.css';
@@ -43,21 +43,19 @@ class AddListingForm extends Component {
         console.error(error);
     }
     handleUploadSuccess = (filename) => {
-        this.setState({avatar: filename, progress: 100, isUploading: false});
+        this.setState({progress: 100, isUploading: false});
         firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({imageURL: url}));
     };
 
     addListingHandler = () => {
-        
+
         const listing = {};
         for (let formElementIdentifier in this.state.itemForm) {
             listing[formElementIdentifier] = this.state.itemForm[formElementIdentifier].value;
         }
+        listing['imageURL'] = this.state.imageURL;
+        axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing);
 
-        axios.post('https://barterbuddy-4b41a.firebaseio.com/listings.json', listing)
-            .then( response => {
-                this.props.history.push('/profile');
-            });
     }
     inputChangedHandler = (event, inputIdentifier) => {
 
@@ -99,9 +97,10 @@ class AddListingForm extends Component {
                 </div>
             )
         }
+
 		return (
             <div className={classes.AddListingForm}>
-                <form className={classes.Form}>
+                <form className={classes.Form} >
                         {image}
                     <FileUploader
                             accept="image/*"
@@ -121,6 +120,7 @@ class AddListingForm extends Component {
                             value={formElement.config.value}
                             changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
                         ))}
+                    <p>Cancel</p>
                     <Button label="Create" clicked={this.addListingHandler}/>
                 </form>
 
