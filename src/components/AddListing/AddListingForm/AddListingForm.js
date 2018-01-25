@@ -97,38 +97,47 @@ class AddListingForm extends Component {
                 </div>
             )
         }
+        let config={
+            type: 'text',
+            placeholder: 'Item Name'}
 
 		return (
             <div className={classes.AddListingForm}>
                 <form className={classes.Form} >
-
-                    <div className={classes.FileLoader} style={{'background-image': 'url(' + this.state.imageURL + ')'}}>
-
-                        <label>
-                            <i className="fa fa-pencil" aria-hidden="true"></i>
-                            <FileUploader
-                                hidden
-                                accept="image/*"
-                                name="item"
-                                randomizeFilename
-                                storageRef={firebase.storage().ref('images')}
-                                onUploadStart={this.handleUploadStart}
-                                onUploadError={this.handleUploadError}
-                                onUploadSuccess={this.handleUploadSuccess}
-                                onProgress={this.handleProgress}
-                            />
-                        </label>
+                    <div>
+                        <div className={classes.FileLoader} style={{'background-image': 'url(' + this.state.imageURL + ')'}}>
+                            <label>
+                                <i className="fa fa-pencil" aria-hidden="true"></i>
+                                <FileUploader
+                                    hidden
+                                    accept="image/*"
+                                    name="item"
+                                    randomizeFilename
+                                    storageRef={firebase.storage().ref('images')}
+                                    onUploadStart={this.handleUploadStart}
+                                    onUploadError={this.handleUploadError}
+                                    onUploadSuccess={this.handleUploadSuccess}
+                                    onProgress={this.handleProgress}
+                                />
+                            </label>
+                        </div>
+                        <Input
+                            elementType='input'
+                            elementConfig={config}
+                            value=''
+                            changed={(event) => this.inputChangedHandler(event, 'itemName')}/>
                     </div>
 
 
-                    {formElementsArray.map(formElement =>(
+
+                    {/* {formElementsArray.map(formElement =>(
                         <Input
                             key={formElement.id}
                             elementType={formElement.config.elementType}
                             elementConfig={formElement.config.elementConfig}
                             value={formElement.config.value}
                             changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
-                        ))}
+                        ))} */}
                     <p>Cancel</p>
                     <Button label="Create" clicked={this.addListingHandler}/>
                 </form>

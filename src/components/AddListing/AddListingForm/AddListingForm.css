@@ -3,7 +3,7 @@
     width: 100%;
     height: 50%;
     display: flex;
-    flex-flow: column;
+    flex-flow: row;
     align-items: center;
 }
 
@@ -13,7 +13,7 @@
 
 .Form {
     display: flex;
-    flex-flow: column;
+    flex-flow: row;
     align-items: center;
     width: 80%;
 }
