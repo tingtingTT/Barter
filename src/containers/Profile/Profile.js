@@ -5,7 +5,7 @@ import Modal from '../../components/UI/Modal/Modal';
 import Button from '../../components/UI/Button/Button';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Inventory from '../../components/Inventory/Inventory'
-import Item from '../../components/Inventory/Item/Item'
+
 import classes from './Profile.css'
 
 import axios from 'axios';
@@ -35,8 +35,9 @@ class Profile extends Component {
     // componentDidMount () {
     //     axios.get('https://barter-sf.firebaseio.com/inventory.json')
     //         .then(response => {
-    //             // console.log(response);
+    //             console.log(response);
     //             this.setState({inventory: response.data});
+                
     //         });
     // }
 
@@ -49,9 +50,9 @@ class Profile extends Component {
         console.log("clicked");
     }
 
-    componentDidMount = () =>{
-        //alert(this.state.personal_inventory[1].title)
-    }
+    // componentDidMount = () =>{
+    //     //alert(this.state.personal_inventory[1].title)
+    // }
 
 	render () {
 		return (

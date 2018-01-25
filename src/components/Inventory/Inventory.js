@@ -18,7 +18,7 @@ import Item from './Item/Item';
 
 const inventory = (props)=>
 props.inventory.map((item, index)=>{
-    return <Item className={classes.Item}
+    return <Item className={classes.Inventory}
     //usage
     click1={()=>item.handler1(index)}
     //usage

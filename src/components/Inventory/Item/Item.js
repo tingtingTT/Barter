@@ -19,13 +19,13 @@ const item = (props) => {
                 <p>{props.title}</p>
             </div>
             <div>
-                <p>{props.description}</p>
+                <p width="50px" >{props.description}</p>
             </div>
             <div>
                 <img src={props.image}></img>
             </div>
 
-            <div>
+            <div display="flex" flex-flow="column"  flex >
                 <button onClick={props.click1}>handler1</button>
                 <button onClick={props.click2}>handler2</button>
                 <button onClick={props.click3}>handler3</button>
