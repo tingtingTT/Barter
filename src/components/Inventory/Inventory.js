@@ -12,13 +12,13 @@
     .handler2
     .handler3
 */
-
+import classes from './Item/Item.css'
 import React from 'react';
 import Item from './Item/Item';
 
 const inventory = (props)=>
 props.inventory.map((item, index)=>{
-    return <Item
+    return <Item className={classes.Item}
     //usage
     click1={()=>item.handler1(index)}
     //usage

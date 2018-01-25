@@ -1,8 +1,9 @@
 .Item{
+    box-sizing: border-box;
     width: 60%;
     margin: 24px auto;
-    border: 2px #eee;
-    box-shadow: 0 4px 20px #ccc;
+    border: 10px rgb(255, 0, 0);
+    box-shadow: 10px 4px 20px #ccc;
     padding: 16px;
     text-align: center;
     border-radius: 25px 25px 25px 25px;

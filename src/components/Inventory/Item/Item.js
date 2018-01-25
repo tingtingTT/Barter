@@ -1,6 +1,6 @@
 //Component for a single item (user profile only? or use all over site)
 import React from 'react';
-import './Item.css';
+import classes from './Item.css';
 /*
      .inventory (list)
     .title
@@ -14,7 +14,7 @@ import './Item.css';
 
 const item = (props) => {
     return (
-        <div className="Item">
+        <div className={classes.Item}>
             <div>
                 <p>{props.title}</p>
             </div>
