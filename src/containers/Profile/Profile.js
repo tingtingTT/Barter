@@ -41,6 +41,7 @@ class Profile extends Component {
                   <AddListingForm />
               </div>
           </Modal>
+          <div></div>
       </Auxiliary>
 		);
     }
