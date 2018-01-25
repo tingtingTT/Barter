@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import FileUploader from 'react-firebase-file-uploader';
+import axios from 'axios';
+import { withRouter } from 'react-router-dom'
 
 import Button from '../UI/Button/Button';
 import Input from '../UI/Input/Input';
@@ -11,7 +13,7 @@ import classes from './AddListingForm.css';
 
 class AddListingForm extends Component {
     state = {
-        item: {
+        itemForm: {
             itemName: {
                 elementType: 'input',
                 elementConfig: {
@@ -28,8 +30,8 @@ class AddListingForm extends Component {
               },
               value: ''
             },
-            imageURL: ''
         },
+        imageURL: '',
         isUploading: false,
         progress: 0,
     }
@@ -46,18 +48,47 @@ class AddListingForm extends Component {
     };
 
     addListingHandler = () => {
+        
         const listing = {};
+        for (let formElementIdentifier in this.state.itemForm) {
+            listing[formElementIdentifier] = this.state.itemForm[formElementIdentifier].value;
+        }
+
+        axios.post('https://barterbuddy-4b41a.firebaseio.com/listings.json', listing)
+            .then( response => {
+                this.props.history.push('/profile');
+            });
+    }
+    inputChangedHandler = (event, inputIdentifier) => {
+
+
+        const updatedForm = {
+            ...this.state.itemForm
+        };
+        const updatedFormElement = {
+            ...updatedForm[inputIdentifier]
+        };
+
+        updatedFormElement.value = event.target.value;
+        updatedForm[inputIdentifier] = updatedFormElement;
+
+        this.setState({itemForm: updatedForm});
+
     }
 
 	render () {
 
+
+
         const formElementsArray = [];
-        for (let key in this.state.item) {
+        for (let key in this.state.itemForm) {
             formElementsArray.push({
                 id: key,
-                config: this.state.item[key]
+                config: this.state.itemForm[key]
             });
+
         }
+
 
         /*Display the image if one has been uploaded*/
         let image = null
@@ -83,19 +114,13 @@ class AddListingForm extends Component {
                             onProgress={this.handleProgress}
                     />
                     {formElementsArray.map(formElement =>(
-                    <Input
-                        key={formElement.id}
-                        elementType={formElement.config.elementType}
-                        elementConfig={formElement.config.elementConfig}
-                        value={formElement.config.value} />
-                    ))}
-                    {/* {this.state.isUploading && <p>Progress: {this.state.progress}</p>} */}
-                    {/* {this.state.imageURL && <img className={classes.Image} src={this.state.imageURL} alt=''/> } */}
-
-
-                    {/* <input type="text" placeholder="Title" /> */}
-
-                    {/* <textarea placeholder="Description" rows="15"></textarea> */}
+                        <Input
+                            key={formElement.id}
+                            elementType={formElement.config.elementType}
+                            elementConfig={formElement.config.elementConfig}
+                            value={formElement.config.value}
+                            changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
+                        ))}
                     <Button label="Create" clicked={this.addListingHandler}/>
                 </form>
 
@@ -108,4 +133,4 @@ class AddListingForm extends Component {
 
 }
 
-export default AddListingForm;
+export default withRouter(AddListingForm);
