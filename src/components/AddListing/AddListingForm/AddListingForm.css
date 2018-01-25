@@ -29,3 +29,30 @@
     border: 1px solid lightgrey;
 
 }
+
+.FileLoader {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: relative;
+    width: 250px;
+    height: 250px;
+    border: 2px solid #E54A59;
+}
+.FileLoader label {
+    cursor: pointer;
+}
+.FileLoader i {
+    border-radius: 2px;
+    margin: 5px;
+    padding: 2px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #E54A59;
+    background-color: white;
+}
+.FileLoader i:hover {
+    color: white;
+    background-color: #E54A59;
+}

@@ -101,17 +101,26 @@ class AddListingForm extends Component {
 		return (
             <div className={classes.AddListingForm}>
                 <form className={classes.Form} >
-                        {image}
-                    <FileUploader
-                            accept="image/*"
-                            name="item"
-                            randomizeFilename
-                            storageRef={firebase.storage().ref('images')}
-                            onUploadStart={this.handleUploadStart}
-                            onUploadError={this.handleUploadError}
-                            onUploadSuccess={this.handleUploadSuccess}
-                            onProgress={this.handleProgress}
-                    />
+
+                    <div className={classes.FileLoader} style={{'background-image': 'url(' + this.state.imageURL + ')'}}>
+
+                        <label>
+                            <i className="fa fa-pencil" aria-hidden="true"></i>
+                            <FileUploader
+                                hidden
+                                accept="image/*"
+                                name="item"
+                                randomizeFilename
+                                storageRef={firebase.storage().ref('images')}
+                                onUploadStart={this.handleUploadStart}
+                                onUploadError={this.handleUploadError}
+                                onUploadSuccess={this.handleUploadSuccess}
+                                onProgress={this.handleProgress}
+                            />
+                        </label>
+                    </div>
+
+
                     {formElementsArray.map(formElement =>(
                         <Input
                             key={formElement.id}
