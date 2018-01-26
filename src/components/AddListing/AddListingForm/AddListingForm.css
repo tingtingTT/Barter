@@ -13,7 +13,7 @@
 
 .Form {
     display: flex;
-    flex-flow: row;
+    flex-flow: column;
     align-items: center;
     width: 80%;
 }

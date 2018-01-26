@@ -34,6 +34,8 @@ class AddListingForm extends Component {
         imageURL: '',
         isUploading: false,
         progress: 0,
+        submitted: false
+
     }
 
     handleUploadStart = () => this.setState({isUploading: true, progress: 0});
@@ -54,11 +56,18 @@ class AddListingForm extends Component {
             listing[formElementIdentifier] = this.state.itemForm[formElementIdentifier].value;
         }
         listing['imageURL'] = this.state.imageURL;
-        axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing);
+        axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing)
+            .then(
+                this.setState({submitted: true})
+
+            );
+
+            this.props.func();
 
     }
     inputChangedHandler = (event, inputIdentifier) => {
-
+        console.log(event.target.value);
+        
 
         const updatedForm = {
             ...this.state.itemForm
@@ -74,6 +83,7 @@ class AddListingForm extends Component {
 
     }
 
+
 	render () {
 
 
@@ -86,7 +96,15 @@ class AddListingForm extends Component {
             });
 
         }
-
+        let inputArray = formElementsArray.map(formElement =>(
+            <Input
+                key={formElement.id}
+                elementType={formElement.config.elementType}
+                elementConfig={formElement.config.elementConfig}
+                value={formElement.config.value}
+                changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
+            ))
+        
 
         /*Display the image if one has been uploaded*/
         let image = null
@@ -97,14 +115,13 @@ class AddListingForm extends Component {
                 </div>
             )
         }
-        let config={
-            type: 'text',
-            placeholder: 'Item Name'}
-
-		return (
-            <div className={classes.AddListingForm}>
+       
+    //    Dynamic form 
+        let form = null;
+        if (this.props.addForm) {
+            form = (
                 <form className={classes.Form} >
-                    <div>
+                    <div className={classes.row1}>
                         <div className={classes.FileLoader} style={{'background-image': 'url(' + this.state.imageURL + ')'}}>
                             <label>
                                 <i className="fa fa-pencil" aria-hidden="true"></i>
@@ -121,26 +138,33 @@ class AddListingForm extends Component {
                                 />
                             </label>
                         </div>
-                        <Input
+                        {inputArray[0]}
+                        {/* <Input
                             elementType='input'
                             elementConfig={config}
                             value=''
-                            changed={(event) => this.inputChangedHandler(event, 'itemName')}/>
+                            changed={(event) => this.inputChangedHandler(event, 'itemName')}/> */}
                     </div>
-
-
-
-                    {/* {formElementsArray.map(formElement =>(
-                        <Input
-                            key={formElement.id}
-                            elementType={formElement.config.elementType}
-                            elementConfig={formElement.config.elementConfig}
-                            value={formElement.config.value}
-                            changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
-                        ))} */}
+    
+    
+    
+                   
                     <p>Cancel</p>
                     <Button label="Create" clicked={this.addListingHandler}/>
                 </form>
+            )
+        }
+        
+        if (this.state.submitted) {
+            form = (
+                <Button label="OK" clicked={this.props.closeModal} />
+            ) 
+        }
+       
+    
+		return (
+            <div className={classes.AddListingForm}>
+                {form}
 
             </div>
 

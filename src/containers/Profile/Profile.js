@@ -42,7 +42,7 @@ class Profile extends Component {
         this.props.history.replace( '/profile/addlisting' );
     }
 
-    addCancelHandler = () => {
+    closeHandler = () => {
         this.setState({addingItem: false});
         console.log("clicked");
         axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
@@ -60,7 +60,6 @@ class Profile extends Component {
 
 
 
-
 	render () {
 
 
@@ -68,9 +67,9 @@ class Profile extends Component {
 		return (
           <Auxiliary>
               <Button label="+ ITEM" clicked={this.addingItemHandler}/>
-              <Modal show={this.state.addingItem} modalClosed={this.addCancelHandler}>
+              <Modal show={this.state.addingItem} modalClosed={this.closeHandler}>
                  {/* <Route path={this.props.match.path + '/profile/addlisting'} component={ AddListing }/> */}
-                 <AddListing />
+                 <AddListing closeModal={this.closeHandler} addForm/>
 
               </Modal>
               <div>

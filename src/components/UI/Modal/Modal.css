@@ -14,8 +14,7 @@
 
 @media (min-width: 600px) {
     .Modal {
-        max-height: calc(100vh - 200px);
-        width: 800px;
-        left: calc(50% - 400px);
+        width: 50%;
+        left: 25%;
     }
 }
