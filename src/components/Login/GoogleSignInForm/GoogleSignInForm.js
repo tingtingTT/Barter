@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import classes from './GoogleSignInForm.css';
+import { NavLink } from 'react-router-dom';
 
 var googleUser = {};
 
@@ -75,7 +76,13 @@ class GoogleSignInForm extends React.Component {
               </button>
             </div>
           </form>
-       </div>
+          <div className={classes.create}>
+            <p> New to Barter?
+               <NavLink exact to="/join?source=login"> Create an account.</NavLink>
+
+            </p>
+          </div>
+        </div>
        </div>
      )
 

@@ -3,6 +3,21 @@
   padding-right: 20px;
 }
 
+.create {
+  border: 1px solid #d8dee2;
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-align: center;
+  box-sizing: border-box;
+
+}
+
+.create a {
+  text-decoration: none;
+}
 .container {
   margin: 0 auto;
   padding: 0 0 40px;
