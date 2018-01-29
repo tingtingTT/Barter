@@ -6,8 +6,8 @@
     border: 1px solid #ccc;
     box-shadow: 1px 1px 1px black;
     padding: 16px;
-    left: 15%;
-    top: 30%;
+    top: 50%;
+    left: 50%;
     box-sizing: border-box;
     transition: all 0.3s ease-out;
 }
@@ -15,6 +15,8 @@
 @media (min-width: 600px) {
     .Modal {
         width: 50%;
-        left: 25%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
     }
 }

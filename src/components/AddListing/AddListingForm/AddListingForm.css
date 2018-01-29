@@ -2,9 +2,7 @@
     padding: 20px;
     width: 100%;
     height: 50%;
-    display: flex;
-    flex-flow: row;
-    align-items: center;
+    
 }
 
 .Image img{
@@ -12,9 +10,6 @@
 }
 
 .Form {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
     width: 80%;
 }
 

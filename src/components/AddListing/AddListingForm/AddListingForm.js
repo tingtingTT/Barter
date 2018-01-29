@@ -103,7 +103,7 @@ class AddListingForm extends Component {
 
         }
 
-        // MAKE ARRAY OF INPUTS
+        // MAKE ARRAY OF INPUT ELEMENTS
         let inputArray = formElementsArray.map(formElement =>(
             <Input
                 key={formElement.id}
