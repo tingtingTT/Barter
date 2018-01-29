@@ -1,3 +1,4 @@
+/* global gapi */
 import React, { Component } from 'react';
 import axios from 'axios';
 import classes from './CreateAccount.css';
@@ -5,6 +6,39 @@ import { NavLink } from 'react-router-dom';
 
 
 class CreateAccount extends React.Component {
+  constructor(props){
+      super(props);
+      this.onSignIn = this.onSignIn.bind(this)
+  }
+
+  componentDidMount() {
+      console.log('this mounted')
+      gapi.signin2.render('my-signin2', {
+          'scope': 'profile email',
+          'width': '380',
+          'height': 50,
+          'longtitle': true,
+          'theme': 'dark',
+          'onsuccess': this.onSignIn,
+      });
+  }
+
+  validateGoogleSignIn() {
+    var x = document.forms["GoogleSignUp"]["username"].value;
+    if (x == "") {
+        alert("Name must be filled out");
+        return false;
+    }
+
+}
+
+  onSignIn(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      console.log('Name: ' + profile.getName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  }
 
   render(){
     return(
@@ -14,6 +48,7 @@ class CreateAccount extends React.Component {
           <p className={classes.lead}>
             Sign up with Google: Choose a username and sign in.
           </p>
+          <form name="GoogleSignUp">
           <div className={classes.formGroup}>
             <label className={classes.label} htmlFor="username">
               Username:
@@ -24,10 +59,13 @@ class CreateAccount extends React.Component {
                 name="username"
                 placeholder="Username associated with Google"
                 autoFocus // eslint-disable-line jsx-a11y/no-autofocus
+                required // NOT WORKING - FIND FIX **********
               />
             </label>
           </div>
-          *GOOGLE BUTTON HERE*
+          <div id='my-signin2' className={classes.formGroup}>
+         </div>
+       </form>
           <strong className={classes.lineThrough}>OR</strong>
           <form method="post"> {/* change later to databaseinfo and router */}
           <div className={classes.formGroup}>
@@ -40,6 +78,7 @@ class CreateAccount extends React.Component {
                 name="username"
                 placeholder="Pick a username"
                 autoFocus // eslint-disable-line jsx-a11y/no-autofocus
+                required
               />
             </label>
           </div>
@@ -53,6 +92,7 @@ class CreateAccount extends React.Component {
                 name="Email"
                 placeholder="you@example.com"
                 autoFocus // eslint-disable-line jsx-a11y/no-autofocus
+                required
               />
             </label>
           </div>
@@ -65,6 +105,7 @@ class CreateAccount extends React.Component {
                 type="password"
                 name="password"
                 placeholder="Create a password"
+                required
               />
             </label>
           </div>
