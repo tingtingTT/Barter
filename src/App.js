@@ -19,7 +19,7 @@ class App extends Component {
                 {/* <Route path='/' component = {} /> */}
                 <Route path='/profile' component = { Profile } />
                 <Route path='/login' component = {Login} />
-                <Route path='/join?source=login' component = {SignUp} />
+                <Route path='/join' component = {SignUp} />
             </Switch>
 
         </Layout>
