@@ -38,6 +38,8 @@ class AddListingForm extends Component {
 
     }
 
+
+    // FILE UPLOADER HANDLERS
     handleUploadStart = () => this.setState({isUploading: true, progress: 0});
     handleProgress = (progress) => this.setState({progress});
     handleUploadError = (error) => {
@@ -49,6 +51,8 @@ class AddListingForm extends Component {
         firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({imageURL: url}));
     };
 
+
+    // POSTS INPUT FIELDS TO DB
     addListingHandler = () => {
 
         const listing = {};
@@ -65,6 +69,8 @@ class AddListingForm extends Component {
             this.props.func();
 
     }
+
+    // TWO-WAY BINDING WITH INPUT FIELDS
     inputChangedHandler = (event, inputIdentifier) => {
         console.log(event.target.value);
         
@@ -87,7 +93,7 @@ class AddListingForm extends Component {
 	render () {
 
 
-
+        // MAKE ARRAY OF INPUT OBJECTS
         const formElementsArray = [];
         for (let key in this.state.itemForm) {
             formElementsArray.push({
@@ -96,6 +102,8 @@ class AddListingForm extends Component {
             });
 
         }
+
+        // MAKE ARRAY OF INPUTS
         let inputArray = formElementsArray.map(formElement =>(
             <Input
                 key={formElement.id}
@@ -106,7 +114,7 @@ class AddListingForm extends Component {
             ))
         
 
-        /*Display the image if one has been uploaded*/
+        // DISPLAY IMAGE AFTER UPLOAD
         let image = null
         if (this.state.imageURL){
             image = (
@@ -116,7 +124,7 @@ class AddListingForm extends Component {
             )
         }
        
-    //    Dynamic form 
+        // FORM DISPLAY
         let form = null;
         if (this.props.addForm) {
             form = (
@@ -155,6 +163,7 @@ class AddListingForm extends Component {
             )
         }
         
+        // DISPLAY CONFIRMATION AFTER ADDING ITEM
         if (this.state.submitted) {
             form = (
                 <Button label="OK" clicked={this.props.closeModal} />
