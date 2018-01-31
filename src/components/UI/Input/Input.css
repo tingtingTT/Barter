@@ -1,4 +1,6 @@
+
 .Input {
+    font-size: 1.6rem;
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
@@ -20,5 +22,5 @@
 }
 .InputElement:focus {
     outline: none;
-    background-color: #ccc;
+    border: 1px solid #E54A59;
 }

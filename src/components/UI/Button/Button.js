@@ -1,13 +1,17 @@
 import React from 'react';
 
+import classnames from 'classnames';
+
 import classes from './Button.css';
 
 const button = (props) => (
-    <div
-        className={classes.Button}
+
+
+    <button
+        className={classnames( classes.Button, classes[props.position])}
         onClick={props.clicked}>
-        <p>{props.label}</p>
-    </div>
+        {props.label}
+    </button>
 );
 
 export default button;

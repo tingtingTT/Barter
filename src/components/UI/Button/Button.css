@@ -1,17 +1,33 @@
-.Button {
-    height: 40px;
-    width: 70px;
+.Button,
+.Button:focus {
+    font-size: 1.6rem;
+    font-family: 'Roboto', sans-serif;
+    /* height: 40px;
+    width: 70px; */
+    text-transform: uppercase;
     background-color: #E54A59;
     color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
     box-sizing: border-box;
+    border: none;
+    padding: 1rem 1rem;
+    outline: 0;
 }
 
-.Button:hover {
+
+
+.Button:hover,
+.Button:active {
+    outline: none;
     cursor: pointer;
     border: 2px solid #E54A59;
     background-color: white;
     color: #E54A59;
+}
+
+
+.rightBottom {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }

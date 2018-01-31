@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 import classes from './Input.css'
@@ -10,14 +11,18 @@ const input = (props) => {
             inputElement = <input
                 className={classes.InputElement}
                 {...props.elementConfig}
-                value={props.value}/>;
+                value={props.value}
+                onChange={props.changed}/>;
+
             break;
         case ('textarea'):
             inputElement = <textarea
                 className={classes.InputElement}
                 {...props.elementConfig}
                 rows="10"
-                value={props.value}/>;
+                value={props.value}
+                onChange={props.changed}/>;
+
             break;
         case ('select'):
             inputElement = (
