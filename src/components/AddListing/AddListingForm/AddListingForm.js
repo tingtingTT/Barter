@@ -6,7 +6,6 @@ import { withRouter } from 'react-router-dom'
 
 import Button from '../../UI/Button/Button';
 import Input from '../../UI/Input/Input';
-// import ImageUploader from '../../containers/ImageUploader/ImageUploader'
 
 import classes from './AddListingForm.css';
 
@@ -53,20 +52,20 @@ class AddListingForm extends Component {
 
 
     // POSTS INPUT FIELDS TO DB
-    addListingHandler = () => {
+    addListingHandler = (event) => { 
+
+        event.preventDefault();
+        console.log("adding to DB");
+        
 
         const listing = {};
         for (let formElementIdentifier in this.state.itemForm) {
             listing[formElementIdentifier] = this.state.itemForm[formElementIdentifier].value;
         }
         listing['imageURL'] = this.state.imageURL;
-        axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing)
-            .then(
-                this.setState({submitted: true})
-
-            );
-
-            this.props.func();
+        axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(
+            this.setState({submitted: true})
+        );
 
     }
 
@@ -126,49 +125,43 @@ class AddListingForm extends Component {
        
         // FORM DISPLAY
         let form = null;
-        if (this.props.addForm) {
-            form = (
-                <form className={classes.Form} >
-                    <div className={classes.row1}>
-                        <div className={classes.FileLoader} style={{'background-image': 'url(' + this.state.imageURL + ')'}}>
-                            <label>
-                                <i className="fa fa-pencil" aria-hidden="true"></i>
-                                <FileUploader
-                                    hidden
-                                    accept="image/*"
-                                    name="item"
-                                    randomizeFilename
-                                    storageRef={firebase.storage().ref('images')}
-                                    onUploadStart={this.handleUploadStart}
-                                    onUploadError={this.handleUploadError}
-                                    onUploadSuccess={this.handleUploadSuccess}
-                                    onProgress={this.handleProgress}
-                                />
-                            </label>
-                        </div>
-                        {inputArray[0]}
-                        {/* <Input
-                            elementType='input'
-                            elementConfig={config}
-                            value=''
-                            changed={(event) => this.inputChangedHandler(event, 'itemName')}/> */}
-                    </div>
-    
-    
-    
-                   
-                    <p>Cancel</p>
-                    <Button label="Create" clicked={this.addListingHandler}/>
-                </form>
-            )
-        }
         
-        // DISPLAY CONFIRMATION AFTER ADDING ITEM
-        if (this.state.submitted) {
-            form = (
-                <Button label="OK" clicked={this.props.closeModal} />
-            ) 
-        }
+        form = (
+            <form className={classes.Form} onSubmit={this.addListingHandler}>
+                <div className={classes.row1}>
+                    <div className={classes.FileLoader} style={{'background-image': 'url(' + this.state.imageURL + ')'}}>
+                        <label>
+                            <i className="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                            <FileUploader
+                                hidden
+                                accept="image/*"
+                                name="item"
+                                randomizeFilename
+                                storageRef={firebase.storage().ref('images')}
+                                onUploadStart={this.handleUploadStart}
+                                onUploadError={this.handleUploadError}
+                                onUploadSuccess={this.handleUploadSuccess}
+                                onProgress={this.handleProgress}
+                            />
+                        </label>
+                    </div>
+                    {inputArray[0]}
+                    {/* <Input
+                        elementType='input'
+                        elementConfig={config}
+                        value=''
+                        changed={(event) => this.inputChangedHandler(event, 'itemName')}/> */}
+                </div>
+
+
+
+                
+                <p>Cancel</p>
+                <Button label="Create"  position="rightBottom" clicked={() => this.props.closeModal(this.submitted)}/>
+            </form>
+        )
+        
+    
        
     
 		return (

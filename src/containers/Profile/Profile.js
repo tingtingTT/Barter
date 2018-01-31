@@ -42,20 +42,25 @@ class Profile extends Component {
         this.props.history.replace( '/profile/addlisting' );
     }
 
-    closeHandler = () => {
-        this.setState({addingItem: false});
-        console.log("clicked");
-        axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
-            .then(response => {
-                const fetchedItems = []
-                for (let key in response.data) {
-                    fetchedItems.push({
-                        ...response.data[key],
-                        id: key
-                    })
-                }
-                this.setState({inventory: fetchedItems});
-            });
+    closeHandler = (okToClose) => {
+
+        if(okToClose){
+            this.setState({addingItem: false});
+            console.log("clicked");
+    
+            axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
+                .then(response => {
+                    const fetchedItems = []
+                    for (let key in response.data) {
+                        fetchedItems.push({
+                            ...response.data[key],
+                            id: key
+                        })
+                    }
+                    this.setState({inventory: fetchedItems});
+                });
+        }
+        
     }
 
 
@@ -67,7 +72,7 @@ class Profile extends Component {
 		return (
           <Auxiliary>
               <Button label="+ ITEM" clicked={this.addingItemHandler}/>
-              <Modal show={this.state.addingItem} modalClosed={this.closeHandler}>
+              <Modal show={this.state.addingItem} modalClosed={() => this.closeHandler(true)}>
                  {/* <Route path={this.props.match.path + '/profile/addlisting'} component={ AddListing }/> */}
                  <AddListing closeModal={this.closeHandler} addForm/>
 
