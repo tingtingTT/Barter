@@ -32,8 +32,7 @@ class AddListingForm extends Component {
         },
         imageURL: '',
         isUploading: false,
-        progress: 0,
-        submitted: false
+        progress: 0
 
     }
 
@@ -63,9 +62,12 @@ class AddListingForm extends Component {
             listing[formElementIdentifier] = this.state.itemForm[formElementIdentifier].value;
         }
         listing['imageURL'] = this.state.imageURL;
-        axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(
-            this.setState({submitted: true})
-        );
+        axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(response => {
+           
+             this.props.closeModal()
+        });
+           
+        
 
     }
 
@@ -157,7 +159,7 @@ class AddListingForm extends Component {
 
                 
                 <p>Cancel</p>
-                <Button label="Create"  position="rightBottom" clicked={() => this.props.closeModal(this.submitted)}/>
+                <Button label="Create"  position="rightBottom" />
             </form>
         )
         

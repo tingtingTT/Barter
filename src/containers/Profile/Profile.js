@@ -42,24 +42,25 @@ class Profile extends Component {
         this.props.history.replace( '/profile/addlisting' );
     }
 
-    closeHandler = (okToClose) => {
+    closeHandler = () => {
 
-        if(okToClose){
-            this.setState({addingItem: false});
-            console.log("clicked");
-    
-            axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
-                .then(response => {
-                    const fetchedItems = []
-                    for (let key in response.data) {
-                        fetchedItems.push({
-                            ...response.data[key],
-                            id: key
-                        })
-                    }
-                    this.setState({inventory: fetchedItems});
-                });
-        }
+        
+        this.setState({addingItem: false});
+        console.log("clicked");
+
+        axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
+            .then(response => {
+                const fetchedItems = []
+                for (let key in response.data) {
+                    fetchedItems.push({
+                        ...response.data[key],
+                        id: key
+                    })
+                }
+                this.setState({inventory: fetchedItems});
+                console.log(fetchedItems);
+            });
+        
         
     }
 
