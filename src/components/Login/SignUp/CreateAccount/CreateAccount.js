@@ -11,6 +11,14 @@ class CreateAccount extends React.Component {
       this.onSignIn = this.onSignIn.bind(this)
   }
 
+/*  validateGoogleSignIn() {
+    var x = document.forms["GoogleSignUp"]["Gusername"].value;
+    if (x == "") {
+        alert("Name must be filled out");
+        return false;
+    }
+  }*/
+
   componentDidMount() {
       console.log('this mounted')
       gapi.signin2.render('my-signin2', {
@@ -23,14 +31,6 @@ class CreateAccount extends React.Component {
       });
   }
 
-  validateGoogleSignIn() {
-    var x = document.forms["GoogleSignUp"]["username"].value;
-    if (x == "") {
-        alert("Name must be filled out");
-        return false;
-    }
-
-}
 
   onSignIn(googleUser) {
       var profile = googleUser.getBasicProfile();
@@ -56,8 +56,8 @@ class CreateAccount extends React.Component {
                 className={classes.input}
                 id="username"
                 type="text"
-                name="username"
-                placeholder="Username associated with Google"
+                name="Gusername"
+                placeholder="Pick a username"
                 autoFocus // eslint-disable-line jsx-a11y/no-autofocus
                 required // NOT WORKING - FIND FIX **********
               />
@@ -112,6 +112,7 @@ class CreateAccount extends React.Component {
           <div className={classes.formGroup}>
             <button className={classes.button} type="submit">
                 Sign up for Barter
+
               </button>
             </div>
           </form>
