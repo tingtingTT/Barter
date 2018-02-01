@@ -2,22 +2,17 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import classes from './CreateAccount.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 
 
 class CreateAccount extends React.Component {
   constructor(props){
       super(props);
       this.onSignIn = this.onSignIn.bind(this)
+      this.onLogin = this.onLogin.bind(this)
   }
 
-/*  validateGoogleSignIn() {
-    var x = document.forms["GoogleSignUp"]["Gusername"].value;
-    if (x == "") {
-        alert("Name must be filled out");
-        return false;
-    }
-  }*/
+
 
   componentDidMount() {
       console.log('this mounted')
@@ -32,12 +27,23 @@ class CreateAccount extends React.Component {
   }
 
 
+
   onSignIn(googleUser) {
       var profile = googleUser.getBasicProfile();
       console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
       console.log('Name: ' + profile.getName());
       console.log('Image URL: ' + profile.getImageUrl());
       console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  }
+
+  onLogin(){
+    if(document.getElementById("email").validity.valid &&
+    document.getElementById("username").validity.valid &&
+    document.getElementById("password").validity.valid){
+          this.props.history.push('/login');
+    } else {
+      document.getElementById("signin").click();
+    }
   }
 
   render(){
@@ -54,7 +60,7 @@ class CreateAccount extends React.Component {
               Username:
               <input
                 className={classes.input}
-                id="username"
+                id="Gusername"
                 type="text"
                 name="Gusername"
                 placeholder="Pick a username"
@@ -67,7 +73,7 @@ class CreateAccount extends React.Component {
          </div>
        </form>
           <strong className={classes.lineThrough}>OR</strong>
-          <form method="post"> {/* change later to databaseinfo and router */}
+          <form id='NormalSignUp'> {/* change later to databaseinfo and router */}
           <div className={classes.formGroup}>
             <label className={classes.label} htmlFor="username">
               Username:
@@ -87,8 +93,8 @@ class CreateAccount extends React.Component {
               Email address:
               <input
                 className={classes.input}
-                id="Email"
-                type="text"
+                id="email"
+                type="email"
                 name="Email"
                 placeholder="you@example.com"
                 autoFocus // eslint-disable-line jsx-a11y/no-autofocus
@@ -110,7 +116,7 @@ class CreateAccount extends React.Component {
             </label>
           </div>
           <div className={classes.formGroup}>
-            <button className={classes.button} type="submit">
+            <button id='signin' className={classes.button} type="submit" onClick={this.onLogin}  >
                 Sign up for Barter
 
               </button>
@@ -124,4 +130,4 @@ class CreateAccount extends React.Component {
 
 }
 
-export default CreateAccount;
+export default withRouter(CreateAccount);
