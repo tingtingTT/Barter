@@ -62,9 +62,8 @@ class LogInForm extends React.Component {
               </button>
             </div>
           </form>
-          <div className={classes.create} onClick={this.signOut}>
+          <div className={classes.create}>
             <p> New to Barter
-               {this.signOut}
                <NavLink exact to="/join?source=login"> Create an account.</NavLink>
 
             </p>

@@ -1,8 +1,8 @@
-/* global gapi */
 import React, { Component } from 'react';
 import axios from 'axios';
 import classes from './CreateAccount.css';
 import { NavLink, withRouter } from 'react-router-dom';
+import firebase, {database} from 'firebase';
 
 
 class CreateAccount extends React.Component {
@@ -15,12 +15,40 @@ class CreateAccount extends React.Component {
   }
 
   onLogin(){
-    if(document.getElementById("email").validity.valid &&
-    document.getElementById("username").validity.valid &&
-    document.getElementById("password").validity.valid &&
-    document.getElementById("zipcode").validity.valid){
-          //AUTH GOES HERE ***
-          this.props.history.push('/login');
+    var email = document.getElementById("email");
+    var username = document.getElementById("username");
+    var password = document.getElementById("password");
+    var zipcode = document.getElementById("zipcode");
+    if(email.validity.valid &&
+    username.validity.valid &&
+    password.validity.valid &&
+    zipcode.validity.valid){
+
+    var isSuccessful = new Boolean(true);
+    firebase.auth().createUserWithEmailAndPassword(email.value, password.value).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+
+      if(errorCode === 'auth/email-already-in-use'){
+        email.focus;
+        /*this.email.value = "";
+        document.getElementById("signin").click();*/
+        isSuccessful= new Boolean(false);
+        alert(errorMessage)
+        console.log(errorCode);
+        console.log(isSuccessful);
+
+      }
+      console.log(errorCode);
+      console.log(errorMessage);
+      // ...
+      });
+
+      if (isSuccessful === true){
+        console.log(isSuccessful);
+        this.props.history.push('/login');
+      }
 
     } else {
       document.getElementById("signin").click();
@@ -72,10 +100,12 @@ class CreateAccount extends React.Component {
                 id="password"
                 type="password"
                 name="password"
+                pattern=".{6,}"
                 placeholder="Create a password"
                 required
               />
             </label>
+            Use atleast six characters.
           </div>
           <div className={classes.formGroup}>
             <label className={classes.label} htmlFor="zipcode">
