@@ -1,6 +1,6 @@
 //Component for a single item (user profile only? or use all over site)
 import React from 'react';
-import './Item.css';
+import classes from './Item.css';
 /*
      .inventory (list)
     .title
@@ -14,18 +14,18 @@ import './Item.css';
 
 const item = (props) => {
     return (
-        <div className="Item">
+        <div className={classes.Item}>
             <div>
                 <p>{props.title}</p>
             </div>
             <div>
-                <p>{props.description}</p>
+                <p width="50px" >{props.description}</p>
             </div>
             <div>
                 <img src={props.image}></img>
             </div>
 
-            <div>
+            <div display="flex" flex-flow="column"  flex >
                 <button onClick={props.click1}>handler1</button>
                 <button onClick={props.click2}>handler2</button>
                 <button onClick={props.click3}>handler3</button>

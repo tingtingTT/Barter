@@ -12,21 +12,21 @@
     .handler2
     .handler3
 */
-
+import classes from './Item/Item.css'
 import React from 'react';
 import Item from './Item/Item';
 
 const inventory = (props)=>
-    props.inventory.map((item, index)=>{
-        return <Item
-        //usage
-        click1={()=>item.handler1(index)}
-        //usage
-        click2={()=>item.handler2(index)}
-        //usage
-        click3={()=>item.handler3(index)}
-        title={item.title}
-        description={item.description}
-        />
-        });
+props.inventory.map((item, index)=>{
+    return <Item className={classes.Inventory}
+    //usage
+    click1={()=>item.handler1(index)}
+    //usage
+    click2={()=>item.handler2(index)}
+    //usage
+    click3={()=>item.handler3(index)}
+    title={item.title}
+    description={item.description}
+    />
+    });
     export default inventory;
