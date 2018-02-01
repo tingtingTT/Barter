@@ -23,4 +23,5 @@
 .InputElement:focus {
     outline: none;
     border: 1px solid #E54A59;
+    box-shadow: 0 .1rem .3rem #ccc;
 }

@@ -49,7 +49,6 @@ class AddListingForm extends Component {
     }
 
 
-
     // FILE UPLOADER HANDLERS
     handleUploadStart = () => this.setState({isUploading: true, progress: 0});
     handleProgress = (progress) => this.setState({progress});
@@ -86,8 +85,7 @@ class AddListingForm extends Component {
 
     // TWO-WAY BINDING WITH INPUT FIELDS
     inputChangedHandler = (event, inputIdentifier) => {
-        console.log('changed');
-        console.log(event.target.value);
+        
         
 
         const updatedForm = {
@@ -100,8 +98,13 @@ class AddListingForm extends Component {
         updatedFormElement.value = event.target.value;
         updatedForm[inputIdentifier] = updatedFormElement;
 
+        console.log(updatedForm);
         this.setState({itemForm: updatedForm});
 
+    }
+
+    chicken = () => {
+        console.log('chicken');
     }
 
 
@@ -118,16 +121,7 @@ class AddListingForm extends Component {
 
         }
 
-        // MAKE ARRAY OF INPUT ELEMENTS
-        let inputArray = formElementsArray.map(formElement =>(
-            <Input
-                key={formElement.id}
-                elementType={formElement.config.elementType}
-                elementConfig={formElement.config.elementConfig}
-                value={formElement.config.value}
-                changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
-            ))
-        
+    
 
         // DISPLAY IMAGE AFTER UPLOAD
         let image = null
@@ -170,7 +164,9 @@ class AddListingForm extends Component {
                         elementType={formElement.config.elementType}
                         elementConfig={formElement.config.elementConfig}
                         value={formElement.config.value}
-                        changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
+                        changed={(event) => this.inputChangedHandler(event, formElement.id)}
+                        // changed={this.chicken}
+                        />
                 ))}
                 
                 
