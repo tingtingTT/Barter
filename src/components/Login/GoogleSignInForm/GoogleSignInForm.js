@@ -10,8 +10,9 @@ class GoogleSignInForm extends React.Component {
 
   constructor(props){
       super(props);
-      this.onSignIn = this.onSignIn.bind(this)
-      this.onLogin = this.onLogin.bind(this)
+      this.onSignIn = this.onSignIn.bind(this);
+      this.onLogin = this.onLogin.bind(this);
+      this.signOut = this.signOut.bind(this);
   }
 
   componentDidMount() {
@@ -37,12 +38,26 @@ class GoogleSignInForm extends React.Component {
       document.getElementById("login").click();
     }
   }
+
+  signOut() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+      });
+    }
   onSignIn(googleUser) {
       var profile = googleUser.getBasicProfile();
       console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
       console.log('Name: ' + profile.getName());
       console.log('Image URL: ' + profile.getImageUrl());
       console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+      //AUTH
+      //if (first time viist Login){
+      // sign user outl
+      // else {
+      this.props.history.push('/');
+
   }
 
   render() {
@@ -89,8 +104,9 @@ class GoogleSignInForm extends React.Component {
               </button>
             </div>
           </form>
-          <div className={classes.create}>
-            <p> New to Barter?
+          <div className={classes.create} onClick={this.signOut}>
+            <p> New to Barter
+               {this.signOut}
                <NavLink exact to="/join?source=login"> Create an account.</NavLink>
 
             </p>

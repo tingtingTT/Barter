@@ -8,14 +8,25 @@ import { NavLink, withRouter } from 'react-router-dom';
 class CreateAccount extends React.Component {
   constructor(props){
       super(props);
-      this.onSignIn = this.onSignIn.bind(this)
-      this.onLogin = this.onLogin.bind(this)
+      this.signOut = this.signOut.bind(this);
+      this.onSignIn = this.onSignIn.bind(this);
+      this.onLogin = this.onLogin.bind(this);
+
+
+      //this.signOut();
   }
 
 
+  signOut() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+      });
+    }
+
 
   componentDidMount() {
-      console.log('this mounted')
+      console.log('this mounted');
       gapi.signin2.render('my-signin2', {
           'scope': 'profile email',
           'width': '380',
@@ -30,11 +41,20 @@ class CreateAccount extends React.Component {
 
 
   onSignIn(googleUser) {
+      if(document.getElementById('Gusername').validity.valid){
       var profile = googleUser.getBasicProfile();
       console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
       console.log('Name: ' + profile.getName());
       console.log('Image URL: ' + profile.getImageUrl());
       console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+      this.props.history.push('/login');
+      //AUTH
+      } else {
+        var user = prompt("You need a username along with your google email!");
+        if(user != ""){
+          //AUTH
+        }
+      }
   }
 
   onLogin(){
@@ -121,6 +141,7 @@ class CreateAccount extends React.Component {
           <div className={classes.formGroup}>
             <button id='signin' className={classes.button} type="submit" onClick={this.onLogin}  >
                 Sign up for Barter
+
 
               </button>
             </div>
