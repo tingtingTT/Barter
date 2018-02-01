@@ -30,7 +30,7 @@
     align-self: center;
 }
 
-@media max-width: 500px{
+@media (max-width: 500px){
     Item {
         flex-flow: column;
     }

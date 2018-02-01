@@ -5,6 +5,7 @@ import Modal from '../../components/UI/Modal/Modal';
 import Button from '../../components/UI/Button/Button';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Inventory from '../../components/Inventory/Inventory';
+import Listing from '../../components/Listing/Listing';
 
 import classes from './Profile.css'
 
@@ -15,6 +16,7 @@ import { Route } from 'react-router-dom';
 class Profile extends Component {
     state = {
         inventory: [],
+        listing: [],
         addingItem: false,
         itemAdded: false
     }
@@ -30,6 +32,7 @@ class Profile extends Component {
                     })
                 }
                 this.setState({inventory: fetchedItems});
+                this.setState({listing: fetchedItems});
             });
     }
 
@@ -58,10 +61,9 @@ class Profile extends Component {
                     })
                 }
                 this.setState({inventory: fetchedItems});
+                this.setState({listing: fetchedItems});
                 console.log(fetchedItems);
             });
-        
-        
     }
 
 
@@ -78,6 +80,10 @@ class Profile extends Component {
                  <AddListing closeModal={this.closeHandler} addForm/>
 
               </Modal>
+              <div>
+                  <Listing listing={this.state.listing.reverse()} />
+              </div>
+
               <div>
                   <Inventory inventory={this.state.inventory.reverse()} />
               </div>
