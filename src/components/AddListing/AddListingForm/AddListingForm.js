@@ -29,6 +29,18 @@ class AddListingForm extends Component {
               },
               value: ''
             },
+            category: {
+                elementType: 'select',
+                elementConfig: {
+                    options: [
+                        {value: 'electronics', displayValue: 'Electronics'},
+                        {value: 'entertainment', displayValue: 'Entertainment'},
+                        {value: 'service', displayValue: 'Service'},
+                        {value: 'appliance', displayValue: 'Appliance'}
+                    ]
+                },
+                value: 'Electronics'
+            }
         },
         imageURL: '',
         isUploading: false,
@@ -73,6 +85,7 @@ class AddListingForm extends Component {
 
     // TWO-WAY BINDING WITH INPUT FIELDS
     inputChangedHandler = (event, inputIdentifier) => {
+        console.log('changed');
         console.log(event.target.value);
         
 
@@ -130,36 +143,37 @@ class AddListingForm extends Component {
         
         form = (
             <form className={classes.Form} onSubmit={this.addListingHandler}>
-                <div className={classes.row1}>
-                    <div className={classes.FileLoader} style={{'background-image': 'url(' + this.state.imageURL + ')'}}>
-                        <label>
-                            <i className="fa fa-pencil fa-2x" aria-hidden="true"></i>
-                            <FileUploader
-                                hidden
-                                accept="image/*"
-                                name="item"
-                                randomizeFilename
-                                storageRef={firebase.storage().ref('images')}
-                                onUploadStart={this.handleUploadStart}
-                                onUploadError={this.handleUploadError}
-                                onUploadSuccess={this.handleUploadSuccess}
-                                onProgress={this.handleProgress}
-                            />
-                        </label>
-                    </div>
-                    {inputArray[0]}
-                    {/* <Input
-                        elementType='input'
-                        elementConfig={config}
-                        value=''
-                        changed={(event) => this.inputChangedHandler(event, 'itemName')}/> */}
+                 
+                <div className={classes.FileLoader} style={{'background-image': 'url(' + this.state.imageURL + ')'}}>
+                    <label>
+                        <i className="fa fa-pencil fa-2x" aria-hidden="true"></i>
+                        <FileUploader
+                            hidden
+                            accept="image/*"
+                            name="item"
+                            randomizeFilename
+                            storageRef={firebase.storage().ref('images')}
+                            onUploadStart={this.handleUploadStart}
+                            onUploadError={this.handleUploadError}
+                            onUploadSuccess={this.handleUploadSuccess}
+                            onProgress={this.handleProgress}
+                        />
+                    </label>
+                    
                 </div>
-
-
-
+            
+            
+                {formElementsArray.map(formElement =>(
+                    <Input
+                        key={formElement.id}
+                        elementType={formElement.config.elementType}
+                        elementConfig={formElement.config.elementConfig}
+                        value={formElement.config.value}
+                        changed={(event) => this.inputChangedHandler(event, formElement.id)}/>
+                ))}
                 
-                <p>Cancel</p>
-                <Button label="Create"  position="rightBottom" />
+                
+                <Button label="Create" />
             </form>
         )
         

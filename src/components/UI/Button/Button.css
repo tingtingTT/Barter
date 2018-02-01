@@ -12,6 +12,7 @@
     border: none;
     padding: 1rem 1rem;
     outline: 0;
+    margin: 1rem;
 }
 
 
@@ -30,4 +31,8 @@
     position: absolute;
     bottom: 0;
     right: 0;
+}
+button::before {
+    content: "";
+    clear: both;
 }
