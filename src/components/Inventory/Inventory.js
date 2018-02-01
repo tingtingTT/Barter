@@ -8,7 +8,7 @@
     .title
     .description
     callbacks with index reference
-    .handler1 
+    .handler1
     .handler2
     .handler3
 */
