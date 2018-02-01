@@ -17,7 +17,8 @@ class CreateAccount extends React.Component {
   onLogin(){
     if(document.getElementById("email").validity.valid &&
     document.getElementById("username").validity.valid &&
-    document.getElementById("password").validity.valid){
+    document.getElementById("password").validity.valid &&
+    document.getElementById("zipcode").validity.valid){
           //AUTH GOES HERE ***
           this.props.history.push('/login');
 
@@ -72,6 +73,20 @@ class CreateAccount extends React.Component {
                 type="password"
                 name="password"
                 placeholder="Create a password"
+                required
+              />
+            </label>
+          </div>
+          <div className={classes.formGroup}>
+            <label className={classes.label} htmlFor="zipcode">
+              Zipcode:
+              <input
+                className={classes.input}
+                id="zipcode"
+                type="text"
+                pattern="[0-9]{5}"
+                name="zipcode"
+                placeholder="Enter your zipcode"
                 required
               />
             </label>
