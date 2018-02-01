@@ -24,6 +24,7 @@ class CreateAccount extends React.Component {
           'theme': 'dark',
           'onsuccess': this.onSignIn,
       });
+
   }
 
 
@@ -40,7 +41,9 @@ class CreateAccount extends React.Component {
     if(document.getElementById("email").validity.valid &&
     document.getElementById("username").validity.valid &&
     document.getElementById("password").validity.valid){
+          //AUTH GOES HERE ***
           this.props.history.push('/login');
+
     } else {
       document.getElementById("signin").click();
     }

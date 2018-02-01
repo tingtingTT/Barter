@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import classes from './GoogleSignInForm.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 
 var googleUser = {};
 
@@ -11,6 +11,7 @@ class GoogleSignInForm extends React.Component {
   constructor(props){
       super(props);
       this.onSignIn = this.onSignIn.bind(this)
+      this.onLogin = this.onLogin.bind(this)
   }
 
   componentDidMount() {
@@ -26,6 +27,16 @@ class GoogleSignInForm extends React.Component {
   }
 
 
+  onLogin(){
+    if(document.getElementById("usernameOrEmail").validity.valid &&
+    document.getElementById("Lpassword").validity.valid){
+          //AUTH GOES HERE ***
+          this.props.history.push('/');
+
+    } else {
+      document.getElementById("login").click();
+    }
+  }
   onSignIn(googleUser) {
       var profile = googleUser.getBasicProfile();
       console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -46,7 +57,7 @@ class GoogleSignInForm extends React.Component {
             <div id='my-signin2' className={classes.formGroup}>
            </div>
          <strong className={classes.lineThrough}>OR</strong>
-          <form method="post"> {/* change later to databaseinfo and router */}
+          <form > {/* change later to databaseinfo and router */}
             <div className={classes.formGroup}>
               <label className={classes.label} htmlFor="usernameOrEmail">
                 Username or email address:
@@ -56,6 +67,7 @@ class GoogleSignInForm extends React.Component {
                   type="text"
                   name="usernameOrEmail"
                   autoFocus // eslint-disable-line jsx-a11y/no-autofocus
+                  required
                 />
               </label>
             </div>
@@ -64,14 +76,15 @@ class GoogleSignInForm extends React.Component {
                 Password:
                 <input
                   className={classes.input}
-                  id="password"
+                  id="Lpassword"
                   type="password"
                   name="password"
+                  required
                 />
               </label>
             </div>
             <div className={classes.formGroup}>
-              <button className={classes.button} type="submit">
+              <button id="login" className={classes.button} type="submit" onClick={this.onLogin}>
                 Log in
               </button>
             </div>
@@ -92,4 +105,4 @@ class GoogleSignInForm extends React.Component {
 
 }
 
-export default GoogleSignInForm;
+export default withRouter(GoogleSignInForm);
