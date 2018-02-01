@@ -49,6 +49,7 @@ class AddListingForm extends Component {
     }
 
 
+
     // FILE UPLOADER HANDLERS
     handleUploadStart = () => this.setState({isUploading: true, progress: 0});
     handleProgress = (progress) => this.setState({progress});

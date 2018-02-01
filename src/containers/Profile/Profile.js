@@ -4,7 +4,7 @@ import AddListing from '../../components/AddListing/AddListing';
 import Modal from '../../components/UI/Modal/Modal';
 import Button from '../../components/UI/Button/Button';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
-import InventoryItem from '../../components/Inventory/InventoryItem/InventoryItem';
+import Inventory from '../../components/Inventory/Inventory';
 
 import classes from './Profile.css'
 
@@ -79,13 +79,7 @@ class Profile extends Component {
 
               </Modal>
               <div>
-                  {this.state.inventory.map(item => (
-                      <InventoryItem key={item.id}
-                          img={item.imageURL}
-                          name={item.itemName}
-                          desc={item.desc}
-                      />
-                  ))}
+                  <Inventory inventory={this.state.inventory.reverse()} />
               </div>
           </Auxiliary>
 		);
