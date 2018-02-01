@@ -14,6 +14,22 @@
   font-size: 80%;
 }
 
+
+.terms {
+  /*border: 1px solid #d8dee2; */
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-align: center;
+  box-sizing: border-box;
+
+}
+
+.terms a {
+  text-decoration: none;
+}
 .lineThrough::before {
   position: absolute;
   top: 50%;
