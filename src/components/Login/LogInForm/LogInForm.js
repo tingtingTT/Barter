@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import classes from './LogInForm.css';
 import { NavLink, withRouter } from 'react-router-dom';
+import firebase, {database} from 'firebase';
 
 class LogInForm extends React.Component {
 
@@ -11,13 +12,42 @@ class LogInForm extends React.Component {
   }
 
   onLogin(){
-    if(document.getElementById("usernameOrEmail").validity.valid &&
-    document.getElementById("Lpassword").validity.valid){
-          //AUTH GOES HERE ***
+    var useremail = document.getElementById("usernameOrEmail");
+    var password = document.getElementById("Lpassword");
+    if(useremail.validity.valid &&
+    password.validity.valid){
+
+      var isSuccessful = new Boolean(true);
+      firebase.auth().signInWithEmailAndPassword(useremail.value, password.value).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode === 'auth/invalid-email'){
+          isSuccessful = !(isSuccessful);
+          useremail.value = "";
+          alert(errorMessage);
+        }
+        if (errorCode === 'auth/user-not-found'){
+          isSuccessful = !(isSuccessful);
+          useremail.value = "";
+          alert(errorMessage);
+        }
+        if (errorCode === 'auth/wrong-password'){
+          isSuccessful = !(isSuccessful);
+          password.value = "";
+          alert(errorMessage);
+        }
+        console.log(errorCode);
+        console.log(errorMessage);
+      });
+
+        if(isSuccessful){
           this.props.history.push('/');
+          // DO MORE AUTH STUFF
+        }
 
     } else {
-      document.getElementById("login").click();
+      alert("Invalid input!");
     }
   }
 
@@ -33,7 +63,7 @@ class LogInForm extends React.Component {
           <form > {/* change later to databaseinfo and router */}
             <div className={classes.formGroup}>
               <label className={classes.label} htmlFor="usernameOrEmail">
-                Username or email address:
+                Email address:
                 <input
                   className={classes.input}
                   id="usernameOrEmail"
@@ -57,7 +87,7 @@ class LogInForm extends React.Component {
               </label>
             </div>
             <div className={classes.formGroup}>
-              <button id="login" className={classes.button} type="submit" onClick={this.onLogin}>
+              <button id="login" className={classes.button} type="button" onClick={this.onLogin}>
                 Log in
               </button>
             </div>

@@ -19,41 +19,42 @@ class CreateAccount extends React.Component {
     var username = document.getElementById("username");
     var password = document.getElementById("password");
     var zipcode = document.getElementById("zipcode");
-    if(email.validity.valid &&
-    username.validity.valid &&
-    password.validity.valid &&
-    zipcode.validity.valid){
 
-    var isSuccessful = new Boolean(true);
-    firebase.auth().createUserWithEmailAndPassword(email.value, password.value).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
+    if(email.validity.valid && username.validity.valid &&
+    password.validity.valid && zipcode.validity.valid){
+      var isSuccessful = new Boolean(true);
+      firebase.auth().createUserWithEmailAndPassword(email.value, password.value).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
 
-      if(errorCode === 'auth/email-already-in-use'){
-        email.focus;
-        /*this.email.value = "";
-        document.getElementById("signin").click();*/
-        isSuccessful= new Boolean(false);
-        alert(errorMessage)
+        if(errorCode === 'auth/email-already-in-use'){
+          email.value = "";
+          /*this.email.value = "";
+          document.getElementById("signin").click(); */
+          isSuccessful = !(isSuccessful);
+          alert(errorMessage);
+          console.log(errorCode);
+          console.log(isSuccessful);
+
+        }
         console.log(errorCode);
+        console.log(errorMessage);
+        // ...
+        });
+
         console.log(isSuccessful);
+        if (isSuccessful === true){
+          console.log(isSuccessful);
+          this.props.history.push('/login');
 
+        }
+      } else {
+        alert("Invalid input!");
       }
-      console.log(errorCode);
-      console.log(errorMessage);
-      // ...
-      });
-
-      if (isSuccessful === true){
-        console.log(isSuccessful);
-        this.props.history.push('/login');
-      }
-
-    } else {
-      document.getElementById("signin").click();
-    }
   }
+
+
 
   render(){
     return(
@@ -87,7 +88,6 @@ class CreateAccount extends React.Component {
                 type="email"
                 name="Email"
                 placeholder="you@example.com"
-                autoFocus // eslint-disable-line jsx-a11y/no-autofocus
                 required
               />
             </label>
@@ -120,9 +120,10 @@ class CreateAccount extends React.Component {
                 required
               />
             </label>
+            Enter a 5 digit zipcode.
           </div>
           <div className={classes.formGroup}>
-            <button id='signin' className={classes.button} type="submit" onClick={this.onLogin}  >
+            <button id='signin' className={classes.button} type="button" onClick={this.onLogin}>
                 Sign up for Barter
               </button>
             </div>
