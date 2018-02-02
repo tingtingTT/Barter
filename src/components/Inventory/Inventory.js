@@ -12,7 +12,6 @@
     .handler2
     .handler3
 */
-import classes from './Item/Item.css'
 import React from 'react';
 import InventoryItem from './InventoryItem/InventoryItem';
 
