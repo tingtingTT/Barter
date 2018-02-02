@@ -18,7 +18,24 @@ class Profile extends Component {
         inventory: [],
         listing: [],
         addingItem: false,
-        itemAdded: false
+        itemAdded: false,
+        //dont want variable with same name as component
+        inventory: [
+                {
+                    title: 'First Item',
+                    description: 'The first dummy stub item',
+                },
+                {
+                    title: 'Second Item',
+                    description: 'The Second dummy stub item',
+                },
+                {
+                    title: 'Third Item',
+                    description: 'The Third dummy stub item',
+                }
+            ],
+        addingItem: false
+
     }
 
     componentDidMount () {
@@ -47,7 +64,7 @@ class Profile extends Component {
 
     closeHandler = () => {
 
-        
+
         this.setState({addingItem: false});
         console.log("clicked");
 
@@ -66,7 +83,9 @@ class Profile extends Component {
             });
     }
 
-
+    // componentDidMount = () =>{
+    //     //alert(this.state.personal_inventory[1].title)
+    // }
 
 	render () {
 

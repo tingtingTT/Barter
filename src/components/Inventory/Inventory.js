@@ -12,7 +12,7 @@
     .handler2
     .handler3
 */
-
+import classes from './Item/Item.css'
 import React from 'react';
 import InventoryItem from './InventoryItem/InventoryItem';
 
@@ -36,9 +36,9 @@ const inventory = (props)=> {
             {inventoryItems}
 
         </div>
-        
+
     )
-    
+
 
 }
     // props.inventory.map((item, index)=>{
@@ -54,5 +54,5 @@ const inventory = (props)=> {
     //     />
     //     });
 
-        
+
     export default inventory;

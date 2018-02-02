@@ -6,3 +6,7 @@
     align-items: center;
     text-align: center;
 }
+
+.Inventory{
+    flex-flow: row;
+}
