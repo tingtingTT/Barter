@@ -36,8 +36,33 @@
     align-self: center;
 }
 
+
 .Item p {
     font-size: 2rem;
+    align-self: center;
+}
+
+.Item p1 {
+    font-size: 1.5rem;
+    align-self: center;
+}
+
+.Item h1{
+    font-size: 1.5rem;
+    align-self: center;
+}
+
+.Item h2{
+    font-size: 4rem;
+    align-self: center;
+    color: white;
+}
+
+
+
+.Item b {
+    width: 100%;
+    height: 60%;
     align-self: center;
 }
 
