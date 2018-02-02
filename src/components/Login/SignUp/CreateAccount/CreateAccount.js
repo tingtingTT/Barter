@@ -26,7 +26,7 @@ class CreateAccount extends React.Component {
 
     if(email.validity.valid && username.validity.valid &&
     password.validity.valid && zipcode.validity.valid){
-      var isSuccessful = new Boolean(true);
+      var isSuccessful = "true";
       firebase.auth().createUserWithEmailAndPassword(email.value, password.value).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
@@ -36,7 +36,7 @@ class CreateAccount extends React.Component {
           email.value = "";
           /*this.email.value = "";
           document.getElementById("signin").click(); */
-          isSuccessful = !(isSuccessful);
+          isSuccessful = "false";
           alert(errorMessage);
           console.log(errorCode);
           console.log(isSuccessful);
@@ -48,7 +48,7 @@ class CreateAccount extends React.Component {
         });
 
         console.log(isSuccessful);
-        if (isSuccessful === true){
+        if (isSuccessful === "true"){
           console.log(isSuccessful);
           //PUT CODE HERE FOR createUser()
           this.props.history.push('/login');
