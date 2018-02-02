@@ -1,6 +1,7 @@
 import React from 'react';
 
 import classes from './ListingItem.css'
+import Button from '../../UI/Button/Button';
 
 const listingItem = (props) => (
 
@@ -9,6 +10,13 @@ const listingItem = (props) => (
         <p>{props.category || "None"}</p>
         <p> 0 </p>
         <p> Bid </p>
+        <div className={classes.Inside}>
+            <p>{props.category || "None"}</p>
+            <p>{props.name}</p>
+            <p> 0 Bid </p>
+            <p> Edit </p>
+            <Button label="Delete"></Button>
+        </div>
     </div>
 
 );

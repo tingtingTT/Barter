@@ -9,16 +9,25 @@
     display: inline-block;
     border: 1px solid #E54A59;
     vertical-align: middle;
+    position: relative;
+
     
 }
 
-.Item:hover{
-    color: #E54A59;
-    background-color: white;
+.Item:hover .Inside{
+    opacity: 1;
 }
 
-.Item:last-child {
-    border-bottom: 0;
+.Inside{
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    color: #E54A59;
+    background-color: white;
+    margin: auto 0;
 }
 
 .Item img {
