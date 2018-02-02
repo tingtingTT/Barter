@@ -7,7 +7,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter } from 'react-router-dom';
 
 
-import firebase from 'firebase';
+import firebase, {database} from 'firebase';
 
 const config = {
 
