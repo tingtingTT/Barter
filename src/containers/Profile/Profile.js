@@ -4,7 +4,8 @@ import AddListing from '../../components/AddListing/AddListing';
 import Modal from '../../components/UI/Modal/Modal';
 import Button from '../../components/UI/Button/Button';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
-import InventoryItem from '../../components/Inventory/InventoryItem/InventoryItem';
+import Inventory from '../../components/Inventory/Inventory';
+import Listing from '../../components/Listing/Listing';
 
 import classes from './Profile.css'
 
@@ -14,7 +15,8 @@ import { Route } from 'react-router-dom';
 
 class Profile extends Component {
     state = {
-        // inventory: [],
+        inventory: [],
+        listing: [],
         addingItem: false,
         itemAdded: false,
         //dont want variable with same name as component
@@ -47,6 +49,7 @@ class Profile extends Component {
                     })
                 }
                 this.setState({inventory: fetchedItems});
+                this.setState({listing: fetchedItems});
             });
     }
 
@@ -61,7 +64,7 @@ class Profile extends Component {
 
     closeHandler = () => {
 
-        
+
         this.setState({addingItem: false});
         console.log("clicked");
 
@@ -75,10 +78,9 @@ class Profile extends Component {
                     })
                 }
                 this.setState({inventory: fetchedItems});
+                this.setState({listing: fetchedItems});
                 console.log(fetchedItems);
             });
-        
-        
     }
 
     // componentDidMount = () =>{
@@ -98,13 +100,11 @@ class Profile extends Component {
 
               </Modal>
               <div>
-                  {this.state.inventory.map(item => (
-                      <InventoryItem key={item.id}
-                          img={item.imageURL}
-                          name={item.itemName}
-                          desc={item.desc}
-                      />
-                  ))}
+                  <Listing listing={this.state.listing.reverse()} />
+              </div>
+
+              <div>
+                  <Inventory inventory={this.state.inventory.reverse()} />
               </div>
           </Auxiliary>
 		);
