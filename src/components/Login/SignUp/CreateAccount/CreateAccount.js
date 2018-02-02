@@ -14,8 +14,12 @@ class CreateAccount extends React.Component {
       //this.signOut();
   }
 
+  createUser(){
+    //INPUT USER INFO INTO database
+    //CALL THIS FUNCTION IN onLogin
+  }
   onLogin(){
-    var email = document.getElementById("email");
+    var email = document.getElementById("email"); // use email.value to get vals
     var username = document.getElementById("username");
     var password = document.getElementById("password");
     var zipcode = document.getElementById("zipcode");
@@ -46,6 +50,7 @@ class CreateAccount extends React.Component {
         console.log(isSuccessful);
         if (isSuccessful === true){
           console.log(isSuccessful);
+          //PUT CODE HERE FOR createUser()
           this.props.history.push('/login');
 
         }

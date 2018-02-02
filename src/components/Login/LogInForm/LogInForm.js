@@ -9,39 +9,48 @@ class LogInForm extends React.Component {
   constructor(props){
       super(props);
       this.onLogin = this.onLogin.bind(this);
+      this.signOut = this.signOut.bind(this);
   }
 
+  signOut(){
+    firebase.auth().signOut().then(function() {
+      // Sign-out successful.
+    }).catch(function(error) {
+      // An error happened.
+    });
+  }
   onLogin(){
     var useremail = document.getElementById("usernameOrEmail");
     var password = document.getElementById("Lpassword");
     if(useremail.validity.valid &&
     password.validity.valid){
 
-      var isSuccessful = new Boolean(true);
+      var isSuccessful = "true"; //because booleans are not booleans?
       firebase.auth().signInWithEmailAndPassword(useremail.value, password.value).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
         if (errorCode === 'auth/invalid-email'){
-          isSuccessful = !(isSuccessful);
+          isSuccessful = "false";
           useremail.value = "";
           alert(errorMessage);
-        }
-        if (errorCode === 'auth/user-not-found'){
-          isSuccessful = !(isSuccessful);
+        } else if (errorCode === 'auth/user-not-found'){
+          isSuccessful = "false";
           useremail.value = "";
           alert(errorMessage);
-        }
-        if (errorCode === 'auth/wrong-password'){
-          isSuccessful = !(isSuccessful);
+        } else if (errorCode === 'auth/wrong-password'){
+          isSuccessful = "false";
           password.value = "";
           alert(errorMessage);
-        }
+        } else {
+        isSuccessful = "false";
         console.log(errorCode);
         console.log(errorMessage);
+        }
       });
 
-        if(isSuccessful){
+        console.log(isSuccessful);
+        if(isSuccessful === 'true'){
           this.props.history.push('/');
           // DO MORE AUTH STUFF
         }
