@@ -10,7 +10,28 @@ import classes from './Profile.css'
 
 import axios from 'axios';
 import { Route } from 'react-router-dom';
+import * as firebase from 'firebase';
+import {database} from 'firebase';
 
+
+
+const config = {
+    apiKey: "AIzaSyDfRWLuvzYmSV3TwmLOppZT0ZZbtIZRlrs",
+    authDomain: "barterbuddy-4b41a.firebaseapp.com",
+    databaseURL: "https://barterbuddy-4b41a.firebaseio.com",
+    projectId: "barterbuddy-4b41a",
+    storageBucket: "barterbuddy-4b41a.appspot.com",
+    messagingSenderId: "879139739414"
+};
+
+//create
+let itemDb = firebase.initializeApp(config, 'itemDb').database().ref('/itemDb');
+let userInfo = firebase.initializeApp(config, 'userInfo').database().ref('userInfo');
+
+itemDb.on('value', snapshot =>{
+    const items = snapshot.val();
+    console.log(items);
+});
 
 class Profile extends Component {
     state = {
@@ -60,8 +81,6 @@ class Profile extends Component {
     }
 
     closeHandler = () => {
-
-        
         this.setState({addingItem: false});
         console.log("clicked");
 
@@ -77,25 +96,15 @@ class Profile extends Component {
                 this.setState({inventory: fetchedItems});
                 console.log(fetchedItems);
             });
-        
-        
     }
 
-    // componentDidMount = () =>{
-    //     //alert(this.state.personal_inventory[1].title)
-    // }
-
 	render () {
-
-
-
 		return (
           <Auxiliary>
               <Button label="+ ITEM" clicked={this.addingItemHandler}/>
               <Modal show={this.state.addingItem} modalClosed={() => this.closeHandler(true)}>
                  {/* <Route path={this.props.match.path + '/profile/addlisting'} component={ AddListing }/> */}
                  <AddListing closeModal={this.closeHandler} addForm/>
-
               </Modal>
               <div>
                   {this.state.inventory.map(item => (
