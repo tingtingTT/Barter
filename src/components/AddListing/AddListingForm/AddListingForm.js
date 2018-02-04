@@ -3,12 +3,49 @@ import firebase from 'firebase';
 import FileUploader from 'react-firebase-file-uploader';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom'
-
+import {connect} from 'react-redux';
 import Button from '../../UI/Button/Button';
 import Input from '../../UI/Input/Input';
 
 import classes from './AddListingForm.css';
 
+
+const config = {
+
+    apiKey: "AIzaSyDfRWLuvzYmSV3TwmLOppZT0ZZbtIZRlrs",
+    authDomain: "barterbuddy-4b41a.firebaseapp.com",
+    databaseURL: "https://barterbuddy-4b41a.firebaseio.com",
+    projectId: "barterbuddy-4b41a",
+    storageBucket: "barterbuddy-4b41a.appspot.com",
+    messagingSenderId: "879139739414"
+
+};
+let fb = firebase.initializeApp(config, 'listingDb');
+let userInfo = fb.database().ref('userInfo/');
+let itemDb = fb.database().ref('itemDb');
+let userItems = fb.database().ref('userItems');
+
+const currentUser = 'backEndDevWithWrench';
+
+//given the old listing array as retrieved from the server,
+//push the new listing onto it, and post it to the server
+//over the top of the old listing
+function pushUserListing(userId, payload){
+    let oldState = [];
+    oldState = getUserListingsArray(userId);
+    oldState.push(payload);
+    userItems.child(userId+'/').set(oldState);
+}
+
+
+function getUserListingsArray(userId){
+    let items = null;
+    userItems.child(userId).on('value', snapshot =>{
+        //console.log(snapshot.val());
+        items = snapshot.val();
+    });
+    return items;
+}
 
 class AddListingForm extends Component {
     state = {
@@ -49,23 +86,40 @@ class AddListingForm extends Component {
         firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({imageURL: url}));
     };
 
+    componentDidMount = () =>{
+        console.log(getUserListingsArray(currentUser));
+    };
 
     // POSTS INPUT FIELDS TO DB
     addListingHandler = (event) => { 
-
+        console.log(this.props.userId);
         event.preventDefault();
         console.log("adding to DB");
         
 
         const listing = {};
+        //populate listing object
         for (let formElementIdentifier in this.state.itemForm) {
             listing[formElementIdentifier] = this.state.itemForm[formElementIdentifier].value;
         }
         listing['imageURL'] = this.state.imageURL;
-        axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(response => {
-           
-             this.props.closeModal()
+
+
+        let items = null;
+        userItems.child(currentUser).on('value', snapshot =>{
+            //console.log(snapshot.val());
+            items = snapshot.val();
         });
+        if(items == null){
+            items = [];
+        };
+        items.push(listing);
+        userItems.child(currentUser+'/').set(items).then(response => {this.props.closeModal()});
+
+        //
+        // axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(response => {
+        //     this.props.closeModal()
+        // });
            
         
 
@@ -74,8 +128,6 @@ class AddListingForm extends Component {
     // TWO-WAY BINDING WITH INPUT FIELDS
     inputChangedHandler = (event, inputIdentifier) => {
         console.log(event.target.value);
-        
-
         const updatedForm = {
             ...this.state.itemForm
         };
@@ -178,5 +230,14 @@ class AddListingForm extends Component {
     }
 
 }
+const mapStateToProps = state =>{
+    //console.log(state);
+    //map state to props looks at the whole redux store and then maps it
+    return {
+      userId: state.userId
+    };
+}
 
-export default withRouter(AddListingForm);
+
+
+export default withRouter(connect(mapStateToProps)(AddListingForm));

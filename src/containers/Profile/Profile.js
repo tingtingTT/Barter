@@ -5,7 +5,7 @@ import Modal from '../../components/UI/Modal/Modal';
 import Button from '../../components/UI/Button/Button';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import InventoryItem from '../../components/Inventory/InventoryItem/InventoryItem';
-
+import {connect} from 'react-redux';
 import classes from './Profile.css'
 
 import axios from 'axios';
@@ -25,13 +25,9 @@ const config = {
 };
 
 //create
-let itemDb = firebase.initializeApp(config, 'itemDb').database().ref('/itemDb');
-let userInfo = firebase.initializeApp(config, 'userInfo').database().ref('userInfo');
+const currentUser = 'backEndDevWithWrench';
+let userItems = firebase.initializeApp(config, 'userInfo').database().ref('/userItems');
 
-itemDb.on('value', snapshot =>{
-    const items = snapshot.val();
-    console.log(items);
-});
 
 class Profile extends Component {
     state = {
@@ -58,17 +54,25 @@ class Profile extends Component {
     }
 
     componentDidMount () {
-        axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
-            .then(response => {
-                const fetchedItems = []
-                for (let key in response.data) {
-                    fetchedItems.push({
-                        ...response.data[key],
-                        id: key
-                    })
-                }
-                this.setState({inventory: fetchedItems});
-            });
+        userItems.child(currentUser).on('value', snapshot =>{
+            const items = snapshot.val();
+            console.log(items);
+            this.setState({inventory: items});
+        });
+
+
+        //
+        // axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
+        //     .then(response => {
+        //         const fetchedItems = []
+        //         for (let key in response.data) {
+        //             fetchedItems.push({
+        //                 ...response.data[key],
+        //                 id: key
+        //             })
+        //         }
+        //         this.setState({inventory: fetchedItems});
+        //     });
     }
 
 
@@ -84,19 +88,21 @@ class Profile extends Component {
         this.setState({addingItem: false});
         console.log("clicked");
 
-        axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
-            .then(response => {
-                const fetchedItems = []
-                for (let key in response.data) {
-                    fetchedItems.push({
-                        ...response.data[key],
-                        id: key
-                    })
-                }
-                this.setState({inventory: fetchedItems});
-                console.log(fetchedItems);
-            });
-    }
+
+        //
+        // axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
+        //     .then(response => {
+        //         const fetchedItems = []
+        //         for (let key in response.data) {
+        //             fetchedItems.push({
+        //                 ...response.data[key],
+        //                 id: key
+        //             })
+        //         }
+        //         this.setState({inventory: fetchedItems});
+        //         console.log(fetchedItems);
+        //     });
+    };
 
 	render () {
 		return (
@@ -118,6 +124,13 @@ class Profile extends Component {
           </Auxiliary>
 		);
     }
+
+}
+const mapStateToProps = state => {
+
+}
+
+const mapDispatchToProps = dispatch =>{
 
 }
 

@@ -3,7 +3,7 @@ import axios from 'axios';
 import classes from './LogInForm.css';
 import { NavLink, withRouter } from 'react-router-dom';
 import firebase, {database} from 'firebase';
-
+import {connect} from 'react-redux';
 class LogInForm extends React.Component {
 
   constructor(props){
