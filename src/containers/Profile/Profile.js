@@ -25,39 +25,51 @@ const config = {
 };
 
 //create
-const currentUser = 'backEndDevWithWrench';
+
 let userItems = firebase.initializeApp(config, 'userInfo').database().ref('/userItems');
 
-
+//debug
+//const currentUser = 'backEndDevWithWrench';
 class Profile extends Component {
+
     state = {
         // inventory: [],
+        currentUser: 'not logged in',
         addingItem: false,
         itemAdded: false,
         //dont want variable with same name as component
         inventory: [
                 {
-                    title: 'First Item',
-                    description: 'The first dummy stub item',
+                    itemName: 'First Item',
+                    desc: 'The first dummy stub item',
+                    imageUrl:''
                 },
                 {
-                    title: 'Second Item',
-                    description: 'The Second dummy stub item',
+                    itemName: 'Second Item',
+                    desc: 'The Second dummy stub item',
+                    imageUrl:''
                 },
                 {
-                    title: 'Third Item',
-                    description: 'The Third dummy stub item',
+                    itemName: 'Third Item',
+                    desc: 'The Third dummy stub item',
+                    imageUrl:''
                 }
             ],
         addingItem: false
 
-    }
+    };
 
     componentDidMount () {
-        userItems.child(currentUser).on('value', snapshot =>{
+        this.setState({currentUser: this.props.userId});
+        console.log('in profile, logged in as: ',this.props.userId);
+        userItems.child(this.state.currentUser).on('value', snapshot =>{
             const items = snapshot.val();
             console.log(items);
-            this.setState({inventory: items});
+            if(items === null){
+                this.setState({inventory:[ {itemName:'empty',desc:'empty',imageUrl:'empty'}]});
+            }else{
+                this.setState({inventory: items});
+            }
         });
 
 
@@ -127,11 +139,10 @@ class Profile extends Component {
 
 }
 const mapStateToProps = state => {
-
+    return {
+        userId: state.userId
+    }
 }
 
-const mapDispatchToProps = dispatch =>{
 
-}
-
-export default Profile;
+export default connect(mapStateToProps) (Profile);

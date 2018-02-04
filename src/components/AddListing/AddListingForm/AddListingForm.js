@@ -25,7 +25,7 @@ let userInfo = fb.database().ref('userInfo/');
 let itemDb = fb.database().ref('itemDb');
 let userItems = fb.database().ref('userItems');
 
-const currentUser = 'backEndDevWithWrench';
+let currentUser = 'backEndDevWithWrench';
 
 //given the old listing array as retrieved from the server,
 //push the new listing onto it, and post it to the server
@@ -87,8 +87,10 @@ class AddListingForm extends Component {
     };
 
     componentDidMount = () =>{
-        console.log(getUserListingsArray(currentUser));
+        console.log(getUserListingsArray(this.props.userId));
+        console.log(this.props.userId);
     };
+
 
     // POSTS INPUT FIELDS TO DB
     addListingHandler = (event) => { 
@@ -106,7 +108,7 @@ class AddListingForm extends Component {
 
 
         let items = null;
-        userItems.child(currentUser).on('value', snapshot =>{
+        userItems.child(this.props.userId).on('value', snapshot =>{
             //console.log(snapshot.val());
             items = snapshot.val();
         });
@@ -114,7 +116,7 @@ class AddListingForm extends Component {
             items = [];
         };
         items.push(listing);
-        userItems.child(currentUser+'/').set(items).then(response => {this.props.closeModal()});
+        userItems.child(this.props.userId+'/').set(items).then(response => {this.props.closeModal()});
 
         //
         // axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(response => {
@@ -123,7 +125,7 @@ class AddListingForm extends Component {
            
         
 
-    }
+    };
 
     // TWO-WAY BINDING WITH INPUT FIELDS
     inputChangedHandler = (event, inputIdentifier) => {
@@ -144,8 +146,6 @@ class AddListingForm extends Component {
 
 
 	render () {
-
-
         // MAKE ARRAY OF INPUT OBJECTS
         const formElementsArray = [];
         for (let key in this.state.itemForm) {
@@ -213,11 +213,8 @@ class AddListingForm extends Component {
                 <p>Cancel</p>
                 <Button label="Create"  position="rightBottom" />
             </form>
-        )
-        
-    
-       
-    
+        );
+
 		return (
             <div className={classes.AddListingForm}>
                 {form}
@@ -236,7 +233,7 @@ const mapStateToProps = state =>{
     return {
       userId: state.userId
     };
-}
+};
 
 
 

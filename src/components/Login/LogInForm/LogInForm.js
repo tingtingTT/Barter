@@ -19,6 +19,7 @@ class LogInForm extends React.Component {
       // An error happened.
     });
   }
+
   onLogin(){
     var useremail = document.getElementById("usernameOrEmail");
     var password = document.getElementById("Lpassword");
@@ -53,6 +54,8 @@ class LogInForm extends React.Component {
         if(isSuccessful === 'true'){
           this.props.history.push('/');
           // DO MORE AUTH STUFF
+            //console.log(firebase.auth().currentUser.email);
+            this.props.onLogin(firebase.auth().currentUser.email.replace(/\W/g, ''));
         }
 
     } else {
@@ -117,4 +120,16 @@ class LogInForm extends React.Component {
 
 }
 
-export default withRouter(LogInForm);
+const mapDispatchToProps = dispatch =>{
+    return {
+        onLogin: (email) => dispatch({type: 'LOGIN', val:email}),
+    }
+};
+
+const mapStateToProps = state =>{
+  return {
+    userId: state.userId
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LogInForm));
