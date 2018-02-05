@@ -61,15 +61,15 @@ class Profile extends Component {
 
     componentDidMount () {
         this.setState({currentUser: this.props.userId});
-        console.log('in profile, logged in as: ',this.props.userId);
+        alert(this.props.userId);
         userItems.child(this.state.currentUser).on('value', snapshot =>{
             const items = snapshot.val();
             console.log(items);
-            if(items === null){
-                this.setState({inventory:[ {itemName:'empty',desc:'empty',imageUrl:'empty'}]});
-            }else{
+            if(items != null){
+
                 this.setState({inventory: items});
             }
+            
         });
 
 
