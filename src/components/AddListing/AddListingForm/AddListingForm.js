@@ -21,6 +21,8 @@ const config = {
 
 };
 
+let a = "";
+
 let fb = firebase.initializeApp(config, 'listingDb');
 let userInfo = fb.database().ref('userInfo/');
 let itemDb = fb.database().ref('itemDb');
