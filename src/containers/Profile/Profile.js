@@ -46,6 +46,18 @@ class Profile extends Component {
         this.props.history.replace( '/profile/addlisting' );
     }
 
+    editItemHandler = (itemID) => {
+        const items = {};
+        for (let item in this.state.inventory) {
+            items[this.state.inventory[item].id] = this.state.inventory[item];
+        }
+
+        console.log(itemID);
+        console.log(items);
+        console.log(items[itemID]);
+    }
+
+
     closeHandler = () => {
 
         
@@ -80,14 +92,14 @@ class Profile extends Component {
               <Button label="+ ITEM" clicked={this.addingItemHandler}/>
               <Modal show={this.state.addingItem} modalClosed={() => this.closeHandler(true)}>
                  {/* <Route path={this.props.match.path + '/profile/addlisting'} component={ AddListing }/> */}
-                 <AddListing closeModal={this.closeHandler} addForm/>
+                 <AddListing closeModal={this.closeHandler} />
 
               </Modal>
               <div>
                   <Listing listing={this.state.listing.reverse()} />
               </div>
               <div>
-                  <Inventory inventory={this.state.inventory.reverse()} />
+                  <Inventory inventory={this.state.inventory.reverse()} editItemHandler={this.editItemHandler}/>
               </div>
           </Auxiliary>
 		);
