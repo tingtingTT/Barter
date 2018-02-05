@@ -8,7 +8,7 @@ const AddListing = (props) => (
 
 
     <div className={classes.AddListing}>
-        <AddListingForm closeModal={props.closeModal} addForm={props.addForm}/>
+        <AddListingForm closeModal={props.closeModal} addForm={props.addForm} editingItem={props.editingItem} item={props.itemToEdit}/>
     </div>
 
 

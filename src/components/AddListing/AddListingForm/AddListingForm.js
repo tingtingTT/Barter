@@ -103,23 +103,37 @@ class AddListingForm extends Component {
 
     }
 
-    chicken = () => {
-        console.log('chicken');
-    }
-
-
 	render () {
 
 
         // MAKE ARRAY OF INPUT OBJECTS
         const formElementsArray = [];
-        for (let key in this.state.itemForm) {
-            formElementsArray.push({
-                id: key,
-                config: this.state.itemForm[key]
-            });
+        if (!this.props.edit){
+            console.log('not edit');
+            for (let key in this.state.itemForm) {
+                formElementsArray.push({
+                    id: key,
+                    config: this.state.itemForm[key]
+                });
+    
+            }
+        }else {
 
+            console.log('item in add listingform: ' + this.props.item);
+            // Change value
+            // for (let key in this.state.itemForm) {
+            //     console.log(this.state.itemForm[key]);
+            //     const newConfig = this.state.itemForm[key];
+            //     newConfig.value = this.props.item[value];
+            //     console.log(newConfig);
+                // formElementsArray.push({
+                //     id: key,
+                //     config: this.state.itemForm[key]
+                // });
+    
+            //}
         }
+       
 
     
 

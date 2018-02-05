@@ -19,8 +19,11 @@ class Profile extends Component {
         inventory: [],
         listing: [],
         addingItem: false,
-        itemAdded: false
+        editingItem: false,
+        itemToEdit: {}
     }
+
+    
 
     componentDidMount () {
         axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
@@ -47,21 +50,35 @@ class Profile extends Component {
     }
 
     editItemHandler = (itemID) => {
+        
+        // makes an items oject of the form --> itemID: {name: '', desc: '' ...}
         const items = {};
+        
         for (let item in this.state.inventory) {
+                
             items[this.state.inventory[item].id] = this.state.inventory[item];
+            console.log(items);
         }
 
-        console.log(itemID);
-        console.log(items);
-        console.log(items[itemID]);
+        const itemObj = items[itemID]
+
+        this.setState({itemToEdit: itemObj});
+
+        
+        console.log(this.state.itemToEdit);
+        // console.log(this.state.editingItem);
+       
+    }
+
+    deleteItem = (itemID) => {
+        
     }
 
 
     closeHandler = () => {
 
         
-        this.setState({addingItem: false});
+        this.setState({addingItem: false, editingItem: false});
         console.log("clicked");
 
         axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
@@ -88,20 +105,20 @@ class Profile extends Component {
 
 
 		return (
-          <Auxiliary>
-              <Button label="+ ITEM" clicked={this.addingItemHandler}/>
-              <Modal show={this.state.addingItem} modalClosed={() => this.closeHandler(true)}>
-                 {/* <Route path={this.props.match.path + '/profile/addlisting'} component={ AddListing }/> */}
-                 <AddListing closeModal={this.closeHandler} />
+            <Auxiliary>
+                <Button label="+ ITEM" clicked={this.addingItemHandler}/>
+                <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
 
-              </Modal>
-              <div>
-                  <Listing listing={this.state.listing.reverse()} />
-              </div>
-              <div>
-                  <Inventory inventory={this.state.inventory.reverse()} editItemHandler={this.editItemHandler}/>
-              </div>
-          </Auxiliary>
+                    <AddListing closeModal={this.closeHandler} editingItem={this.state.editingItem} item={this.state.itemToEdit}/>
+
+                </Modal>
+                <div>
+                    <Listing listing={this.state.listing.reverse()} />
+                </div>
+                <div>
+                    <Inventory inventory={this.state.inventory.reverse()} editItemHandler={this.editItemHandler}/>
+                </div>
+            </Auxiliary>
 		);
     }
 
