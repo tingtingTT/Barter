@@ -57,16 +57,19 @@ class Profile extends Component {
         for (let item in this.state.inventory) {
                 
             items[this.state.inventory[item].id] = this.state.inventory[item];
-            console.log(items);
+            
         }
 
         const itemObj = items[itemID]
 
-        this.setState({itemToEdit: itemObj});
+        console.log(itemObj);
+
+        this.setState({itemToEdit: itemObj, editingItem: true});
+        
 
         
         console.log(this.state.itemToEdit);
-        // console.log(this.state.editingItem);
+        console.log('editing Item' + this.state.editingItem);
        
     }
 
@@ -79,7 +82,6 @@ class Profile extends Component {
 
         
         this.setState({addingItem: false, editingItem: false});
-        console.log("clicked");
 
         axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
             .then(response => {
@@ -92,7 +94,6 @@ class Profile extends Component {
                 }
                 this.setState({inventory: fetchedItems});
                 this.setState({listing: fetchedItems});
-                console.log(fetchedItems);
             });
         
         

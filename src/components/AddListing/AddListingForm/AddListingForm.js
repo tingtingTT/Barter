@@ -108,7 +108,9 @@ class AddListingForm extends Component {
 
         // MAKE ARRAY OF INPUT OBJECTS
         const formElementsArray = [];
-        if (!this.props.edit){
+        console.log('props.edit ' + this.props.editingItem);
+        console.log('props.item ' + this.props.item);
+        if (!this.props.editingItem){
             console.log('not edit');
             for (let key in this.state.itemForm) {
                 formElementsArray.push({
