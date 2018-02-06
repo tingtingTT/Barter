@@ -1,6 +1,6 @@
 
 const initialState = {
-    userId: 'not logged in',
+    userId: 'none',
     testField: 'empty'
 }
 

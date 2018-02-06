@@ -24,3 +24,6 @@ firebase.initializeApp(config);
 
 ReactDOM.render(<BrowserRouter><Provider store={store}><App /></Provider></BrowserRouter>, document.getElementById('root'));
 registerServiceWorker();
+
+export default firebase;
+export const auth = firebase.auth();
