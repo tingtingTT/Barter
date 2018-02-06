@@ -29,7 +29,9 @@ class NavigationItems extends Component {
                     {console.log(this.state.userId)}
                     <NavigationItem show={this.state.userId !== 'none'} link='/' >Home</NavigationItem>
                     <NavigationItem show={this.state.userId !== 'none'} link='/profile' >Profile</NavigationItem>
-                    <NavigationItem show={this.state.userId !== 'none'} link='/'>Log Out</NavigationItem>
+                    <NavigationItem show={this.state.userId !== 'none'} link='/'>Log Out
+                    </NavigationItem>
+                    
                 </ul>
         );
     }
