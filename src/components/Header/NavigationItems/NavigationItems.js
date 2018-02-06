@@ -22,6 +22,13 @@ class NavigationItems extends Component {
         }
     }
      
+
+    // logout function, pass it as a prop to logout button 
+    logout = () => {
+        auth().signOut().then(() => {
+            console.log("Should log out");
+        });}
+
     render(){
 
         return(
@@ -33,7 +40,7 @@ class NavigationItems extends Component {
                     {console.log(this.state.userId)}
                     <NavigationItem show={this.state.userId !== 'none'} link='/' >Home</NavigationItem>
                     <NavigationItem show={this.state.userId !== 'none'} link='/profile' >Profile</NavigationItem>
-                    <NavigationItem show={this.state.userId !== 'none'} link='/'>Log Out
+                    <NavigationItem clicked={this.logout} show={this.state.userId !== 'none'} link='/'>Log Out
                     </NavigationItem>
                     
                 </ul>

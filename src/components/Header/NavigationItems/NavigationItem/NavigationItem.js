@@ -6,7 +6,7 @@ import classes from './NavigationItem.css';
 
 const navigationItem = (props) => (
     props.show ? 
-    <li className={classes.NavigationItem}>
+    <li className={classes.NavigationItem} onClick={props.clicked}>
         <NavLink
             to={props.link}
             exact>
