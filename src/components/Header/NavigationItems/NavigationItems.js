@@ -14,8 +14,12 @@ class NavigationItems extends Component {
         userId: 'none'
     };
 
-    componentDidUpdate(){
-        this.setState({userId: this.props.userId});
+    componentDidUpdate(prevProps){
+        console.log(prevProps.userId);
+        console.log(this.state.userId);
+        if(prevProps.userId !== this.props.userId){
+            this.setState({userId: this.props.userId});
+        }
     }
      
     render(){
