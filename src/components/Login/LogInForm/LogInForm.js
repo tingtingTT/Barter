@@ -54,8 +54,9 @@ class LogInForm extends React.Component {
         if(isSuccessful === 'true'){
           this.props.history.push('/');
           // DO MORE AUTH STUFF
-            //console.log(firebase.auth().currentUser.email);
+            console.log("Current Email at login: ",firebase.auth().currentUser.email);
             this.props.onLogin(firebase.auth().currentUser.email.replace(/\W/g, ''));
+
         }
 
     } else {
@@ -121,7 +122,9 @@ class LogInForm extends React.Component {
 }
 
 const mapDispatchToProps = dispatch =>{
-    return {
+    console.log('onLogin successfully passed to redux', dispatch);
+  return {
+
         onLogin: (email) => dispatch({type: 'LOGIN', val:email}),
     }
 };

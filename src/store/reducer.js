@@ -9,11 +9,12 @@ const reducer = (state = initialState, action) =>{
         case 'LOGIN':
             console.log("setting userId to:", action.val);
             return {
-                userId: action.val};
+                userId: action.val,
+            };
             break;
     }
         if(action.type === 'login'){
-            console.log('Login action detected')
+            console.log('Login action detected');
            return {
 
                userId: action.userId

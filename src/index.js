@@ -7,7 +7,8 @@ import {createStore} from 'redux';
 import { BrowserRouter } from 'react-router-dom';
 import firebase, {database} from 'firebase';
 import reducer from './store/reducer';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
+
 const store = createStore(reducer);
 
 const config = {
