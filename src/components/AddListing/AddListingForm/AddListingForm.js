@@ -9,6 +9,17 @@ import Input from '../../UI/Input/Input';
 
 import classes from './AddListingForm.css';
 
+/* 
+TODO (in priority order):
+    1. Fix Modal popup positiion
+    2. Show spinner while form is submitting
+    3. Show progress while image is uploading
+    ......
+    Stretch goal:
+    ......
+    4. Upload multiple images
+
+*/
 
 class AddListingForm extends Component {
     state = {
@@ -36,9 +47,15 @@ class AddListingForm extends Component {
                 elementConfig: {
                     options: [
                         {value: 'electronics', displayValue: 'Electronics'},
-                        {value: 'entertainment', displayValue: 'Entertainment'},
+                        {value: 'games', displayValue: 'Games'},
                         {value: 'service', displayValue: 'Service'},
-                        {value: 'appliance', displayValue: 'Appliance'}
+                        {value: 'appliance', displayValue: 'Appliance'},
+                        {value: 'craft', displayValue: 'Craft'},
+                        {value: 'clothes', displayValue: 'Clothes'},
+                        {value: 'sporting', displayValue: 'Sporting Goods'},
+                        {value: 'jewelry', displayValue: 'Jewelry'},
+                        {value: 'home', displayValue: 'Home Goods'},
+                        {value: 'furniture', displayValue: 'Furniture'}
                     ]
                 },
                 value: 'Electronics',
@@ -80,14 +97,12 @@ class AddListingForm extends Component {
                     category: this.props.category,
                 }
 
-                console.log('Setting ' + formElementIdentifier + ' to ' + values[formElementIdentifier]);
-
                 listing[formElementIdentifier] = values[formElementIdentifier]
                 
               
 
             }else {
-                console.log('input not edited');
+                
                 listing[formElementIdentifier] = this.state.itemForm[formElementIdentifier].value;
                
             }
@@ -110,6 +125,7 @@ class AddListingForm extends Component {
             firebase.database().ref('inventory/' + this.props.id).set({
                 itemName: listing.itemName,
                 desc: listing.desc,
+                category: listing.category,
                 imageURL: listing.imageURL
 
             }).then(response => {
@@ -117,10 +133,12 @@ class AddListingForm extends Component {
                 this.props.closeModal();
             });
         }else{
+            // Add new item
             axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(response => {
                 this.resetValues();
                 this.props.closeModal()
             });
+        
         }
         
            
@@ -170,11 +188,14 @@ class AddListingForm extends Component {
         updatedFormElement.value = event.target.value;
         updatedForm[inputIdentifier] = updatedFormElement;
 
+        
         this.setState({itemForm: updatedForm});
 
     }
 
     inputClicked = (element) => {
+
+        console.log('clicked');
         
         let updatedForm = {
             ...this.state.itemForm
