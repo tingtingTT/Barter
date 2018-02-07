@@ -27,7 +27,7 @@ class NavigationItems extends Component {
                     {console.log(this.props.userId)}
                     <NavigationItem show={this.props.userId !== 'none'} link='/' >Home</NavigationItem>
                     <NavigationItem show={this.props.userId !== 'none'} link='/profile' >Profile</NavigationItem>
-                    <NavigationItem clicked={this.logout} show={this.props.userId !== 'none'} link='/'>Log Out
+                    <NavigationItem clicked={this.logout} show={this.props.userId !== 'none'} link='/'>Logout
                     </NavigationItem>
                     
                 </ul>
