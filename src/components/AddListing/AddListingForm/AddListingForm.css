@@ -72,3 +72,9 @@
     background-color: #E54A59;
 }
 
+.Delete {
+    color: #E54A59;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+

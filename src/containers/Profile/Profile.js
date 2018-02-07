@@ -50,7 +50,6 @@ class Profile extends Component {
 
 
     addingItemHandler = () => {
-        console.log('adding Item');
         this.setState({addingItem: true});
         this.props.history.replace( '/profile/addlisting' );
     }
@@ -68,8 +67,6 @@ class Profile extends Component {
 
         const itemObj = {...items[itemID]};
         
-
-        console.log(itemObj);
 
         this.setState({itemToEdit: itemObj, editingItem: true});
        

@@ -68,14 +68,42 @@ class AddListingForm extends Component {
     addListingHandler = (event) => { 
 
         event.preventDefault();
-        console.log("adding to DB");
-        
 
+    
         const listing = {};
         for (let formElementIdentifier in this.state.itemForm) {
-            listing[formElementIdentifier] = this.state.itemForm[formElementIdentifier].value;
+            if (this.state.itemForm[formElementIdentifier].clicked === false && this.props.editingItem){
+
+                const values = {
+                    itemName: this.props.itemName,
+                    desc: this.props.desc,
+                    category: this.props.category,
+                }
+
+                console.log('Setting ' + formElementIdentifier + ' to ' + values[formElementIdentifier]);
+
+                listing[formElementIdentifier] = values[formElementIdentifier]
+                
+              
+
+            }else {
+                console.log('input not edited');
+                listing[formElementIdentifier] = this.state.itemForm[formElementIdentifier].value;
+               
+            }
+            
         }
-        listing['imageURL'] = this.state.imageURL;
+
+        if (this.props.editingItem){
+            if (this.state.imageURL == ''){
+                listing['imageURL'] = this.props.imgURL;
+            }else{
+                listing['imageURL'] = this.state.imageURL;
+            }   
+        }else {
+            listing['imageURL'] = this.state.imageURL;
+        }
+        
         
         // update existing item
         if(this.props.editingItem){
@@ -111,6 +139,7 @@ class AddListingForm extends Component {
                 ...updatedForm[key]
             };
             updatedFormElement.value = '';
+            updatedFormElement.clicked = false;
             updatedForm[key] = updatedFormElement;
         }
     
@@ -141,7 +170,6 @@ class AddListingForm extends Component {
         updatedFormElement.value = event.target.value;
         updatedForm[inputIdentifier] = updatedFormElement;
 
-        console.log(updatedForm);
         this.setState({itemForm: updatedForm});
 
     }
@@ -188,6 +216,7 @@ class AddListingForm extends Component {
 
         // Show the values of the item if one is being edited
         if (this.props.editingItem){
+        
             for (let key in this.state.itemForm) {
                 if (!this.state.itemForm[key].clicked){
                     const config = {
@@ -197,7 +226,6 @@ class AddListingForm extends Component {
                        config.value = values[key]
                     }
                     
-                    console.log(this.state.itemForm[key].value);
                     formElementsArray.push({
                         id: key,
                         config: config
@@ -232,7 +260,6 @@ class AddListingForm extends Component {
                 {'background-image': 'url(' + this.state.imageURL + ')'}
             )
         } else if (this.props.editingItem && !this.state.imageURL){
-            console.log('in Else ' + this.props.imageURL)
             image = (
                 {'background-image': 'url(' + this.props.imgURL + ')'}
             )
