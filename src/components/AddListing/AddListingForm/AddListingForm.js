@@ -12,12 +12,13 @@ import classes from './AddListingForm.css';
 /* 
 TODO (in priority order):
     1. Fix Modal popup positiion
-    2. Show spinner while form is submitting
-    3. Show progress while image is uploading
+    2. Add form Validation
+    3. Show spinner while form is submitting
+    4. Show progress while image is uploading
     ......
     Stretch goal:
     ......
-    4. Upload multiple images
+    5. Upload multiple images
 
 */
 
@@ -60,6 +61,17 @@ class AddListingForm extends Component {
                 },
                 value: 'Electronics',
                 clicked: false
+            },
+            ItemType: {
+                elementType: 'select',
+                elementConfig: {
+                    options: [
+                        {value: 'auction', displayValue: 'Auction Item'},
+                        {value: 'bid', displayValue: 'Bid Item'},
+                    ]
+                },
+                value: 'auction',
+                clicked: false
             }
         },
         imageURL: '',
@@ -96,6 +108,7 @@ class AddListingForm extends Component {
                     itemName: this.props.itemName,
                     desc: this.props.desc,
                     category: this.props.category,
+                    ItemType: this.props.ItemType
                 }
 
                 listing[formElementIdentifier] = values[formElementIdentifier]
@@ -110,7 +123,7 @@ class AddListingForm extends Component {
 
         // Set the img url depending if it was updated while editing, or if its a new image
         if (this.props.editingItem){
-            if (this.state.imageURL == ''){
+            if (this.state.imageURL === ''){
                 listing['imageURL'] = this.props.imgURL;
             }else{
                 listing['imageURL'] = this.state.imageURL;
@@ -126,7 +139,8 @@ class AddListingForm extends Component {
                 itemName: listing.itemName,
                 desc: listing.desc,
                 category: listing.category,
-                imageURL: listing.imageURL
+                imageURL: listing.imageURL,
+                ItemType: listing.ItemType
 
             }).then(response => {
                 this.resetValues();
@@ -213,6 +227,7 @@ class AddListingForm extends Component {
                 itemName: this.props.itemName,
                 desc: this.props.desc,
                 category: this.props.category,
+                ItemType: this.props.ItemType
             }
             updatedState.value = values[element];
         }
@@ -230,6 +245,7 @@ class AddListingForm extends Component {
             itemName: this.props.itemName,
             desc: this.props.desc,
             category: this.props.category,
+            ItemType: this.props.ItemType
         }
     
 
@@ -268,6 +284,7 @@ class AddListingForm extends Component {
             // Show empy form
             for (let key in this.state.itemForm) {
                 formElementsArray.push({
+                    key: key,
                     id: key,
                     config: this.state.itemForm[key]
                 });

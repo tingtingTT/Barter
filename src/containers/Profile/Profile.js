@@ -31,7 +31,8 @@ class Profile extends Component {
             itemName: '',
             desc: '',
             id: '',
-            imageURL: ''
+            imageURL: '',
+            ItemType: ''
         }
     }
 
@@ -40,13 +41,28 @@ class Profile extends Component {
     componentDidMount () {
         axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
             .then(response => {
-                const fetchedItems = []
+                const fetchedItems = [];
                 for (let key in response.data) {
+                    console.log(...response.data[key]);
+
                     fetchedItems.push({
                         ...response.data[key],
                         id: key
                     })
                 }
+                let bidItems = [];
+                let auctionItems = [];
+                for (let item in fetchedItems){
+                    console.log(fetchedItems[item]);
+                    if (fetchedItems[item].ItemType === 'bid'){
+                        bidItems.push(fetchedItems[item]);
+                    }else {
+                        auctionItems.push(fetchedItems[item]);
+                    }
+                }
+                console.log('bids: ' + bidItems);
+                console.log('auc: ' + auctionItems);
+
                 this.setState({inventory: fetchedItems});
                 this.setState({listing: fetchedItems});
             });
@@ -64,16 +80,12 @@ class Profile extends Component {
         
         // makes an items oject of the form --> itemID: {name: '', desc: '' ...}
         const items = {};
-        
         for (let item in this.state.inventory) {
-                
             items[this.state.inventory[item].id] = this.state.inventory[item];
-            
         }
 
         const itemObj = {...items[itemID]};
-        
-
+    
         this.setState({itemToEdit: itemObj, editingItem: true});
        
     }
@@ -113,15 +125,14 @@ class Profile extends Component {
             <Auxiliary>
                 <Button label="+ ITEM" clicked={this.addingItemHandler}/>
                 <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
-
-                    {/* <AddListing closeModal={this.closeHandler} editingItem={this.state.editingItem} item={this.state.itemToEdit}/> */}
                     <AddListing closeModal={this.closeHandler} 
                         editingItem={this.state.editingItem} 
                         category={this.state.itemToEdit.category} 
                         itemName={this.state.itemToEdit.itemName} 
                         id={this.state.itemToEdit.id} 
                         desc={this.state.itemToEdit.desc} 
-                        imgURL={this.state.itemToEdit.imageURL} />
+                        imgURL={this.state.itemToEdit.imageURL}
+                        ItemType={this.state.itemToEdit.ItemType} />
 
                 </Modal>
                 <div>
