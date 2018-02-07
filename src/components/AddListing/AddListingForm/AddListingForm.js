@@ -202,6 +202,7 @@ class AddListingForm extends Component {
         // }
        
        
+        // Showing the prepoulated image
 
     
 
@@ -209,9 +210,12 @@ class AddListingForm extends Component {
         let image = null
         if (this.state.imageURL){
             image = (
-                <div className={classes.Image}>
-                    <img src={this.state.imageURL} alt=''/>
-                </div>
+                {'background-image': 'url(' + this.state.imageURL + ')'}
+            )
+        } else if (this.props.editingItem && !this.state.imageURL){
+            console.log('in Else ' + this.props.imageURL)
+            image = (
+                {'background-image': 'url(' + this.props.imgURL + ')'}
             )
         }
        
@@ -219,7 +223,7 @@ class AddListingForm extends Component {
         let form = null;
 
         let button = null;
-        if (this.state.editingItem) {
+        if (this.props.editingItem) {
             button = (
                 <Button label="Save" />
             )
@@ -232,7 +236,7 @@ class AddListingForm extends Component {
         form = (
             <form className={classes.Form} onSubmit={this.addListingHandler}>
                  
-                <div className={classes.FileLoader} style={{'background-image': 'url(' + this.state.imageURL + ')'}}>
+                <div className={classes.FileLoader} style={image}>
                     <label>
                         <i className="fa fa-pencil fa-2x" aria-hidden="true"></i>
                         <FileUploader

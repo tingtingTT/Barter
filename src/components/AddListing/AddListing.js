@@ -6,7 +6,7 @@ import classes from './AddListing.css';
 
 const AddListing = (props) => {
 
-    console.log('in AdList: ' + props.itemToEdit);
+    console.log('in AdList: ' + props.imgURL);
 
     return (
         <div className={classes.AddListing}>
