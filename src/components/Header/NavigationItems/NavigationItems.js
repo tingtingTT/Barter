@@ -10,29 +10,10 @@ import {connect} from 'react-redux';
 
 class NavigationItems extends Component {
 
-    state = {
-        userId: 'none'
-    };
-
-    componentDidUpdate(prevProps){
-        console.log(prevProps.userId);
-        console.log(this.state.userId);
-        if(prevProps.userId !== this.props.userId){
-            this.setState({userId: this.props.userId});
-        }
-    }
-     
-
     // logout function, pass it as a prop to logout button 
     logout = () => {
-        let beforeUser = auth().currentUser;
-        console.log(auth().currentUser);
         auth().signOut().then(() => {
-            console.log("Should log out");
-            console.log(auth().currentUser);
-            if (beforeUser === auth().currentUser) {
-                console.log('same');
-            }
+            this.props.onLogout();
         });}
 
     render(){
@@ -40,13 +21,13 @@ class NavigationItems extends Component {
         return(
 
                 <ul className={classes.NavigationItems}>
-                    <NavigationItem show={this.state.userId === 'none'} link='/' >Home</NavigationItem>
-                    <NavigationItem show={this.state.userId === 'none'} link='/profile' >Profile</NavigationItem>
-                    <NavigationItem show={this.state.userId === 'none'} link='/login' >Login</NavigationItem>
-                    {console.log(this.state.userId)}
-                    <NavigationItem show={this.state.userId !== 'none'} link='/' >Home</NavigationItem>
-                    <NavigationItem show={this.state.userId !== 'none'} link='/profile' >Profile</NavigationItem>
-                    <NavigationItem clicked={this.logout} show={this.state.userId !== 'none'} link='/'>Log Out
+                    <NavigationItem show={this.props.userId === 'none'} link='/' >Home</NavigationItem>
+                    <NavigationItem show={this.props.userId === 'none'} link='/profile' >Profile</NavigationItem>
+                    <NavigationItem show={this.props.userId === 'none'} link='/login' >Login</NavigationItem>
+                    {console.log(this.props.userId)}
+                    <NavigationItem show={this.props.userId !== 'none'} link='/' >Home</NavigationItem>
+                    <NavigationItem show={this.props.userId !== 'none'} link='/profile' >Profile</NavigationItem>
+                    <NavigationItem clicked={this.logout} show={this.props.userId !== 'none'} link='/'>Log Out
                     </NavigationItem>
                     
                 </ul>
@@ -55,6 +36,11 @@ class NavigationItems extends Component {
 
 }
 
+const mapDispatchToProps = dispatch =>{
+    return {
+        onLogout: () => dispatch({type: 'LOGOUT'}),
+    }
+};
 
 const mapStateToProps = state => {
     return {
@@ -63,5 +49,5 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps) (NavigationItems);
+export default connect(mapStateToProps, mapDispatchToProps) (NavigationItems);
 
