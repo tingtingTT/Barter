@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-
+import {createStore} from 'redux';
 import { BrowserRouter } from 'react-router-dom';
-
-
-import firebase from 'firebase';
+import firebase, {database} from 'firebase';
+import reducer from './store/reducer';
+import { Provider } from 'react-redux'
+const store = createStore(reducer);
 
 const config = {
 
@@ -21,5 +22,5 @@ const config = {
 };
 firebase.initializeApp(config);
 
-ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
+ReactDOM.render(<BrowserRouter><Provider store={store}><App /></Provider></BrowserRouter>, document.getElementById('root'));
 registerServiceWorker();

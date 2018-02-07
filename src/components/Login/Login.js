@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import GoogleSignInForm from './GoogleSignInForm/GoogleSignInForm';
+import LogInForm from './LogInForm/LogInForm';
 
 class Login extends React.Component {
 
@@ -8,7 +8,7 @@ class Login extends React.Component {
 
     return (
             <div>
-                <GoogleSignInForm title='Log in'/>
+                <LogInForm title='Log in'/>
             </div>
     );
   }

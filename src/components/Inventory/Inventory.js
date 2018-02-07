@@ -12,7 +12,6 @@
     .handler2
     .handler3
 */
-
 import React from 'react';
 import InventoryItem from './InventoryItem/InventoryItem';
 
