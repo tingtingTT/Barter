@@ -60,13 +60,17 @@ class Profile extends Component {
     };
 
     componentDidMount () {
-        this.setState({currentUser: this.props.userId});
-        alert(this.props.userId);
+        this.state.currentUser = '/' + this.props.userId;
+        console.log("first: ",this.props.userId);
+
+        //alert(this.state.currentUser);
+        console.log("second: ",this.state.currentUser);
+
+        console.log("third", this.state.currentUser);
         userItems.child(this.state.currentUser).on('value', snapshot =>{
             const items = snapshot.val();
             console.log(items);
             if(items != null){
-
                 this.setState({inventory: items});
             }
             
