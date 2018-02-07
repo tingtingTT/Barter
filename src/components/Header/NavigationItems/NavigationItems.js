@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import firebase, { auth } from 'firebase';
+import firebase, { auth, User } from 'firebase';
 
 import NavigationItem from './NavigationItem/NavigationItem';
 
@@ -25,8 +25,14 @@ class NavigationItems extends Component {
 
     // logout function, pass it as a prop to logout button 
     logout = () => {
+        let beforeUser = auth().currentUser;
+        console.log(auth().currentUser);
         auth().signOut().then(() => {
             console.log("Should log out");
+            console.log(auth().currentUser);
+            if (beforeUser === auth().currentUser) {
+                console.log('same');
+            }
         });}
 
     render(){

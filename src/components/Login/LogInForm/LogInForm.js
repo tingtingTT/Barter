@@ -26,37 +26,35 @@ class LogInForm extends React.Component {
     if(useremail.validity.valid &&
     password.validity.valid){
 
-      var isSuccessful = "true"; //because booleans are not booleans?
-      firebase.auth().signInWithEmailAndPassword(useremail.value, password.value).catch(function(error) {
+      var that = this;
+      firebase.auth().signInWithEmailAndPassword(useremail.value, password.value).then(function(response) {
+        //response returns User
+        console.log(that);
+        that.props.history.push('/');
+        // DO MORE AUTH STUFF
+        //console.log(firebase.auth().currentUser.email);
+        that.props.onLogin(firebase.auth().currentUser.email.replace(/\W/g, ''));
+      
+      }, function(error) {
         // Handle Errors here.
+        console.log(error);
         var errorCode = error.code;
         var errorMessage = error.message;
         if (errorCode === 'auth/invalid-email'){
-          isSuccessful = "false";
           useremail.value = "";
           alert(errorMessage);
         } else if (errorCode === 'auth/user-not-found'){
-          isSuccessful = "false";
           useremail.value = "";
           alert(errorMessage);
         } else if (errorCode === 'auth/wrong-password'){
-          isSuccessful = "false";
           password.value = "";
           alert(errorMessage);
         } else {
-        isSuccessful = "false";
-        console.log(errorCode);
-        console.log(errorMessage);
+          console.log(errorCode);
+          console.log(errorMessage);
         }
       });
 
-        console.log(isSuccessful);
-        if(isSuccessful === 'true'){
-          this.props.history.push('/');
-          // DO MORE AUTH STUFF
-            //console.log(firebase.auth().currentUser.email);
-            this.props.onLogin(firebase.auth().currentUser.email.replace(/\W/g, ''));
-        }
 
     } else {
       alert("Invalid input!");
