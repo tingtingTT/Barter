@@ -13,6 +13,12 @@ import classes from './Profile.css'
 import axios from 'axios';
 import { Route } from 'react-router-dom';
 
+/* 
+TODO:
+    1. Style Profile Layout
+    2. Add User info section
+    3. Add functionality to Auction Item tiles
+*/
 
 class Profile extends Component {
     state = {
