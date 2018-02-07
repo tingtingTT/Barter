@@ -88,6 +88,7 @@ class AddListingForm extends Component {
 
     
         const listing = {};
+        // Create listing obj with values depending if they were updated while editing, or if its a new value
         for (let formElementIdentifier in this.state.itemForm) {
             if (this.state.itemForm[formElementIdentifier].clicked === false && this.props.editingItem){
 
@@ -98,8 +99,6 @@ class AddListingForm extends Component {
                 }
 
                 listing[formElementIdentifier] = values[formElementIdentifier]
-                
-              
 
             }else {
                 
@@ -109,6 +108,7 @@ class AddListingForm extends Component {
             
         }
 
+        // Set the img url depending if it was updated while editing, or if its a new image
         if (this.props.editingItem){
             if (this.state.imageURL == ''){
                 listing['imageURL'] = this.props.imgURL;
@@ -146,6 +146,7 @@ class AddListingForm extends Component {
 
     }
 
+    // Reset to a blank form after submitting
     resetValues = () => {
         const updatedForm = {
             ...this.state.itemForm
@@ -164,6 +165,7 @@ class AddListingForm extends Component {
         this.setState({itemForm: updatedForm, imageURL: ''});
     }
 
+    // Delete item handler
     deleteItem = () => {
         if(this.props.editingItem){
             firebase.database().ref('inventory/' + this.props.id).remove().then(response => {
@@ -195,8 +197,8 @@ class AddListingForm extends Component {
 
     inputClicked = (element) => {
 
-        console.log('clicked');
         
+        // Copy state
         let updatedForm = {
             ...this.state.itemForm
         }
@@ -205,7 +207,7 @@ class AddListingForm extends Component {
         }
         updatedState.clicked = true;
 
-        // Set the config value to the prepopulated value
+        // Set the config value to the prepopulated value 
         if(this.props.editingItem){
             const values = {
                 itemName: this.props.itemName,
@@ -223,7 +225,7 @@ class AddListingForm extends Component {
 
 	render () {
 
-        
+        // Create values array with props values so they are easy to use
         const values = {
             itemName: this.props.itemName,
             desc: this.props.desc,
@@ -289,6 +291,7 @@ class AddListingForm extends Component {
         // FORM DISPLAY
         let form = null;
 
+        // Show Save of Create depending on if the item is being edited
         let button = null;
         if (this.props.editingItem) {
             button = (

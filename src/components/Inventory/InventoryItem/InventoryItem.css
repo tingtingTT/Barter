@@ -20,6 +20,7 @@
 
 .Item img {
     width: 10rem;
+    object-fit: contain;
     max-height: 10rem;
     align-self: center;
 }

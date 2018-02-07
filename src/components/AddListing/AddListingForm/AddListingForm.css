@@ -47,7 +47,7 @@
 .FileLoader {
     margin: 0 auto;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     background-position: center;
     position: relative;
     width: 40%;

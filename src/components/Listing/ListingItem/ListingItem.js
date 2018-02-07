@@ -6,7 +6,7 @@ import Button from '../../UI/Button/Button';
 const listingItem = (props) => (
 
     <div className={classes.Item} onClick={props.clicked}>
-        <img src={props.img} />
+        <img src={props.img} className={classes.Image}/>
         <p>{props.category || "None"}</p>
         <p> 0 </p>
         <p> Bid </p>
