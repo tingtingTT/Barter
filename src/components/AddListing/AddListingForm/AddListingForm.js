@@ -51,16 +51,6 @@ class AddListingForm extends Component {
 
     }
 
-    // componentDidMount () {
-        // const updatedForm = {
-        //     ...this.state.itemForm
-        //  };
-        //  updatedForm['itemName'].value = this.props.itemName;
-
-        //  this.setState({itemForm: updatedForm});
-
-    // }
-
     // FILE UPLOADER HANDLERS
     handleUploadStart = () => this.setState({isUploading: true, progress: 0});
     handleProgress = (progress) => this.setState({progress});
@@ -86,13 +76,45 @@ class AddListingForm extends Component {
             listing[formElementIdentifier] = this.state.itemForm[formElementIdentifier].value;
         }
         listing['imageURL'] = this.state.imageURL;
-        axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(response => {
-           
-             this.props.closeModal()
-        });
+        
+        // update existing item
+        if(this.props.editingItem){
+            firebase.database().ref('inventory/' + this.props.id).set({
+                itemName: listing.itemName,
+                desc: listing.desc,
+                imageURL: listing.imageURL
+
+            }).then(response => {
+                this.resetValues();
+                this.props.closeModal();
+            });
+        }else{
+            axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(response => {
+                this.resetValues();
+                this.props.closeModal()
+            });
+        }
+        
            
         
 
+    }
+
+    resetValues = () => {
+        const updatedForm = {
+            ...this.state.itemForm
+        };
+        let updatedFormElement = {};
+
+        for (let key in this.state.itemForm){
+            updatedFormElement = {
+                ...updatedForm[key]
+            };
+            updatedFormElement.value = '';
+            updatedForm[key] = updatedFormElement;
+        }
+    
+        this.setState({itemForm: updatedForm, imageURL: ''});
     }
 
     // TWO-WAY BINDING WITH INPUT FIELDS
@@ -192,19 +214,7 @@ class AddListingForm extends Component {
             }
                 
         }
-        // else {
-        //     const updatedForm = {
-        //         ...this.state.itemForm
-        //      };
-        //      updatedForm['itemName'].value = this.props.itemName;
-    
-        //      this.setState({itemForm: updatedForm});
-        // }
        
-       
-        // Showing the prepoulated image
-
-    
 
         // DISPLAY IMAGE AFTER UPLOAD
         let image = null
