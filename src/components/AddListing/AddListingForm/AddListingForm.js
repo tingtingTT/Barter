@@ -117,6 +117,15 @@ class AddListingForm extends Component {
         this.setState({itemForm: updatedForm, imageURL: ''});
     }
 
+    deleteItem = () => {
+        if(this.props.editingItem){
+            firebase.database().ref('inventory/' + this.props.id).remove().then(response => {
+                this.resetValues();
+                this.props.closeModal();
+            });
+        }
+    }
+
     // TWO-WAY BINDING WITH INPUT FIELDS
     inputChangedHandler = (event, inputIdentifier) => {
         
@@ -242,6 +251,14 @@ class AddListingForm extends Component {
                 <Button label="Create" />
             )
         }
+
+        // Display Delete Button if Editing item
+        let deleteBut = null;
+        if (this.props.editingItem) {
+            deleteBut = (
+                <p className={classes.Delete} onClick={this.deleteItem}>Delete</p>
+            )
+        }
         
         form = (
             <form className={classes.Form} onSubmit={this.addListingHandler}>
@@ -277,7 +294,7 @@ class AddListingForm extends Component {
                         />
                 ))}
                 
-                
+                {deleteBut}
                 {button}
             </form>
         )
