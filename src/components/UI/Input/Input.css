@@ -1,8 +1,8 @@
 
 .Input {
     font-size: 1.6rem;
-    width: 100%;
-    padding: 10px;
+    /* width: 100%;
+    padding: 10px; */
     box-sizing: border-box;
 }
 .Label {
@@ -23,4 +23,5 @@
 .InputElement:focus {
     outline: none;
     border: 1px solid #E54A59;
+    box-shadow: 0 .1rem .3rem #ccc;
 }

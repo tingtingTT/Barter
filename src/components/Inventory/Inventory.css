@@ -1,10 +1,11 @@
 .Inventory{
     justify-content: space-between;
     width: 60%;
-    margin: 24px;
-    border: 2px rgb(220, 15, 15);
-    box-shadow: 0 4px 20px #ccc;
-    padding: 45px;
+    margin: 0 auto;
+    border: 1px solid #E54A59;
+    /* box-shadow: 0 2px 1rem #ccc; */
     text-align: center;
-    border-radius: 25px 25px 25px 25px;
+    border-radius: .3rem;
+
 }
+

@@ -1,4 +1,38 @@
+.Item {
+    border-bottom: 1px solid #E54A59;
+    display: flex;
+    flex-flow: row;
+    padding: 1rem;
+    height: 7rem;
+    overflow: hidden;
+    cursor: pointer;
+    
+}
+
+.Item:hover{
+    background-color: #E54A59;
+    color: white;
+}
+
+.Item:last-child {
+    border-bottom: 0;
+}
+
 .Item img {
-    width: 100px;
-    max-height: 100px;
+    width: 10rem;
+    object-fit: contain;
+    max-height: 7rem;
+    align-self: center;
+}
+
+.Item p {
+    font-size: 2rem;
+    margin: 0 auto;
+    align-self: center;
+}
+
+@media max-width: 500px{
+    Item {
+        flex-flow: column;
+    }
 }

@@ -4,14 +4,17 @@ import AddListingForm from './AddListingForm/AddListingForm';
 
 import classes from './AddListing.css';
 
-const AddListing = (props) => (
+const AddListing = (props) => {
 
 
-    <div className={classes.AddListing}>
-        <AddListingForm closeModal={props.closeModal} addForm={props.addForm}/>
-    </div>
+    return (
+        <div className={classes.AddListing}>
+            {/* <AddListingForm closeModal={props.closeModal} addForm={props.addForm} editingItem={props.editingItem} item={props.item}/> */}
+            <AddListingForm {...props}/>
+         </div>
+    );
+}
 
 
-);
 
 export default AddListing;

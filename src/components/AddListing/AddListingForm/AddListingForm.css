@@ -1,8 +1,28 @@
+/* .row {
+    width: 90%;
+    margin: 0 auto;
+}
+.row::after {
+    content: "";
+    clear: both;
+}
+
+.col1of2 {
+    width: 50%;
+    float: left;
+} */
+
+
 .AddListingForm {
     padding: 20px;
     width: 100%;
     height: 50%;
     
+}
+
+.clearfix {
+    content: "";
+    clear: both;
 }
 
 .Image img{
@@ -14,7 +34,6 @@
 }
 
 .Form input, textarea {
-    margin: 10px;
     padding: 10px;
     width:100%;
 }
@@ -26,15 +45,13 @@
 }
 
 .FileLoader {
-    position: absolute;
-    top: 0;
-    left: 0;
+    margin: 0 auto;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     background-position: center;
     position: relative;
-    width: 250px;
-    height: 250px;
+    width: 40%;
+    height: 27rem;
     border: 2px solid #E54A59;
 }
 .FileLoader label {
@@ -54,3 +71,10 @@
     color: white;
     background-color: #E54A59;
 }
+
+.Delete {
+    color: #E54A59;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
