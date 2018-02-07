@@ -52,7 +52,7 @@ class AddListingForm extends Component {
                         {value: 'service', displayValue: 'Service'},
                         {value: 'appliance', displayValue: 'Appliance'},
                         {value: 'craft', displayValue: 'Craft'},
-                        {value: 'clothes', displayValue: 'Clothes'},
+                        {value: 'clothing', displayValue: 'Clothing'},
                         {value: 'sporting', displayValue: 'Sporting Goods'},
                         {value: 'jewelry', displayValue: 'Jewelry'},
                         {value: 'home', displayValue: 'Home Goods'},
