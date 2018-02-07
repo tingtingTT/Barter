@@ -19,7 +19,7 @@ class CreateAccount extends React.Component {
     firebase.database().ref('userInfo/' + user).set({
       email: email,
       password: pass,
-      zip: zip
+      zipcode: zip
     });
   }
 
