@@ -20,7 +20,13 @@ class Profile extends Component {
         listing: [],
         addingItem: false,
         editingItem: false,
-        itemToEdit: {}
+        itemToEdit: {
+            category: '',
+            itemName: '',
+            desc: '',
+            id: '',
+            imageURL: ''
+        }
     }
 
     
@@ -60,16 +66,12 @@ class Profile extends Component {
             
         }
 
-        const itemObj = items[itemID]
+        const itemObj = {...items[itemID]};
+        
 
         console.log(itemObj);
 
         this.setState({itemToEdit: itemObj, editingItem: true});
-        
-
-        
-        console.log(this.state.itemToEdit);
-        console.log('editing Item' + this.state.editingItem);
        
     }
 
@@ -104,13 +106,19 @@ class Profile extends Component {
 	render () {
 
 
-
 		return (
             <Auxiliary>
                 <Button label="+ ITEM" clicked={this.addingItemHandler}/>
                 <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
 
-                    <AddListing closeModal={this.closeHandler} editingItem={this.state.editingItem} item={this.state.itemToEdit}/>
+                    {/* <AddListing closeModal={this.closeHandler} editingItem={this.state.editingItem} item={this.state.itemToEdit}/> */}
+                    <AddListing closeModal={this.closeHandler} 
+                        editingItem={this.state.editingItem} 
+                        category={this.state.itemToEdit.category} 
+                        itemName={this.state.itemToEdit.itemName} 
+                        id={this.state.itemToEdit.id} 
+                        desc={this.state.itemToEdit.desc} 
+                        imgURL={this.state.itemToEdit.imageURL} />
 
                 </Modal>
                 <div>

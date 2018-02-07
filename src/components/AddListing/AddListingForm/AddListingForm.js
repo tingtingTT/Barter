@@ -19,7 +19,8 @@ class AddListingForm extends Component {
                   type: 'text',
                   placeholder: 'Item Name'
               },
-              value: ''
+              value: '',
+              clicked: false
             },
             desc: {
                 elementType: 'textarea',
@@ -27,7 +28,8 @@ class AddListingForm extends Component {
                   type: 'text',
                   placeholder: 'Item Description'
               },
-              value: ''
+              value: '',
+              clicked: false
             },
             category: {
                 elementType: 'select',
@@ -39,7 +41,8 @@ class AddListingForm extends Component {
                         {value: 'appliance', displayValue: 'Appliance'}
                     ]
                 },
-                value: 'Electronics'
+                value: 'Electronics',
+                clicked: false
             }
         },
         imageURL: '',
@@ -48,6 +51,15 @@ class AddListingForm extends Component {
 
     }
 
+    // componentDidMount () {
+        // const updatedForm = {
+        //     ...this.state.itemForm
+        //  };
+        //  updatedForm['itemName'].value = this.props.itemName;
+
+        //  this.setState({itemForm: updatedForm});
+
+    // }
 
     // FILE UPLOADER HANDLERS
     handleUploadStart = () => this.setState({isUploading: true, progress: 0});
@@ -103,38 +115,92 @@ class AddListingForm extends Component {
 
     }
 
+    inputClicked = (element) => {
+        
+        let updatedForm = {
+            ...this.state.itemForm
+        }
+        let updatedState = {
+            ...this.state.itemForm[element]
+        }
+        updatedState.clicked = true;
+
+        // Set the config value to the prepopulated value
+        if(this.props.editingItem){
+            const values = {
+                itemName: this.props.itemName,
+                desc: this.props.desc,
+                category: this.props.category,
+            }
+            updatedState.value = values[element];
+        }
+        
+        updatedForm[element] = updatedState;
+        this.setState({itemForm: updatedForm});
+    }
+   
+    
+
 	render () {
+
+        
+        const values = {
+            itemName: this.props.itemName,
+            desc: this.props.desc,
+            category: this.props.category,
+        }
+    
 
 
         // MAKE ARRAY OF INPUT OBJECTS
         const formElementsArray = [];
-        console.log('props.edit ' + this.props.editingItem);
-        console.log('props.item ' + this.props.item);
-        if (!this.props.editingItem){
-            console.log('not edit');
+
+        // Show the values of the item if one is being edited
+        if (this.props.editingItem){
+            for (let key in this.state.itemForm) {
+                if (!this.state.itemForm[key].clicked){
+                    const config = {
+                        ...this.state.itemForm[key]
+                    }
+                    if(this.props.editingItem) {
+                       config.value = values[key]
+                    }
+                    
+                    console.log(this.state.itemForm[key].value);
+                    formElementsArray.push({
+                        id: key,
+                        config: config
+                    });
+                }
+                else {
+                    
+                    formElementsArray.push({
+                        id: key,
+                        config: this.state.itemForm[key]
+                    });
+                    
+                }
+    
+            }
+        }else {
+            // Show empy form
             for (let key in this.state.itemForm) {
                 formElementsArray.push({
                     id: key,
                     config: this.state.itemForm[key]
                 });
-    
             }
-        }else {
-
-            console.log('item in add listingform: ' + this.props.item);
-            // Change value
-            // for (let key in this.state.itemForm) {
-            //     console.log(this.state.itemForm[key]);
-            //     const newConfig = this.state.itemForm[key];
-            //     newConfig.value = this.props.item[value];
-            //     console.log(newConfig);
-                // formElementsArray.push({
-                //     id: key,
-                //     config: this.state.itemForm[key]
-                // });
-    
-            //}
+                
         }
+        // else {
+        //     const updatedForm = {
+        //         ...this.state.itemForm
+        //      };
+        //      updatedForm['itemName'].value = this.props.itemName;
+    
+        //      this.setState({itemForm: updatedForm});
+        // }
+       
        
 
     
@@ -151,6 +217,17 @@ class AddListingForm extends Component {
        
         // FORM DISPLAY
         let form = null;
+
+        let button = null;
+        if (this.state.editingItem) {
+            button = (
+                <Button label="Save" />
+            )
+        }else {
+            button = (
+                <Button label="Create" />
+            )
+        }
         
         form = (
             <form className={classes.Form} onSubmit={this.addListingHandler}>
@@ -181,12 +258,13 @@ class AddListingForm extends Component {
                         elementConfig={formElement.config.elementConfig}
                         value={formElement.config.value}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
-                        // changed={this.chicken}
+                        clicked={() => this.inputClicked(formElement.id)}
+                        
                         />
                 ))}
                 
                 
-                <Button label="Create" />
+                {button}
             </form>
         )
         
