@@ -9,15 +9,20 @@ class CreateAccount extends React.Component {
   constructor(props){
       super(props);;
       this.onLogin = this.onLogin.bind(this);
+      this.createUser = this.createUser.bind(this);
 
 
       //this.signOut();
   }
 
-  createUser(){
-    //INPUT USER INFO INTO database
-    //CALL THIS FUNCTION IN onLogin
+  createUser(email, user, pass, zip){
+    firebase.database().ref('userInfo/' + user).set({
+      email: email,
+      password: pass,
+      zip: zip
+    });
   }
+
   onLogin(){
     var email = document.getElementById("email"); // use email.value to get vals
     var username = document.getElementById("username");
@@ -50,7 +55,7 @@ class CreateAccount extends React.Component {
         console.log(isSuccessful);
         if (isSuccessful === "true"){
           console.log(isSuccessful);
-          //PUT CODE HERE FOR createUser()
+          this.createUser(email.value,username.value,password.value,zipcode.value);
           this.props.history.push('/login');
 
         }
@@ -79,10 +84,12 @@ class CreateAccount extends React.Component {
                 type="text"
                 name="username"
                 placeholder="Pick a username"
+                pattern="[^()/><\][\\\x22,;|.#$]+"
                 autoFocus // eslint-disable-line jsx-a11y/no-autofocus
                 required
               />
             </label>
+             Username cannot contain: ".", "#", "$", "[", or "]"
           </div>
           <div className={classes.formGroup}>
             <label className={classes.label} htmlFor="Email">
