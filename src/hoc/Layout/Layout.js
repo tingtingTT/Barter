@@ -11,7 +11,7 @@ const layout = (props) => (
         <main className={classes.Content}>
             {props.children}
         </main>
-
+        
     </Auxiliary>
 );
 
