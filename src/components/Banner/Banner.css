@@ -1,0 +1,20 @@
+.Banner {
+    background-color: #343436;
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+}
+.basic {
+    background-color: #E54A59;
+    height: 50px;
+    width:150px;
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    margin-right: 50px;
+}
+.font {
+    font-family: sans-serif;
+    font-weight: 200;
+   color: white;
+ }
