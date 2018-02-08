@@ -1,6 +1,6 @@
 
 const initialState = {
-    userId: 'not logged in',
+    userId: 'none',
     testField: 'empty'
 }
 
@@ -11,6 +11,13 @@ const reducer = (state = initialState, action) =>{
             return {
                 userId: action.val};
             break;
+
+        case 'LOGOUT':
+            return {
+                userId: 'none'
+            }
+            break;
+
     }
         if(action.type === 'login'){
             console.log('Login action detected')
