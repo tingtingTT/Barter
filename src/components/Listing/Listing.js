@@ -15,7 +15,7 @@ const listing = (props)=> {
                 desc={item.desc}
                 category={item.category}
                 // numBid = {}
-                clicked={() => this.itemClicked(item.id)}
+                // clicked={() => this.itemClicked(item.id)}
             />
         ))
     )
