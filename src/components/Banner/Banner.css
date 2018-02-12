@@ -3,6 +3,7 @@
     padding: 20px;
     height: 100%;
     width: 100%;
+    text-align: center;
 }
 .basic {
     background-color: #E54A59;
@@ -16,5 +17,5 @@
 .font {
     font-family: sans-serif;
     font-weight: 200;
-   color: white;
- }
+    color: white;
+}
