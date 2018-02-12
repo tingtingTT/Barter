@@ -35,7 +35,7 @@ class Profile extends Component {
     state = {
         inventory: [],
         listing: [],
-        currentUser: 'not logged in',
+        currentUser: 'none',
         addingItem: false,
         editingItem: false,
         itemToEdit: {
