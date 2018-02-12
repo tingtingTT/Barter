@@ -1,33 +1,8 @@
-.Form {
-    position: relative;
-}
-
-.Form input, textarea {
-    padding: 10px;
-    width:100%;
-}
-
-.Form textarea {
-    resize: none;
-    border: 1px solid lightgrey;
-
-}
-
-.CategoryMenu {
-    padding: 20px;
-    width: 20%;
-    height: 50%;
-
-}
 
 .dropdown {
   font-size: 13px;
-  padding: 10px 8px 10px 14px;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 6px;
   overflow: hidden;
-  position: relative;
+  display: inline;
 }
 
 .dropdown .select select{

@@ -22,7 +22,7 @@ const categoryList = [
         ];
 
   return (
-      <div class={classes.dropdown}>
+      <div className={classes.dropdown}>
         <select name="Categories" id="categoryList">
           {categoryList.map((e, key) => {
             return <option key={key} value={e.value}>{e.displayValue}</option>;
@@ -35,4 +35,4 @@ const categoryList = [
 }
 
 
-export default CategoryMenu;
+export default withRouter(CategoryMenu);
