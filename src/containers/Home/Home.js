@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import AddListing from '../../components/AddListing/AddListing';
-import Modal from '../../components/UI/Modal/Modal';
 import Button from '../../components/UI/Button/Button';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Inventory from '../../components/Inventory/Inventory';
@@ -16,21 +14,6 @@ import firebase from 'firebase';
 import {database} from 'firebase';
 import Banner from '../../components/Banner/Banner';
 
-
-
-/* 
-TODO:
-    1. Style Profile Layout
-    2. Add User info section
-    3. Add functionality to Auction Item tiles
-*/
-
-//create
-
-
-
-//debug
-//const currentUser = 'backEndDevWithWrench';
 class Home extends Component {
 
     state = {
@@ -50,7 +33,6 @@ class Home extends Component {
     }
 
     
-    
 
     componentDidMount () {
         // let userItems = firebase.database().ref('/userItems');
@@ -65,8 +47,6 @@ class Home extends Component {
             
         });
     }
-
-
 
 
     addingItemHandler = () => {
@@ -85,7 +65,6 @@ class Home extends Component {
         const itemObj = {...items[itemID]};
     
         this.setState({itemToEdit: itemObj, editingItem: true});
-       
     }
 
     deleteItem = (itemID) => {
@@ -113,9 +92,8 @@ class Home extends Component {
         
         
     }
-	render () {
 
-        
+	render () {
 		return (
             <Auxiliary>
                 <div>
@@ -123,9 +101,6 @@ class Home extends Component {
                 </div>
                 <div>
                     <Listing listing={this.state.listing.reverse()} />
-                </div>
-                <div>
-                    <Inventory inventory={this.state.inventory.reverse()} editItemHandler={this.editItemHandler}/>
                 </div>
             </Auxiliary>
         );

@@ -21,9 +21,7 @@ class App extends Component {
                 <Route path='/join' component = {SignUp} />
                 <Route path='/' component = {Home} />
             </Switch>
-
         </Layout>
-
       </div>
     );
   }
