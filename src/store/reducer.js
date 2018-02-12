@@ -1,4 +1,3 @@
-
 const initialState = {
     userId: 'none',
     testField: 'empty'
@@ -21,11 +20,11 @@ const reducer = (state = initialState, action) =>{
     }
         if(action.type === 'login'){
             console.log('Login action detected')
-           return {
-
-               userId: action.userId
-           }
-        }else{
+            return {
+                userId: action.userId
+            }
+        }
+        else{
             //return as default
             return initialState
         }

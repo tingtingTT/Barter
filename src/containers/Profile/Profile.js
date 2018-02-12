@@ -54,7 +54,7 @@ class Profile extends Component {
     componentDidMount () {
         // let userItems = firebase.database().ref('/userItems');
         this.setState({currentUser: this.props.userId});
-        alert(this.props.userId);
+        // alert(this.props.userId);
         firebase.database().ref('/userItems').child(this.state.currentUser).on('value', snapshot =>{
             const items = snapshot.val();
             console.log(items);

@@ -11,7 +11,7 @@ const AddListing = (props) => {
         <div className={classes.AddListing}>
             {/* <AddListingForm closeModal={props.closeModal} addForm={props.addForm} editingItem={props.editingItem} item={props.item}/> */}
             <AddListingForm {...props}/>
-         </div>
+        </div>
     );
 }
 
