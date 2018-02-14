@@ -13,6 +13,7 @@ import { Route } from 'react-router-dom';
 import firebase from 'firebase';
 import {database} from 'firebase';
 import Banner from '../../components/Banner/Banner';
+import FilterMenu from '../../components/FilterMenu/FilterMenu';
 
 class Home extends Component {
 
@@ -32,7 +33,7 @@ class Home extends Component {
         }
     }
 
-    
+
 
     componentDidMount () {
         // let userItems = firebase.database().ref('/userItems');
@@ -43,7 +44,7 @@ class Home extends Component {
             if(items != null){
                 this.setState({inventory: items});
             }
-            
+
         });
     }
 
@@ -54,7 +55,7 @@ class Home extends Component {
     }
 
     editItemHandler = (itemID) => {
-        
+
         // makes an items oject of the form --> itemID: {name: '', desc: '' ...}
         const items = {};
         for (let item in this.state.inventory) {
@@ -62,17 +63,21 @@ class Home extends Component {
         }
 
         const itemObj = {...items[itemID]};
-    
+
         this.setState({itemToEdit: itemObj, editingItem: true});
     }
 
     deleteItem = (itemID) => {
-        
+
     }
 
 
     closeHandler = () => {
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 477ae21d5f9c2c3797ec4d24666e224382888b53
         this.setState({addingItem: false, editingItem: false});
 
         axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
@@ -87,8 +92,8 @@ class Home extends Component {
                 this.setState({inventory: fetchedItems});
                 this.setState({listing: fetchedItems});
             });
-        
-        
+
+
     }
 
 	render () {
@@ -97,13 +102,16 @@ class Home extends Component {
                 <div>
                     <Banner></Banner>
                 </div>
+                {/* <div>
+                    <FilterMenu/>
+                </div> */}
                 <div>
                     <Listing listing={this.state.listing.reverse()} />
                 </div>
             </Auxiliary>
         );
     }
-        
+
 }
 
 const mapStateToProps = state => {

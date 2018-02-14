@@ -1,0 +1,30 @@
+
+.form {
+    display: inline;
+    font-size: 13px;
+}
+
+.form input, textarea {
+    width:50%;
+}
+
+.form textarea {
+    resize: none;
+    border: 1px solid black;
+
+}
+.button {
+  display: inline;
+  box-sizing: border-box;
+  width: 30%;
+  outline: 0;
+  margin: 10px;
+  border: 1px solid #373277;
+  border-radius: 0;
+  background: #E54A59;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+  cursor: pointer;
+}
