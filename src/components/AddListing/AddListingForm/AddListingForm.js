@@ -35,8 +35,8 @@ const config = {
 
 let fb = firebase.initializeApp(config, 'listingDb');
 let userInfo = fb.database().ref('userInfo/');
-let itemDb = fb.database().ref('itemDb');
-let userItems = fb.database().ref('userItems');
+let itemDb = fb.database().ref('itemDb/');
+let userItems = fb.database().ref('userItems/');
 
 let currentUser = 'backEndDevWithWrench';
 
@@ -132,7 +132,7 @@ class AddListingForm extends Component {
 
     componentDidMount = () =>{
         console.log(getUserListingsArray(this.props.userId));
-        console.log(this.props.userId);
+        //console.log(this.props.userId);
     };
 
 
@@ -180,7 +180,7 @@ class AddListingForm extends Component {
         if(this.props.editingItem){
             firebase.database().ref('inventory/' + this.props.id).set({
                 itemName: listing.itemName,
-                desc: listing.desc,
+                desc: 'testing upload methods',//listing.desc,
                 category: listing.category,
                 imageURL: listing.imageURL,
                 ItemType: listing.ItemType
@@ -191,10 +191,30 @@ class AddListingForm extends Component {
             });
         }else{
             // Add new item
-            axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(response => {
-                this.resetValues();
-                this.props.closeModal()
+            let items = null;
+            userItems.child(this.props.userId).once('value', snapshot =>{
+                console.log(snapshot.val());
+                items = snapshot.val();
             });
+            if(items === null){
+                console.log('items is null');
+                items = [];
+                items.push(listing);
+            }else{
+                items.push(listing);
+            }
+
+            userItems.child(this.props.userId+'/').set(items).then(response => {
+                this.resetValues();
+                console.log('listing sent adllisting userID', this.props.userId);
+                this.props.closeModal();
+            });
+            //
+            //
+            // axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(response => {
+            //     this.resetValues();
+            //     this.props.closeModal()
+            // });
         
         }
         
@@ -440,8 +460,9 @@ class AddListingForm extends Component {
     }
 
 }
+
 const mapStateToProps = state =>{
-    //console.log(state);
+    console.log('State is',state);
     //map state to props looks at the whole redux store and then maps it
     return {
       userId: state.userId

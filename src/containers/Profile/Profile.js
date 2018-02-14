@@ -26,6 +26,21 @@ TODO:
 
 //create
 
+const config = {
+
+    apiKey: "AIzaSyDfRWLuvzYmSV3TwmLOppZT0ZZbtIZRlrs",
+    authDomain: "barterbuddy-4b41a.firebaseapp.com",
+    databaseURL: "https://barterbuddy-4b41a.firebaseio.com",
+    projectId: "barterbuddy-4b41a",
+    storageBucket: "barterbuddy-4b41a.appspot.com",
+    messagingSenderId: "879139739414"
+
+};
+
+let fb = firebase.initializeApp(config, 'profile');
+let userInfo = fb.database().ref('userInfo/');
+let itemDb = fb.database().ref('itemDb/');
+let userItems = fb.database().ref('userItems/');
 
 
 //debug
@@ -46,23 +61,21 @@ class Profile extends Component {
             imageURL: '',
             ItemType: ''
         }
-    }
+    };
 
-    
-    
 
     componentDidMount () {
         // let userItems = firebase.database().ref('/userItems');
+        console.log('setting uderId to', this.props.userId);
         this.setState({currentUser: this.props.userId});
-        // alert(this.props.userId);
-        firebase.database().ref('/userItems').child(this.state.currentUser).on('value', snapshot =>{
+        let name = this.props.userId;
+        userItems.child(name+ '/').on('value', snapshot =>{
             const items = snapshot.val();
-            console.log(items);
+            console.log('in promise .on userid is', name)
+            console.log('items in compdidmount',items);
             if(items != null){
-
                 this.setState({inventory: items});
             }
-            
         });
     }
 
@@ -72,7 +85,7 @@ class Profile extends Component {
     addingItemHandler = () => {
         this.setState({addingItem: true});
         this.props.history.replace( '/profile/addlisting' );
-    }
+    };
 
     editItemHandler = (itemID) => {
         
@@ -86,36 +99,16 @@ class Profile extends Component {
     
         this.setState({itemToEdit: itemObj, editingItem: true});
        
-    }
+    };
 
     deleteItem = (itemID) => {
         
-    }
+    };
 
 
     closeHandler = () => {
 
-        
         this.setState({addingItem: false, editingItem: false});
-
-        axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
-            .then(response => {
-                const fetchedItems = []
-                for (let key in response.data) {
-                    fetchedItems.push({
-                        ...response.data[key],
-                        id: key
-                    })
-                }
-                this.setState({inventory: fetchedItems});
-                this.setState({listing: fetchedItems});
-            });
-        
-        
-    }
-
-
-        //
         // axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
         //     .then(response => {
         //         const fetchedItems = []
@@ -126,8 +119,11 @@ class Profile extends Component {
         //             })
         //         }
         //         this.setState({inventory: fetchedItems});
-        //         console.log(fetchedItems);
+        //         this.setState({listing: fetchedItems});
         //     });
+
+
+    };
 
 	render () {
 
@@ -162,7 +158,7 @@ const mapStateToProps = state => {
     return {
         userId: state.userId
     }
-}
+};
 
 
 export default connect(mapStateToProps) (Profile);
