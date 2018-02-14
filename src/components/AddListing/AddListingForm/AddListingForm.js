@@ -34,8 +34,7 @@ const config = {
 };
 
 let fb = firebase.initializeApp(config, 'listingDb');
-let userInfo = fb.database().ref('userInfo/');
-let itemDb = fb.database().ref('itemDb/');
+
 let userItems = fb.database().ref('userItems/');
 
 let currentUser = 'backEndDevWithWrench';

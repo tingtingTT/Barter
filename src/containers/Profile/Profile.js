@@ -71,10 +71,11 @@ class Profile extends Component {
         let name = this.props.userId;
         userItems.child(name+ '/').on('value', snapshot =>{
             const items = snapshot.val();
-            console.log('in promise .on userid is', name)
-            console.log('items in compdidmount',items);
+            //console.log('in promise .on userid is', name)
+            //console.log('items in compdidmount',items);
             if(items != null){
                 this.setState({inventory: items});
+                this.setState({listing: items});
             }
         });
     }
@@ -107,22 +108,7 @@ class Profile extends Component {
 
 
     closeHandler = () => {
-
         this.setState({addingItem: false, editingItem: false});
-        // axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
-        //     .then(response => {
-        //         const fetchedItems = []
-        //         for (let key in response.data) {
-        //             fetchedItems.push({
-        //                 ...response.data[key],
-        //                 id: key
-        //             })
-        //         }
-        //         this.setState({inventory: fetchedItems});
-        //         this.setState({listing: fetchedItems});
-        //     });
-
-
     };
 
 	render () {
