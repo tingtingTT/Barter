@@ -37,18 +37,11 @@ let fb = firebase.initializeApp(config, 'listingDb');
 
 let userItems = fb.database().ref('userItems/');
 
-let currentUser = 'backEndDevWithWrench';
+
 
 //given the old listing array as retrieved from the server,
 //push the new listing onto it, and post it to the server
 //over the top of the old listing
-function pushUserListing(userId, payload){
-    let oldState = [];
-    oldState = getUserListingsArray(userId);
-    oldState.push(payload);
-    userItems.child(userId+'/').set(oldState);
-}
-
 
 function getUserListingsArray(userId){
     let items = null;
@@ -115,7 +108,7 @@ class AddListingForm extends Component {
         isUploading: false,
         progress: 0
 
-    }
+    };
 
     // FILE UPLOADER HANDLERS
     handleUploadStart = () => this.setState({isUploading: true, progress: 0});
@@ -123,7 +116,7 @@ class AddListingForm extends Component {
     handleUploadError = (error) => {
         this.setState({isUploading: false});
         console.error(error);
-    }
+    };
     handleUploadSuccess = (filename) => {
         this.setState({progress: 100, isUploading: false});
         firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({imageURL: url}));
@@ -177,9 +170,10 @@ class AddListingForm extends Component {
         
         // update existing item
         if(this.props.editingItem){
+            //TODO: Convert this to firebase UserItems format
             firebase.database().ref('inventory/' + this.props.id).set({
                 itemName: listing.itemName,
-                desc: 'testing upload methods',//listing.desc,
+                desc: listing.desc,
                 category: listing.category,
                 imageURL: listing.imageURL,
                 ItemType: listing.ItemType
@@ -189,6 +183,19 @@ class AddListingForm extends Component {
                 this.props.closeModal();
             });
         }else{
+            //TODO: Add logic for determining if public or private listing and send to a separate database
+            firebase.database().ref('itemDb/' + this.props.id).set({
+                itemName: listing.itemName,
+                desc: listing.desc,
+                category: listing.category,
+                imageURL: listing.imageURL,
+                ItemType: listing.ItemType
+
+            }).then(response => {
+
+                console.log('Posted to central itemDb')
+            });
+
             // Add new item
             let items = null;
             userItems.child(this.props.userId).once('value', snapshot =>{
