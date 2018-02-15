@@ -16,9 +16,9 @@ const categoryList = [
           {value: 'Appliance', displayValue: 'Appliance'},
           {value: 'Craft', displayValue: 'Craft'},
           {value: 'Clothing', displayValue: 'Clothing'},
-          {value: 'Sporting', displayValue: 'Sporting Goods'},
+          {value: 'Sporting Goods', displayValue: 'Sporting Goods'},
           {value: 'Jewelry', displayValue: 'Jewelry'},
-          {value: 'Home', displayValue: 'Home Goods'},
+          {value: 'Home Goods', displayValue: 'Home Goods'},
           {value: 'Furniture', displayValue: 'Furniture'}
         ];
 

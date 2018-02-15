@@ -4,6 +4,7 @@ import CategoryMenu from './CategoryMenu/CategoryMenu';
 import classes from './FilterMenu.css';
 import ZipCodeMenu from './ZipCodeMenu/ZipCodeMenu';
 import { withRouter } from 'react-router-dom';
+import firebase, {database} from 'firebase';
 
 class FilterMenu extends React.Component {
 
@@ -12,15 +13,43 @@ class FilterMenu extends React.Component {
       this.filterZip = this.filterZip.bind(this);
       this.filterCategory = this.filterCategory.bind(this);
   }
+
+
   filterZip(){
-    console.log("test");
+    var zc = document.getElementById('filterZip').value; //zipcode entered
+    firebase.database().ref("/itemDb").on('value', function(snap){
+      snap.forEach(function(childNodes){
+        //This loop iterates over children of user_id
+        //childNodes.key is key of the children of userid such as (-L5LoRiCBmIwqNw0kP7c)
+        //childNodes.val().name;
+        //childNodes.val().category;
+        //childNodes.val().location;
+        //childNodes.val().interval_time
+        //console.log(childNodes);
+          if(childNodes.val().location === zc){
+            console.log(childNodes.val().itemName);
+          }
+      });
+    });
   }
   filterCategory(obj){
     if(obj !== 'Select a Category'){
       console.log(obj);
-      //handle
+      firebase.database().ref("/itemDb").on('value', function(snap){
+        snap.forEach(function(childNodes){
+          //This loop iterates over children of user_id
+          //childNodes.key is key of the children of userid such as (-L5LoRiCBmIwqNw0kP7c)
+          //childNodes.val().name;
+          //childNodes.val().time;
+          //childNodes.val().rest_time;
+          //childNodes.val().interval_time
+          //console.log(childNodes);
+          if(childNodes.val().category === obj){
+            console.log(childNodes.val().itemName);
+          }
+        });
+      });
     }
-    console.log("test2");
   }
 
   render() {
