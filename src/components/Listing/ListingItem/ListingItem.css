@@ -51,6 +51,11 @@
     align-self: center;
 }
 
+.Item p2 {
+    font-size: 4rem;
+    align-self: center;
+}
+
 .Item h1{
     font-size: 1.5rem;
     align-self: center;
