@@ -42,7 +42,6 @@ class Home extends Component {
             const items = snapshot.val();
             console.log(items);
             if(items != null){
-
                 this.setState({inventory: items});
             }
 
@@ -74,7 +73,6 @@ class Home extends Component {
 
 
     closeHandler = () => {
-
 
         this.setState({addingItem: false, editingItem: false});
 
