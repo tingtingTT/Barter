@@ -21,7 +21,7 @@ const ZipCodeMenu = (props) => {
             name="zipcode"
             placeholder="Filter by zipcode"
           />
-          <button id="filterButton" className={classes.button} type="button">
+          <button id="filterButton" className={classes.button} type="button" onClick={props.onClick}>
             Update
           </button>
 
