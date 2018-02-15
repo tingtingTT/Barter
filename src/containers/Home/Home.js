@@ -74,10 +74,6 @@ class Home extends Component {
 
     closeHandler = () => {
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 477ae21d5f9c2c3797ec4d24666e224382888b53
         this.setState({addingItem: false, editingItem: false});
 
         axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
