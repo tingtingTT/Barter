@@ -187,12 +187,15 @@ class AddListingForm extends Component {
             });
         }else{
             //TODO: Add logic for determining if public or private listing and send to a separate database
-            firebase.database().ref('itemDb/' + this.props.id).set({
+            firebase.database().ref('itemDb/').push({
                 itemName: listing.itemName,
                 desc: listing.desc,
                 category: listing.category,
                 imageURL: listing.imageURL,
-                ItemType: listing.ItemType
+                ItemType: listing.ItemType,
+                ownerUser: this.props.userId,
+                public: true,
+                location:'95060',
 
             }).then(response => {
 
