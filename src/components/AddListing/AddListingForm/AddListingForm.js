@@ -171,13 +171,16 @@ class AddListingForm extends Component {
         // update existing item
         if(this.props.editingItem){
             //TODO: Convert this to firebase UserItems format
-            firebase.database().ref('inventory/' + this.props.id).set({
+
+            firebase.database().ref('inventory/').push({
                 itemName: listing.itemName,
                 desc: listing.desc,
                 category: listing.category,
                 imageURL: listing.imageURL,
-                ItemType: listing.ItemType
-
+                ItemType: listing.ItemType,
+                ownerUser: this.props.userId,
+                public: true,
+                location:'95060'
             }).then(response => {
                 this.resetValues();
                 this.props.closeModal();
