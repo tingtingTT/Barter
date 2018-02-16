@@ -1,0 +1,35 @@
+.ItemDetails {
+    margin-top: 3rem;
+}
+
+.row {
+    width: 80%;
+    margin: 0 auto;
+    clear: both;
+
+}
+.col1of2 {
+    width: 50%;
+    float: left;
+    text-align: center;
+    position: relative;
+}
+.image {
+    width: 40rem;
+}
+.owner {
+    padding: 0;
+    margin: 0; 
+    font-size: 1.8rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.description {
+    border: 2px solid #E54A59;
+    border-radius: 2rem;
+    padding: 1.4rem; 
+}
+.descText {
+    font-size: 1.6rem;
+}

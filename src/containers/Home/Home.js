@@ -15,6 +15,10 @@ import {database} from 'firebase';
 import Banner from '../../components/Banner/Banner';
 import FilterMenu from '../../components/FilterMenu/FilterMenu';
 
+
+
+import ItemDetails from '../../components/ItemDetails/ItemDetails';
+
 class Home extends Component {
 
     state = {
@@ -96,17 +100,18 @@ class Home extends Component {
 
 	render () {
 		return (
-            <Auxiliary>
-                <div>
-                    <Banner></Banner>
-                </div>
-                {/* <div>
-                    <FilterMenu/>
-                </div> */}
-                <div>
-                    <Listing listing={this.state.listing.reverse()} />
-                </div>
-            </Auxiliary>
+            // <Auxiliary>
+            //     <div>
+            //         <Banner></Banner>
+            //     </div>
+            //     {/* <div>
+            //         <FilterMenu/>
+            //     </div> */}
+            //     <div>
+            //         <Listing listing={this.state.listing.reverse()} />
+            //     </div>
+            // </Auxiliary>
+            <ItemDetails />
         );
     }
 
