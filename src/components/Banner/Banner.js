@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+
+import BigButton from '../UI/BigButton/BigButton';
+
 import classes from './Banner.css'
  
  
@@ -7,13 +10,12 @@ class Banner extends Component {
     return (
         <div>
             <div className={classes.Banner}>
-                <div>
-                    <h1 className={classes.font}>Barter</h1>
-                    <h3 className={classes.font}> An online platform for facilitating the exchange of good. </h3>
+                <div className={classes.joinText}>
+                    <h1 className={classes.title}> Join Barter</h1>
+                    <h3 className={classes.font}>Join the community that's changing how we trade goods.</h3>
                 </div>
-                <div className={classes.basic}>
-                    <h2 className={classes.font}>Sign-Up</h2>
-                </div>
+                <BigButton text="Sign-Up" />    
+
             </div>
         </div>
     );
