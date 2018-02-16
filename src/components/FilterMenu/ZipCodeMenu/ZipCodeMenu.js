@@ -11,7 +11,7 @@ const ZipCodeMenu = (props) => {
 
 
   return (
-      <div class={classes.form}>
+      <div className={classes.form}>
         <form>
           <input
             className={classes.form}
