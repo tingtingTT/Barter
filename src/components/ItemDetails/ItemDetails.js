@@ -21,10 +21,17 @@ const itemDetails = ( props ) => {
             <div className = {classes.row}>
                 <div className = {classes.col1of2}>
                     
-                    <h1>{item.title}</h1>
+                    <h1 className={classes.title}>{item.title}</h1>
                     <img src={item.img} className={classes.image}/>
-                    <p className = {classes.owner}>{item.owner}</p>
+                    <div className={classes.ownerDetails}>
+                        {/* this is a placeholder for now, it should be the userIcon */}
+                        <div className={classes.userIcon}></div>
+                        <p className = {classes.owner}>{item.owner}</p>
+                        <p className = {classes.owner}>[rating]</p>
+                    </div>
+                    
                 </div>
+
                 <div className = {classes.col1of2}>
                     {/*pass in item.zipCode as props to the map*/}
                     MAP

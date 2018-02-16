@@ -12,18 +12,45 @@
     width: 50%;
     float: left;
     text-align: center;
-    position: relative;
+}
+.title {
+    font-size: 3rem;
 }
 .image {
-    width: 40rem;
+    width: 100%;
+}
+.ownerDetails {
+    width: 100%;
+    display: inline-block;
+    text-align: left;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+.userIcon {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 2.5rem;
+    background-color: black;
+    display: inline-block;
 }
 .owner {
     padding: 0;
     margin: 0; 
     font-size: 1.8rem;
     position: absolute;
-    bottom: 0;
-    left: 0;
+    top: 0rem;
+    left: 5.5rem
+    
+}
+.rating {
+    padding: 0;
+    margin: 0; 
+    font-size: 1.8rem;
+    position: absolute;
+    top: 2.5rem;
+    left: 5.5rem
+    
 }
 .description {
     border: 2px solid #E54A59;

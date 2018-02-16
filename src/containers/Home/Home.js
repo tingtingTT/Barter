@@ -100,18 +100,17 @@ class Home extends Component {
 
 	render () {
 		return (
-            // <Auxiliary>
-            //     <div>
-            //         <Banner></Banner>
-            //     </div>
-            //     {/* <div>
-            //         <FilterMenu/>
-            //     </div> */}
-            //     <div>
-            //         <Listing listing={this.state.listing.reverse()} />
-            //     </div>
-            // </Auxiliary>
-            <ItemDetails />
+            <Auxiliary>
+                <div>
+                    <Banner></Banner>
+                </div>
+                {/* <div>
+                    <FilterMenu/>
+                </div> */}
+                <div>
+                    <Listing listing={this.state.listing.reverse()} />
+                </div>
+            </Auxiliary>
         );
     }
 
