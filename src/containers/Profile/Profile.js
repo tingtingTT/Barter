@@ -115,7 +115,7 @@ class Profile extends Component {
 
         
 		return (
-            <Auxiliary>
+            <div className={classes.content}>
                 <Button label="+ ITEM" clicked={this.addingItemHandler}/>
                 <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
                     <AddListing closeModal={this.closeHandler} 
@@ -134,7 +134,7 @@ class Profile extends Component {
                 <div>
                     <Inventory inventory={this.state.inventory.reverse()} editItemHandler={this.editItemHandler}/>
                 </div>
-            </Auxiliary>
+            </div>
         );
     }
         
