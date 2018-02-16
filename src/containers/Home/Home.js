@@ -104,9 +104,9 @@ class Home extends Component {
                 <div>
                     <Banner></Banner>
                 </div>
-                {/* <div>
+                { <div>
                     <FilterMenu/>
-                </div> */}
+                </div> }
                 <div>
                     <Listing listing={this.state.listing.reverse()} />
                 </div>

@@ -9,21 +9,22 @@ import classes from './CategoryMenu.css';
 const CategoryMenu = (props) => {
 
 const categoryList = [
-          {value: 'electronics', displayValue: 'Electronics'},
-          {value: 'games', displayValue: 'Games'},
-          {value: 'service', displayValue: 'Service'},
-          {value: 'appliance', displayValue: 'Appliance'},
-          {value: 'craft', displayValue: 'Craft'},
-          {value: 'clothing', displayValue: 'Clothing'},
-          {value: 'sporting', displayValue: 'Sporting Goods'},
-          {value: 'jewelry', displayValue: 'Jewelry'},
-          {value: 'home', displayValue: 'Home Goods'},
-          {value: 'furniture', displayValue: 'Furniture'}
+          {value: 'Select a Category', displayValue: 'Select a Category'},
+          {value: 'Electronics', displayValue: 'Electronics'},
+          {value: 'Games', displayValue: 'Games'},
+          {value: 'Service', displayValue: 'Service'},
+          {value: 'Appliance', displayValue: 'Appliance'},
+          {value: 'Craft', displayValue: 'Craft'},
+          {value: 'Clothing', displayValue: 'Clothing'},
+          {value: 'Sporting Goods', displayValue: 'Sporting Goods'},
+          {value: 'Jewelry', displayValue: 'Jewelry'},
+          {value: 'Home Goods', displayValue: 'Home Goods'},
+          {value: 'Furniture', displayValue: 'Furniture'}
         ];
 
   return (
       <div className={classes.dropdown}>
-        <select name="Categories" id="categoryList">
+        <select name="Categories" id="categoryList" onChange={(event) => props.onChange(event.target.value)}>
           {categoryList.map((e, key) => {
             return <option key={key} value={e.value}>{e.displayValue}</option>;
             })

@@ -11,7 +11,7 @@ const ZipCodeMenu = (props) => {
 
 
   return (
-      <div class={classes.form}>
+      <div className={classes.form}>
         <form>
           <input
             className={classes.form}
@@ -21,7 +21,7 @@ const ZipCodeMenu = (props) => {
             name="zipcode"
             placeholder="Filter by zipcode"
           />
-          <button id="filterButton" className={classes.button} type="button">
+          <button id="filterButton" className={classes.button} type="button" onClick={props.onClick}>
             Update
           </button>
 
