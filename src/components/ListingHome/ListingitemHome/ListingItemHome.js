@@ -16,7 +16,7 @@ const listingItemHome = (props) => (
             <p>{props.name}</p>
             <h2>Plcae Holder</h2>
             <p2>0 </p2>
-            <p> Bid</p>
+            <p> Bid </p>
         </div>
     </div>
 
