@@ -8,7 +8,7 @@ import Inventory from '../../components/Inventory/Inventory';
 import Listing from '../../components/Listing/Listing';
 
 import {connect} from 'react-redux';
-import classes from './Profile.css'
+import classes from './Profile.css';
 
 import axios from 'axios';
 import { Route } from 'react-router-dom';
@@ -115,7 +115,7 @@ class Profile extends Component {
 
         
 		return (
-            <Auxiliary>
+            <div className={classes.Profile}>
                 <Button label="+ ITEM" clicked={this.addingItemHandler}/>
                 <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
                     <AddListing closeModal={this.closeHandler} 
@@ -134,7 +134,7 @@ class Profile extends Component {
                 <div>
                     <Inventory inventory={this.state.inventory.reverse()} editItemHandler={this.editItemHandler}/>
                 </div>
-            </Auxiliary>
+            </div>
         );
     }
         

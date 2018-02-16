@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Button from '../../components/UI/Button/Button';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Inventory from '../../components/Inventory/Inventory';
-import Listing from '../../components/Listing/Listing';
+import ListingHome from '../../components/ListingHome/ListingHome';
 
 import {connect} from 'react-redux';
 import classes from './Home.css'
@@ -42,8 +42,8 @@ class Home extends Component {
             const items = snapshot.val();
             console.log(items);
             if(items != null){
-
                 this.setState({inventory: items});
+                this.setState({listing: items});
             }
 
         });
@@ -75,7 +75,6 @@ class Home extends Component {
 
     closeHandler = () => {
 
-
         this.setState({addingItem: false, editingItem: false});
 
         axios.get('https://barterbuddy-4b41a.firebaseio.com/inventory.json')
@@ -96,7 +95,7 @@ class Home extends Component {
 
 	render () {
 		return (
-            <Auxiliary>
+            <div className={classes.Home}>
                 <div>
                     <Banner></Banner>
                 </div>
@@ -104,9 +103,9 @@ class Home extends Component {
                     <FilterMenu/>
                 </div> }
                 <div>
-                    <Listing listing={this.state.listing.reverse()} />
+                    <ListingHome listing={this.state.listing.reverse()} />
                 </div>
-            </Auxiliary>
+            </div>
         );
     }
 

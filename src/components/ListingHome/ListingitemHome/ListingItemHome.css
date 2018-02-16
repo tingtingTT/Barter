@@ -1,6 +1,6 @@
 .Item {
-    width: 300px;
-    height: 400px;
+    width: 250px;
+    height: 300px;
     flex-flow: row;
     margin: 24px;
     text-align: center;
