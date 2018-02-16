@@ -1,6 +1,6 @@
 import React from 'react';
 
-import classes from '../../Listing/ListingItem/ListingItem.css';
+import classes from './ListingItemHome.css';
 import Button from '../../UI/Button/Button';
 
 const listingItemHome = (props) => (

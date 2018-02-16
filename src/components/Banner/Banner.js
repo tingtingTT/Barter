@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 
 import classes from './Banner.css';
- 
- 
+
 class Banner extends Component {
   render() {
     return (
