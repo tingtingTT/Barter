@@ -4,7 +4,7 @@ import BigButton from '../UI/BigButton/BigButton';
 
 import classes from './Banner.css'
  
- 
+ // TODO: Get Logged in State from global state
 const Banner = (props) => {
 
     const LoggedIn = false;

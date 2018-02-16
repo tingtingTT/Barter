@@ -20,12 +20,13 @@
     text-align: center;
     display: inline-block;
     position: relative;
+    cursor: pointer;
   }
 
 
 
   .button2 div {
-    transition: all 1s ease-in-out;
+    transition: all .5s ease-in-out;
   }
   
   .button2 div:nth-of-type(1){
