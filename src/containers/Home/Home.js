@@ -93,6 +93,15 @@ class Home extends Component {
 
     }
 
+    filtZipcode = () => {
+      var zc = document.getElementById('filterZip').value;
+      console.log(zc);
+    }
+
+    filtCategory = (category) => {
+      console.log(category);
+    }
+
 	render () {
 		return (
             <div className={classes.Home}>
@@ -100,7 +109,7 @@ class Home extends Component {
                     <Banner></Banner>
                 </div>
                 { <div>
-                    <FilterMenu/>
+                    <FilterMenu onChange={this.filtCategory} onClick={this.filtZipcode}/>
                 </div> }
                 <div>
                     <ListingHome listing={this.state.listing.reverse()} />
