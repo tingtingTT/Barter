@@ -95,62 +95,78 @@ class Home extends Component {
 
     filtZipcode = () => {
       var zc = document.getElementById('filterZip').value;
-      var count = 0;
-      var maxListings = 6; // can be dynamic later
+      //var count = 0;
+      const maxListings = 6; // can be dynamic later
       var fetchedItems = [];
-          firebase.database().ref("/itemDb").on('value', function(snap){
-            snap.forEach(function(childNodes){
-
-              if(childNodes.val().location === zc && count < maxListings){
-                count++;
-                fetchedItems.push( childNodes.val());
-              }
-
-              if(zc === "" && count < maxListings){ //if no filter, want to still show listings
-                count++;
-                fetchedItems.push(childNodes.val());
-              }
-            });
+          // old code - don't delete yet, in case.
+          // firebase.database().ref("/itemDb").on('value', function(snap){
+          //   snap.forEach(function(childNodes){
+          //
+          //     if(childNodes.val().location === zc && count < maxListings){
+          //       count++;
+          //       fetchedItems.push( childNodes.val());
+          //     }
+          //
+          //     if(zc === "" && count < maxListings){ //if no filter, want to still show listings
+          //       count++;
+          //       fetchedItems.push(childNodes.val());
+          //     }
+          //   });
+          // });
+        firebase.database().ref("/itemDb").orderByChild('location').equalTo(zc).limitToLast(maxListings).on("value", function(snapshot) {
+          snapshot.forEach(function(childNodes) {
+            fetchedItems.push( childNodes.val());
           });
+        });
+        if(zc === ""){ //if no filter, want to still show listings
+          firebase.database().ref("/itemDb").limitToLast(maxListings).on('value', function(snap){
+             snap.forEach(function(childNodes){
+               fetchedItems.push(childNodes.val());
+             });
+          });
+        }
         if(fetchedItems !== null || fetchedItems !== []){
           this.setState({listing: fetchedItems});
-        } else {
-
         }
     }
 
     filtCategory = (category) => {
-      console.log(category);
-      console.log(this.state.listing);
-      var count = 0;
+      //var count = 0;
       var maxListings = 6; // can be dynamic later
       var fetchedItems = [];
 
       if (category === 'Select a Category' && this.state.listings === []){
-        firebase.database().ref("/itemDb").on('value', function(snap){
+        firebase.database().ref("/itemDb").limitToLast(maxListings).on('value', function(snap){
           snap.forEach(function(childNodes){
-            if(count < maxListings){
-              count++;
               fetchedItems.push(childNodes.val());
-            }
           });
         });
       }
-      if (category !== 'Select a Category'){
-          console.log(this.state.listing);
-          firebase.database().ref("/itemDb").on('value', function(snap){
-            snap.forEach(function(childNodes){
-              if(childNodes.val().category === category && count < maxListings){
-                count++;
-                fetchedItems.push( childNodes.val());
-              }
-
-
-            });
+      if(category !== 'Select a Category'){
+        firebase.database().ref("/itemDb").orderByChild('category').equalTo(category).limitToLast(maxListings).on("value", function(snapshot) {
+          snapshot.forEach(function(childNodes) {
+              fetchedItems.push( childNodes.val());
           });
-          this.setState({listing: fetchedItems});
-        }
+        });
+        this.setState({listing: fetchedItems});
       }
+
+    }
+      // if (category !== 'Select a Category'){
+      //     console.log(this.state.listing);
+      //     firebase.database().ref("/itemDb").on('value', function(snap){
+      //       snap.forEach(function(childNodes){
+      //         if(childNodes.val().category === category && count < maxListings){
+      //           count++;
+      //           fetchedItems.push( childNodes.val());
+      //         }
+      //
+      //
+      //       });
+      //     });
+      //     this.setState({listing: fetchedItems});
+      //   }
+
       // if(obj !== 'Select a Category'){
       //   console.log(obj);
       //   firebase.database().ref("/itemDb").on('value', function(snap){
