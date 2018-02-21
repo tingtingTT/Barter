@@ -24,8 +24,8 @@ const listingHome = (props)=> {
         <div className={classes.ListingHome}>
             {listingItemsHome}
         </div>
-        
+
     )
 }
- 
+
 export default listingHome;

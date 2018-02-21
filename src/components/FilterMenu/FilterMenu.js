@@ -17,39 +17,42 @@ class FilterMenu extends React.Component {
 
   filterZip(){
     var zc = document.getElementById('filterZip').value; //zipcode entered
-    firebase.database().ref("/itemDb").on('value', function(snap){
-      snap.forEach(function(childNodes){
-        //This loop iterates over children of user_id
-        //childNodes.key is key of the children of userid such as (-L5LoRiCBmIwqNw0kP7c)
-        //childNodes.val().name;
-        //childNodes.val().category;
-        //childNodes.val().location;
-        //childNodes.val().interval_time
-        //console.log(childNodes);
-          if(childNodes.val().location === zc){
-            console.log(childNodes.val().itemName);
-          }
-      });
-    });
+    //console.log(zc);
+    return zc;
+    //   firebase.database().ref("/itemDb").on('value', function(snap){
+    //   snap.forEach(function(childNodes){
+    //     //This loop iterates over children of user_id
+    //     //childNodes.key is key of the children of userid such as (-L5LoRiCBmIwqNw0kP7c)
+    //     //childNodes.val().name;
+    //     //childNodes.val().category;
+    //     //childNodes.val().location;
+    //     //childNodes.val().interval_time
+    //     //console.log(childNodes);
+    //       if(childNodes.val().location === zc){
+    //         console.log(childNodes.val().itemName);
+    //       }
+    //   });
+    // });
   }
   filterCategory(obj){
-    if(obj !== 'Select a Category'){
-      console.log(obj);
-      firebase.database().ref("/itemDb").on('value', function(snap){
-        snap.forEach(function(childNodes){
-          //This loop iterates over children of user_id
-          //childNodes.key is key of the children of userid such as (-L5LoRiCBmIwqNw0kP7c)
-          //childNodes.val().name;
-          //childNodes.val().time;
-          //childNodes.val().rest_time;
-          //childNodes.val().interval_time
-          //console.log(childNodes);
-          if(childNodes.val().category === obj){
-            console.log(childNodes.val().itemName);
-          }
-        });
-      });
-    }
+    return obj;
+    // if(obj !== 'Select a Category'){
+    //   console.log(obj);
+    //   firebase.database().ref("/itemDb").on('value', function(snap){
+    //     snap.forEach(function(childNodes){
+    //       //This loop iterates over children of user_id
+    //       //childNodes.key is key of the children of userid such as (-L5LoRiCBmIwqNw0kP7c)
+    //       //childNodes.val().name;
+    //       //childNodes.val().time;
+    //       //childNodes.val().rest_time;
+    //       //childNodes.val().interval_time
+    //       //console.log(childNodes);
+    //       if(childNodes.val().category === obj){
+    //         console.log(childNodes.val().itemName);
+    //       }
+    //     });
+    //   });
+    // }
   }
 
   render() {
@@ -57,12 +60,13 @@ class FilterMenu extends React.Component {
     return (
       <div className={classes.FilterMenu}>
         <div className={classes.menuItem}>
-        <CategoryMenu onChange ={this.filterCategory}/>
+        <CategoryMenu onChange ={this.props.onChange}/>
       </div>
       <div className={classes.menuItem}>
-        <ZipCodeMenu onClick={this.filterZip}/>
+        <ZipCodeMenu onClick={this.props.onClick}/>
       </div>
       </div>
+
     );
   }
 
