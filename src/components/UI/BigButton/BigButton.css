@@ -1,0 +1,75 @@
+/* .container {
+    position: relative;
+    height: 70px;
+    width:150px;
+}
+.triangle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-clip-path: polygon(100% 0, 0 0, 0 100%);
+    clip-path: polygon(100% 0, 0 0, 0 100%);
+    background-color: rgb(179, 67, 78); 
+}*/
+
+.button2 {
+    background-color: #E54A59;
+    height: 6rem;
+    width:15rem;
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+  }
+
+
+
+  .button2 div {
+    transition: all .5s ease-in-out;
+  }
+  
+  .button2 div:nth-of-type(1){
+    background-color: none;
+    border-top: 1px solid white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%;
+  }
+  .button2 div:nth-of-type(2){
+    background-color: none;
+    border-left: 1px solid white;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 0%;
+  }
+  .button2 div:nth-of-type(3){
+    background-color: none;
+    border-bottom: 1px solid white;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0%;
+  }
+  .button2 div:nth-of-type(4){
+    background-color: none;
+    border-right: 1px solid white;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 0%;
+  }
+  
+  .button2:hover div{
+    width: 100%;
+    height: 100%;
+  }
+
+  .font {
+    font-family: sans-serif;
+    font-weight: 200;
+    color: white;
+    font-size: 2rem;
+  }

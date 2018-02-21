@@ -15,6 +15,10 @@ import {database} from 'firebase';
 import Banner from '../../components/Banner/Banner';
 import FilterMenu from '../../components/FilterMenu/FilterMenu';
 
+
+
+import ItemDetails from '../../components/ItemDetails/ItemDetails';
+
 class Home extends Component {
 
     state = {

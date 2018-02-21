@@ -1,0 +1,62 @@
+.ItemDetails {
+    margin-top: 3rem;
+}
+
+.row {
+    width: 80%;
+    margin: 0 auto;
+    clear: both;
+
+}
+.col1of2 {
+    width: 50%;
+    float: left;
+    text-align: center;
+}
+.title {
+    font-size: 3rem;
+}
+.image {
+    width: 100%;
+}
+.ownerDetails {
+    width: 100%;
+    display: inline-block;
+    text-align: left;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+.userIcon {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 2.5rem;
+    background-color: black;
+    display: inline-block;
+}
+.owner {
+    padding: 0;
+    margin: 0; 
+    font-size: 1.8rem;
+    position: absolute;
+    top: 0rem;
+    left: 5.5rem
+    
+}
+.rating {
+    padding: 0;
+    margin: 0; 
+    font-size: 1.8rem;
+    position: absolute;
+    top: 2.5rem;
+    left: 5.5rem
+    
+}
+.description {
+    border: 2px solid #E54A59;
+    border-radius: 2rem;
+    padding: 1.4rem; 
+}
+.descText {
+    font-size: 1.6rem;
+}

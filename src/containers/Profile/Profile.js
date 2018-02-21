@@ -115,7 +115,7 @@ class Profile extends Component {
 
         
 		return (
-            <div className={classes.Profile}>
+            <div className={classes.content}>
                 <Button label="+ ITEM" clicked={this.addingItemHandler}/>
                 <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
                     <AddListing closeModal={this.closeHandler} 
