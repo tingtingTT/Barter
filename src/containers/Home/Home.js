@@ -102,21 +102,7 @@ class Home extends Component {
       //var count = 0;
       const maxListings = 6; // can be dynamic later
       var fetchedItems = [];
-          // old code - don't delete yet, in case.
-          // firebase.database().ref("/itemDb").on('value', function(snap){
-          //   snap.forEach(function(childNodes){
-          //
-          //     if(childNodes.val().location === zc && count < maxListings){
-          //       count++;
-          //       fetchedItems.push( childNodes.val());
-          //     }
-          //
-          //     if(zc === "" && count < maxListings){ //if no filter, want to still show listings
-          //       count++;
-          //       fetchedItems.push(childNodes.val());
-          //     }
-          //   });
-          // });
+
         var that = this;
         firebase.database().ref("/itemDb").orderByChild('location').equalTo(zc).limitToLast(maxListings).on("value", function(snapshot) {
           snapshot.forEach(function(childNodes) {
@@ -158,9 +144,7 @@ class Home extends Component {
           });
           that.setState({listing: fetchedItems});
         });
-
       }
-
     }
 
 
