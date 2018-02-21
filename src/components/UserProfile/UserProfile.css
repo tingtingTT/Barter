@@ -1,0 +1,15 @@
+.profileContainer {
+    border: 2px solid #E54A59;
+    width: 25rem;
+    height: 30rem;
+}
+.profPic {
+    width: 25rem;
+    height: 20rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.infoBox {
+
+}
