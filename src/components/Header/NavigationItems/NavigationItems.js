@@ -22,7 +22,7 @@ class NavigationItems extends Component {
 
                 <ul className={classes.NavigationItems}>
                     <NavigationItem show={this.props.userId === 'none'} link='/' >Home</NavigationItem>
-                    <NavigationItem show={this.props.userId === 'none'} link='/profile' >Profile</NavigationItem>
+                    {/* <NavigationItem show={this.props.userId === 'none'} link='/profile' >Profile</NavigationItem> */}
                     <NavigationItem show={this.props.userId === 'none'} link='/login' >Login</NavigationItem>
                     {console.log(this.props.userId)}
                     <NavigationItem show={this.props.userId !== 'none'} link='/' >Home</NavigationItem>
