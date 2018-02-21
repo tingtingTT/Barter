@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink, withRouter } from 'react-router-dom';
 
 import BigButton from '../UI/BigButton/BigButton';
 
@@ -16,7 +17,10 @@ const Banner = (props) => {
                 <h1 className={classes.title}> Join Barter</h1>
                 <h3 className={classes.font}>Join the community that's changing how we trade goods.</h3>
             </div>
-            <BigButton text="Sign-Up" />    
+            <NavLink exact to="/join?source=login">
+                <BigButton text="Sign-Up" />    
+            </NavLink>
+            
 
         </div>
     );

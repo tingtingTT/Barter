@@ -8,7 +8,7 @@ import Inventory from '../../components/Inventory/Inventory';
 import Listing from '../../components/Listing/Listing';
 
 import {connect} from 'react-redux';
-import classes from './Profile.css'
+import classes from './Profile.css';
 
 import axios from 'axios';
 import { Route } from 'react-router-dom';
