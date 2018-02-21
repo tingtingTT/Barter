@@ -8,15 +8,14 @@ const listingItemHome = (props) => (
 
     <div className={classes.Item} onClick={props.clicked}>
         <img src={props.img} className={classes.Image} alt=''/>
-        <p>{props.category || "None"}</p>
+        <div className={classes.text}>{props.category || "None"}</div>
         <p> {props.name} </p>
         <div className={classes.Inside}>
         <div> <FontAwesomeIcon icon="gamepad" size="6x"/></div>
-            <p>{props.category || "None"}</p>
-            <p>{props.name}</p>
-            <h2>Plcae Holder</h2>
-            <p2>0 </p2>
-            <p> Bid </p>
+            <div className={classes.text}>{props.category || "None"}</div>
+            <div className={classes.text}>{props.name}</div>
+            <div className={classes.text}>0 </div>
+            <div className={classes.text}> Bid </div>
         </div>
     </div>
 

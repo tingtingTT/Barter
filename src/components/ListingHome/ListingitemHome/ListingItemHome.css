@@ -40,8 +40,15 @@
     align-self: center;
 }
 
+.Item textbelow{
+    font-size: 4rem;
+    width: 100%;
+    height: 40%;
+    align-self: center;
+}
 
-.Item p {
+
+.Item .text {
     font-size: 2rem;
     align-self: center;
 }

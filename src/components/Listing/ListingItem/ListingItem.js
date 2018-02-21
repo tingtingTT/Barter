@@ -11,12 +11,10 @@ const listingItem = (props) => (
         <p> 0 </p>
         <p> Bid </p>
         <div className={classes.Inside}>
-            <h1>{props.category || "None"}</h1>
-            <h1>{props.name}</h1>
-            <h1>0 Bid</h1>
-            <h2>Place Holder</h2>
-            <h1>Edit</h1>
-            <h2>Plcae Holder</h2>
+            <div className={classes.line}>{props.category || "None"}</div>
+            <div className={classes.line}>{props.name}</div>
+            <div className={classes.line}>0 Bid</div>
+            <button>Edit</button>
             <Button label="Delete"></Button>
         </div>
     </div>

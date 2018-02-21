@@ -56,9 +56,12 @@
     align-self: center;
 }
 
-.Item h1{
+.Item .line{
     font-size: 1.5rem;
     align-self: center;
+    width: 100%;
+    height: 10%;
+    position: relative;
 }
 
 .Item h2{
