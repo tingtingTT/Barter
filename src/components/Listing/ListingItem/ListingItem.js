@@ -7,7 +7,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 const listingItem = (props) => (
 
-    <div className={classes.Item} onClick={props.clicked}>
+    <div className={classes.Item}>
         <img src={props.img} className={classes.Image} alt=''/>
         <div> <FontAwesomeIcon icon="gamepad" size="3x"/></div>
         <div className={classes.Textnum}>0 </div>

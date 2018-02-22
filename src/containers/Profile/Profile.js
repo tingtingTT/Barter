@@ -114,13 +114,7 @@ class Profile extends Component {
         const itemObj = {...items[itemID]};
     
         this.setState({itemToEdit: itemObj, editingItem: true});
-       
     };
-
-    deleteItem = (itemID) => {
-        
-    };
-
 
     closeHandler = () => {
         this.setState({addingItem: false, editingItem: false});
