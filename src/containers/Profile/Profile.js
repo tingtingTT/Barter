@@ -102,6 +102,21 @@ class Profile extends Component {
        
     };
 
+
+    editListingItemHandler = (itemID) => {
+        
+        // makes an items oject of the form --> itemID: {name: '', desc: '' ...}
+        const items = {};
+        for (let item in this.state.listing) {
+            items[this.state.listing[item].id] = this.state.listing[item];
+        }
+
+        const itemObj = {...items[itemID]};
+    
+        this.setState({itemToEdit: itemObj, editingItem: true});
+       
+    };
+
     deleteItem = (itemID) => {
         
     };
@@ -129,7 +144,7 @@ class Profile extends Component {
 
                 </Modal>
                 <div>
-                    <Listing listing={this.state.listing.reverse()} />
+                    <Listing listing={this.state.listing.reverse()} editItemHandler={this.editListingItemHandler}/>
                 </div>
                 <div>
                     <Inventory inventory={this.state.inventory.reverse()} editItemHandler={this.editItemHandler}/>
