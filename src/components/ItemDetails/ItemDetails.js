@@ -15,7 +15,7 @@ const itemDetails = ( props ) => {
         owner: 'PennyMonster38'
     }
 
-    
+    // Once this is implemented using Props, need to change everything that gets info from Items
     return (
         <div className = {classes.ItemDetails}>
             <div className = {classes.row}>

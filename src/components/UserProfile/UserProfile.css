@@ -1,15 +1,39 @@
 .profileContainer {
-    border: 2px solid #E54A59;
+    /* border: 2px solid #E54A59; */
     width: 25rem;
     height: 30rem;
 }
 .profPic {
     width: 25rem;
-    height: 20rem;
+    height: 25rem;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    border-radius: 6px;
+}
+.userName {
+    margin: 1rem 0 1rem 0;
+    padding: 0;
+    font-size: 3rem;
+    font-weight: 500;
 }
 .infoBox {
-
+    border-top: 1px solid grey;
+    padding-top: 1rem;
+    padding-left: 1rem;
+}
+.infoBox p{
+    display: inline;
+    
+}
+.info {
+    margin-bottom: 1.5rem;
+}
+.info p {
+    color: grey;
+    font-size: 1.5rem;
+}
+.infoText {
+    color: rgb(101, 101, 101);
+    margin-left: 1.2rem;
 }

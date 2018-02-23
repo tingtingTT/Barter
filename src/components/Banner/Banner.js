@@ -8,7 +8,7 @@ import classes from './Banner.css'
  // TODO: Get Logged in State from global state
 const Banner = (props) => {
 
-    const LoggedIn = true;
+    const LoggedIn = false;
 
     let banner = (
         

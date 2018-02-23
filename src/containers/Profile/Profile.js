@@ -113,7 +113,7 @@ class Profile extends Component {
     };
 
 	render () {
-
+        
         
 		return (
             <div className={classes.content}>
