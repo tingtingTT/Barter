@@ -95,10 +95,11 @@ class Profile extends Component {
         // makes an items object of the form --> itemID: {name: '', desc: '' ...}
         const items = {};
         let itemToEdit = this.state.inventory[itemID];
-
+        itemToEdit.id = itemID; //Really just an index location
         console.log(itemToEdit);
 
         //const itemObj = {...items[itemID]};
+
 
         this.setState({itemToEdit: itemToEdit, editingItem: true});
        
