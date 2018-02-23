@@ -17,7 +17,7 @@ const listingItem = (props) => (
             <div className={classes.Line}>{props.name}</div>
             <div className={classes.Line}>0 Bid</div>
             <div className={classes.Button2} style={{bottom: "100px"}}  onClick={props.clicked}>Edit</div>
-            <div className={classes.Button2}>Delete</div>
+            <div className={classes.Button2} onClick={props.deleteItem}>Delete</div>
         </div>
     </div>
 

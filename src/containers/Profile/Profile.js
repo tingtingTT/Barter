@@ -116,6 +116,13 @@ class Profile extends Component {
         this.setState({itemToEdit: itemObj, editingItem: true});
     };
 
+
+
+    deleteItemHandler = (itemID) => {
+        console.log(itemID);
+        firebase.database().ref('inventory/' + itemID).remove();
+    };
+
     closeHandler = () => {
         this.setState({addingItem: false, editingItem: false});
     };
@@ -138,7 +145,8 @@ class Profile extends Component {
 
                 </Modal>
                 <div>
-                    <Listing listing={this.state.listing.reverse()} editItemHandler={this.editListingItemHandler}/>
+                    <Listing listing={this.state.listing.reverse()} editListingItemHandler={this.editListingItemHandler} 
+                    deleteItemHandler={this.deleteItemHandler}/>
                 </div>
                 <div>
                     <Inventory inventory={this.state.inventory.reverse()} editItemHandler={this.editItemHandler}/>

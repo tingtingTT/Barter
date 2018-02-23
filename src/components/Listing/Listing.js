@@ -1,5 +1,7 @@
 //Haven't tested any of this but it should be legit
 import React from 'react';
+import firebase from 'firebase';
+
 
 import ListingItem from './ListingItem/ListingItem';
 
@@ -15,7 +17,10 @@ const listing = (props)=> {
                 desc={item.desc}
                 category={item.category}
                 // numBid = {}
-                clicked={() => props.editItemHandler(item.id)}
+                clicked={() => props.editListingItemHandler(item.id)}
+                // Delete item handler
+                // TODO: need to re-populate listing items and delete listing items here
+                deleteItem={() => props.deleteItemHandler(item.id)}
             />
         ))
     )
