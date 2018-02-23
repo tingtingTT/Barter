@@ -97,6 +97,57 @@ class Home extends Component {
 
     }
 
+    filtZipcode = () => {
+      var zc = document.getElementById('filterZip').value;
+      //var count = 0;
+      const maxListings = 6; // can be dynamic later
+      var fetchedItems = [];
+
+        var that = this;
+        firebase.database().ref("/itemDb").orderByChild('location').equalTo(zc).limitToLast(maxListings).on("value", function(snapshot) {
+          snapshot.forEach(function(childNodes) {
+            fetchedItems.push( childNodes.val());
+          });
+            that.setState({listing: fetchedItems});
+        });
+
+        var that = this;
+        if(zc === ""){ //if no filter, want to still show listings
+          firebase.database().ref("/itemDb").limitToLast(maxListings).on('value', function(snap){
+             snap.forEach(function(childNodes){
+               fetchedItems.push(childNodes.val());
+             });
+             if(fetchedItems !== null || fetchedItems !== []){
+               that.setState({listing: fetchedItems});
+             }
+          });
+        }
+    }
+
+    filtCategory = (category) => {
+      //var count = 0;
+      var maxListings = 6; // can be dynamic later
+      var fetchedItems = [];
+      var that = this;
+      if (category === 'Select a Category' && this.state.listings === []){
+        firebase.database().ref("/itemDb").limitToLast(maxListings).on('value', function(snap){
+          snap.forEach(function(childNodes){
+              fetchedItems.push(childNodes.val());
+          });
+          that.setState({listing: fetchedItems});
+        });
+      }
+      if(category !== 'Select a Category'){
+        firebase.database().ref("/itemDb").orderByChild('category').equalTo(category).limitToLast(maxListings).on("value", function(snapshot) {
+          snapshot.forEach(function(childNodes) {
+              fetchedItems.push( childNodes.val());
+          });
+          that.setState({listing: fetchedItems});
+        });
+      }
+    }
+
+
 	render () {
 		return (
             <div className={classes.Home}>
@@ -104,7 +155,7 @@ class Home extends Component {
                     <Banner></Banner>
                 </div>
                 { <div>
-                    <FilterMenu/>
+                    <FilterMenu onChange={this.filtCategory} onClick={this.filtZipcode}/>
                 </div> }
                 <div>
                     <ListingHome listing={this.state.listing.reverse()} />
