@@ -89,16 +89,18 @@ class Profile extends Component {
     };
 
     editItemHandler = (itemID) => {
-        
-        // makes an items oject of the form --> itemID: {name: '', desc: '' ...}
-        const items = {};
-        for (let item in this.state.inventory) {
-            items[this.state.inventory[item].id] = this.state.inventory[item];
-        }
 
-        const itemObj = {...items[itemID]};
-    
-        this.setState({itemToEdit: itemObj, editingItem: true});
+
+        console.log(itemID);
+        // makes an items object of the form --> itemID: {name: '', desc: '' ...}
+        const items = {};
+        let itemToEdit = this.state.inventory[itemID];
+
+        console.log(itemToEdit);
+
+        //const itemObj = {...items[itemID]};
+
+        this.setState({itemToEdit: itemToEdit, editingItem: true});
        
     };
 
