@@ -350,12 +350,13 @@ class AddListingForm extends Component {
         if (this.props.editingItem){
         
             for (let key in this.state.itemForm) {
+                console.log(key);
                 if (!this.state.itemForm[key].clicked){
                     const config = {
                         ...this.state.itemForm[key]
                     }
                     if(this.props.editingItem) {
-                       config.value = values[key]
+                        config.value = values[key]
                     }
                     
                     formElementsArray.push({

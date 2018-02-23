@@ -72,7 +72,7 @@ class Profile extends Component {
         userItems.child(name+ '/').on('value', snapshot =>{
             const items = snapshot.val();
             //console.log('in promise .on userid is', name)
-            //console.log('items in compdidmount',items);
+            console.log('items in compdidmount',items);
             if(items != null){
                 this.setState({inventory: items});
                 this.setState({listing: items});
@@ -104,6 +104,7 @@ class Profile extends Component {
 
 
     editListingItemHandler = (itemID) => {
+        console.log(itemID);
         
         // makes an items oject of the form --> itemID: {name: '', desc: '' ...}
         const items = {};
@@ -157,11 +158,18 @@ class Profile extends Component {
         
 }
 
+
+const mapDispatchToProps = dispatch =>{
+    return {
+        onLogout: () => dispatch({type: 'LOGOUT'}),
+    }
+};
+
 const mapStateToProps = state => {
     return {
         userId: state.userId
     }
-};
+}
 
 
-export default connect(mapStateToProps) (Profile);
+export default connect(mapStateToProps, mapDispatchToProps) (Profile);
