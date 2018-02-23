@@ -50,7 +50,7 @@ class ItemDetails extends Component {
                             {/* this is a placeholder for now, it should be the userIcon */}
                             <div className={classes.userIcon}></div>
                             <p className = {classes.owner}>{item.owner}</p>
-                            <p className = {classes.owner}>[rating]</p>
+                            {/* <p className = {classes.owner}>[rating]</p> */}
                         </div>
                         
                     </div>
@@ -61,8 +61,9 @@ class ItemDetails extends Component {
                     </div>
                 </div>
                 <div className = {classes.row}>
+                    <h3>Item Description</h3>
                     <div className = {classes.description}>
-                        <p classes = {classes.descText}>{this.state.item.desc}</p>
+                        <p className = {classes.descText}>{this.state.item.desc}</p>
                     </div>
                 </div>
     
