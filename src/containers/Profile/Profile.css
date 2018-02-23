@@ -9,10 +9,28 @@
     text-align: center;
     margin-top: 60px;
 }
-
-.Inventory{
-    flex-flow: row;
+.row {
+    width: 80%;
+    margin: 0 auto;
+    clear: both;
 }
+.col1of4{
+    width: 23%;
+    margin-right: 4%;
+    float: left;
+}
+.col3of4{
+    width: 73%;
+    float: left;
+}
+
+.inventoryContainer {
+    clear: both;
+}
+/* .Inventory{
+    flex-flow: row;
+} */
+
 
 .content {
     margin-top: 7rem;

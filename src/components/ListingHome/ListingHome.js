@@ -7,6 +7,8 @@ import classes from '../Listing/Listing.css';
 
 const listingHome = (props)=> {
 
+   
+
     const listingItemsHome = (
         props.listing.map(item => (
             <ListingItemHome key={item.id}
