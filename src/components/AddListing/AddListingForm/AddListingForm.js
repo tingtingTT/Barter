@@ -123,14 +123,14 @@ class AddListingForm extends Component {
     };
 
     componentDidMount = () =>{
-        //console.log(getUserListingsArray(this.props.userId));
+        console.log(getUserListingsArray(this.props.userId));
         //console.log(this.props.userId);
     };
 
 
     // POSTS INPUT FIELDS TO DB
     addListingHandler = (event) => { 
-        console.log("addlisting userID:", this.props.userId);
+        console.log(this.props.userId);
         event.preventDefault();
 
     
@@ -171,8 +171,8 @@ class AddListingForm extends Component {
         // update existing item
         if(this.props.editingItem){
             //TODO: Convert this to firebase UserItems format
-            console.log('attempting to push to user:slot',this.props.userId, this.props.id);
-            userItems.child(this.props.userId).child(this.props.id).set({
+
+            firebase.database().ref('inventory/').push({
                 itemName: listing.itemName,
                 desc: listing.desc,
                 category: listing.category,
@@ -198,6 +198,7 @@ class AddListingForm extends Component {
                 location:'95060',
 
             }).then(response => {
+
                 console.log('Posted to central itemDb')
             });
 
@@ -274,7 +275,6 @@ class AddListingForm extends Component {
 
     // Delete item handler
     deleteItem = () => {
-        console.log('registered delete');
         if(this.props.editingItem){
             firebase.database().ref('inventory/' + this.props.id).remove().then(response => {
                 this.resetValues();

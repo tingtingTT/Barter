@@ -22,12 +22,12 @@ const inventory = (props) => {
    
    
     const inventoryItems = (
-        props.inventory.map((item, index) => (
-            <InventoryItem key={index}
+        props.inventory.map(item => (
+            <InventoryItem key={item.id}
                 img={item.imageURL}
                 name={item.itemName}
                 desc={item.desc}
-                clicked={() => props.editItemHandler(index)}
+                clicked={() => props.editItemHandler(item.id)}
             />
         ))
     )
