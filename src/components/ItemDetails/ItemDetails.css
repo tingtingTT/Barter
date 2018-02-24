@@ -1,5 +1,5 @@
 .ItemDetails {
-    margin-top: 3rem;
+    margin-top: 6rem;
 }
 
 .row {
@@ -15,9 +15,11 @@
 }
 .title {
     font-size: 3rem;
+    text-transform: capitalize;
 }
 .image {
     width: 100%;
+    border-radius: 10px;
 }
 .ownerDetails {
     width: 100%;
@@ -52,10 +54,15 @@
     left: 5.5rem
     
 }
+h3 {
+    font-size: 2rem;
+    color: #474142;
+}
 .description {
     border: 2px solid #E54A59;
     border-radius: 2rem;
     padding: 1.4rem; 
+    min-height: 7rem;
 }
 .descText {
     font-size: 1.6rem;
