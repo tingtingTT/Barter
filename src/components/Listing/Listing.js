@@ -8,14 +8,17 @@ import classes from './Listing.css';
 const listing = (props)=> {
 
     const listingItems = (
-        props.listing.map(item => (
+        //CHANGE ADDED HERE   <__  V  __>
+
+        props.listing.map((item) => (
             <ListingItem key={item.id}
                 img={item.imageURL}
                 name={item.itemName}
                 desc={item.desc}
                 category={item.category}
+                // key={props.listing.indexOf(item)}
                 // numBid = {}
-                // clicked={() => this.itemClicked(item.id)}
+               deleteHandler={props.deleteHandler}//(item.id)}//(props.listing.indexOf(item))}
             />
         ))
     )

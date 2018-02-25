@@ -73,7 +73,7 @@ class Profile extends Component {
         userItems.child(name+ '/').on('value', snapshot =>{
             const items = snapshot.val();
             //console.log('in promise .on userid is', name)
-            //console.log('items in compdidmount',items);
+            console.log('items in compdidmount',items);
             if(items != null){
                 this.setState({inventory: items});
                 this.setState({listing: items});
@@ -90,16 +90,18 @@ class Profile extends Component {
     };
 
     editItemHandler = (itemID) => {
-        
-        // makes an items oject of the form --> itemID: {name: '', desc: '' ...}
+
+        console.log(itemID);
+        // makes an items object of the form --> itemID: {name: '', desc: '' ...}
         const items = {};
-        for (let item in this.state.inventory) {
-            items[this.state.inventory[item].id] = this.state.inventory[item];
-        }
+        let itemToEdit = this.state.inventory[itemID];
+        itemToEdit.id = itemID; //Really just an index location
+        console.log(itemToEdit);
 
         const itemObj = {...items[itemID]};
-    
-        this.setState({itemToEdit: itemObj, editingItem: true});
+
+
+        this.setState({itemToEdit: itemToEdit, editingItem: true});
        
     };
 
