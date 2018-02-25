@@ -13,6 +13,7 @@
     width: 80%;
     margin: 0 auto;
     clear: both;
+    position: relative;
 }
 .col1of4{
     width: 23%;
@@ -24,12 +25,23 @@
     float: left;
 }
 
-.inventoryContainer {
-    clear: both;
+.sectionTitle {
+    font-size: 3.5rem;
+    margin: 0;
+    text-transform: capitalize;
 }
-/* .Inventory{
-    flex-flow: row;
-} */
+.sectionDesc {
+    margin: 0;
+    font-size: 1.6rem;
+}
+.addItemButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.spacer {
+    margin-bottom: 4rem;
+}
 
 
 .content {

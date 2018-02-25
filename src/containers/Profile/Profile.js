@@ -127,7 +127,9 @@ class Profile extends Component {
                             zipCode="94070"/>
                     </div>
                     <div className={classes.col3of4}>
-                        <Button label="+ ITEM" clicked={this.addingItemHandler}/>
+                        <h1 className={classes.sectionTitle}>Auction items</h1>
+                        <p className={classes.sectionDesc}>These items are available for other members to bid on.</p>
+                        
                         <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
                             <AddListing closeModal={this.closeHandler} 
                                 editingItem={this.state.editingItem} 
@@ -140,6 +142,7 @@ class Profile extends Component {
 
                         </Modal>
                         <div>
+                            
                             <Listing listing={this.state.listing.reverse()} />
                         </div>
                        
@@ -148,10 +151,16 @@ class Profile extends Component {
                    
                    
                 </div>
-
-                <div className={classes.inventoryContainer}>
+                <div className={classes.row}>
+                    <h1 className={classes.sectionTitle}>Bid items</h1>
+                    <p className={classes.sectionDesc}>Use these items to bid on other members auction items.</p>
+                    <div className={classes.addItemButton}>
+                        <Button label="+ ITEM" clicked={this.addingItemHandler}/>
+                    </div>
+                    <div className={classes.spacer}></div>
                     <Inventory inventory={this.state.inventory.reverse()} editItemHandler={this.editItemHandler}/>
                 </div>
+                
                 
             </div>
         );
