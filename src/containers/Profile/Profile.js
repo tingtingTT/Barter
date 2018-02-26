@@ -143,7 +143,7 @@ class Profile extends Component {
                         </Modal>
                         <div>
                             
-                            <Listing listing={this.state.listing.reverse()} />
+                            <Listing listing={this.state.listing} />
                         </div>
                        
                     </div>
