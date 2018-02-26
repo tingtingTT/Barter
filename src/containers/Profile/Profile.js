@@ -143,7 +143,7 @@ class Profile extends Component {
                         </Modal>
                         <div>
                             
-                            <Listing listing={this.state.listing.reverse()} />
+                            <Listing listing={this.state.listing} />
                         </div>
                        
                     </div>
@@ -158,7 +158,7 @@ class Profile extends Component {
                         <Button label="+ ITEM" clicked={this.addingItemHandler}/>
                     </div>
                     <div className={classes.spacer}></div>
-                    <Inventory inventory={this.state.inventory.reverse()} editItemHandler={this.editItemHandler}/>
+                    <Inventory inventory={this.state.inventory} editItemHandler={this.editItemHandler}/>
                 </div>
                 
                 
