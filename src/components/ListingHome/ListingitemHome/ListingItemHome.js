@@ -27,7 +27,7 @@ const listingItemHome = (props) => {
         <img src={props.img} className={classes.Image} alt=''/>
         <div> <FontAwesomeIcon icon={props.category} size="3x"/></div>
         <div className={classes.Text}>{props.name}</div>
-        <div className={classes.Inside}>
+        <div className={classes.Inside} onClick={openDetails}>
             <div> <FontAwesomeIcon icon={props.category} size="3x"/></div>
             <div className={classes.Text}>{props.name}</div>
             <div className={classes.Textnum}>0 </div>
