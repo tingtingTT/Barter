@@ -13,6 +13,24 @@
     float: left;
     text-align: center;
 }
+.button {
+  display: inline;
+  position: relative;
+  right: 0px;
+  box-sizing: border-box;
+  width: 10%;
+  outline: 0;
+  margin: 10px;
+  border: 1px solid #373277;
+  border-radius: 0;
+  background: #E54A59;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+  cursor: pointer;
+}
+
 .title {
     font-size: 3rem;
     text-transform: capitalize;
@@ -38,21 +56,21 @@
 }
 .owner {
     padding: 0;
-    margin: 0; 
+    margin: 0;
     font-size: 1.8rem;
     position: absolute;
     top: 0rem;
     left: 5.5rem
-    
+
 }
 .rating {
     padding: 0;
-    margin: 0; 
+    margin: 0;
     font-size: 1.8rem;
     position: absolute;
     top: 2.5rem;
     left: 5.5rem
-    
+
 }
 h3 {
     font-size: 2rem;
@@ -61,7 +79,7 @@ h3 {
 .description {
     border: 2px solid #E54A59;
     border-radius: 2rem;
-    padding: 1.4rem; 
+    padding: 1.4rem;
     min-height: 7rem;
 }
 .descText {
