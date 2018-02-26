@@ -24,6 +24,9 @@ class ItemDetails extends Component {
 
     setWinner(){
       console.log('winner!');
+      //make code later when other items implemented.
+      //make Winner
+      //remove items from invy
     }
     componentWillMount () {
         console.log('item');
@@ -74,13 +77,16 @@ class ItemDetails extends Component {
                         {/*pass in item.zipCode as props to the map*/}
                         MAP
                     </div>
+
                 </div>
+
                 <div className = {classes.row}>
                     <h3>Item Description</h3>
                     <div className = {classes.description}>
                         <p className = {classes.descText}>{this.state.item.desc}</p>
-                        { this.isOwner(this.state.item.owner) ? <WinningBidButton onClick={this.setWinner}/> : null }
+                  { this.isOwner(item.owner) ? <WinningBidButton onClick={this.setWinner}/> : null }
                     </div>
+
                 </div>
 
             </div>
