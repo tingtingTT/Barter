@@ -9,7 +9,7 @@ import classes from './WinningBidButton.css';
 const WinningBidButton = (props) => {
 
 
-
+//                  { this.isOwner(item.owner) ? <WinningBidButton onClick={this.setWinner}/> : null }
   return (
     <button id="WinnerButton" className={classes.button} type="button" onClick={props.onClick}>
       Choose Winner
