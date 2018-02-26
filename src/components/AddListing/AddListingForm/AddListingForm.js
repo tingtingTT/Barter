@@ -206,18 +206,23 @@ class AddListingForm extends Component {
             userItems.child(this.props.userId).once('value', snapshot =>{
                 console.log(snapshot.val());
                 items = snapshot.val();
-            });
-            if(items === null){
-                console.log('items is null');
-                items = [];
-                items.push(listing);
-            }else{
-                items.push(listing);
-            }
+            }).then(()=>{
+                if(items === null){
+                    console.log('items is null');
+                    items = [];
+                    items.push(listing);
+                }else{
+                    items.push(listing);
+                }
 
-            userItems.child(this.props.userId+'/').set(items).then(response => {
+                userItems.child(this.props.userId+'/').set(items).then(response => {
+                    this.resetValues();
+                    console.log('listing sent adllisting userID', this.props.userId);
+                    this.props.closeModal();
+                });
+                //just in case it fucks up
+
                 this.resetValues();
-                console.log('listing sent adllisting userID', this.props.userId);
                 this.props.closeModal();
             });
             //
