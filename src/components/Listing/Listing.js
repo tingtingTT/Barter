@@ -10,8 +10,10 @@ import classes from './Listing.css';
 const listing = (props)=> {
 
     const listingItems = (
-        props.listing.map(item => (
-            <ListingItem key={item.id}
+        //CHANGE ADDED HERE   <__  V  __>
+
+        props.listing.map((item, index) => (
+            <ListingItem key={index}
                 img={item.imageURL}
                 name={item.itemName}
                 desc={item.desc}
@@ -19,11 +21,10 @@ const listing = (props)=> {
                 {...console.log(item.category)}
                 // numBid = {}
                 // {...console.log(item.name)}
-                clicked={() => props.editListingItemHandler(item.id)}
+                clicked={() => props.editListingItemHandler(index)}
                 // Delete item handler
                 // TODO: need to re-populate listing items and delete listing items here
-                deleteItem={() => props.deleteItemHandler(item.id)}
-                getCategory={() => props.getCategory(item.id)}
+                deleteItem={() => props.deleteItemHandler(index)}
             />
         ))
     )

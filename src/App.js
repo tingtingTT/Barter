@@ -13,6 +13,7 @@ import { faGamepad, faEdit, faTrashAlt, faTv, faBriefcase, faWrench, faImages, f
 
 
 import Profile from './containers/Profile/Profile';
+import ItemDetails from './components/ItemDetails/ItemDetails';
 import Login from './components/Login/Login';
 import SignUp from './components/Login/SignUp/SignUp';
 import Banner from './components/Banner/Banner';
@@ -29,6 +30,7 @@ class App extends Component {
         <Layout>
             <Switch>
                 <Route path='/profile' component = {Profile} />
+                <Route path='/details' component = {ItemDetails} />
                 <Route path='/login' component = {Login} />
                 <Route path='/join' component = {SignUp} />
                 <Route path='/' component = {Home} />

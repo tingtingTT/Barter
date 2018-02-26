@@ -6,6 +6,7 @@ import Button from '../../components/UI/Button/Button';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Inventory from '../../components/Inventory/Inventory';
 import Listing from '../../components/Listing/Listing';
+import UserProfile from '../../components/UserProfile/UserProfile';
 
 import {connect} from 'react-redux';
 import classes from './Profile.css';
@@ -89,32 +90,19 @@ class Profile extends Component {
     };
 
     editItemHandler = (itemID) => {
-        
-        // makes an items oject of the form --> itemID: {name: '', desc: '' ...}
-        const items = {};
-        for (let item in this.state.inventory) {
-            items[this.state.inventory[item].id] = this.state.inventory[item];
-        }
 
-        const itemObj = {...items[itemID]};
-    
-        this.setState({itemToEdit: itemObj, editingItem: true});
-       
-    };
-
-
-    editListingItemHandler = (itemID) => {
         console.log(itemID);
-        
-        // makes an items oject of the form --> itemID: {name: '', desc: '' ...}
+        // makes an items object of the form --> itemID: {name: '', desc: '' ...}
         const items = {};
-        for (let item in this.state.listing) {
-            items[this.state.listing[item].id] = this.state.listing[item];
-        }
+        let itemToEdit = this.state.inventory[itemID];
+        itemToEdit.id = itemID; //Really just an index location
+        console.log(itemToEdit);
 
         const itemObj = {...items[itemID]};
-    
-        this.setState({itemToEdit: itemObj, editingItem: true});
+
+
+        this.setState({itemToEdit: itemToEdit, editingItem: true});
+       
     };
 
 
@@ -129,29 +117,53 @@ class Profile extends Component {
     };
 
 	render () {
-
+        
         
 		return (
             <div className={classes.content}>
-                <Button label="+ ITEM" clicked={this.addingItemHandler}/>
-                <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
-                    <AddListing closeModal={this.closeHandler} 
-                        editingItem={this.state.editingItem} 
-                        category={this.state.itemToEdit.category} 
-                        itemName={this.state.itemToEdit.itemName} 
-                        id={this.state.itemToEdit.id} 
-                        desc={this.state.itemToEdit.desc} 
-                        imgURL={this.state.itemToEdit.imageURL}
-                        ItemType={this.state.itemToEdit.ItemType} />
+                <div className={classes.row}>
+                    <div className={classes.col1of4}>
+                        <UserProfile profilePic="https://i.imgur.com/Ig7JBId.jpg"
+                            userName="PennyButt226"
+                            email="getdamouse@gmail.com"
+                            zipCode="94070"/>
+                    </div>
+                    <div className={classes.col3of4}>
+                        <h1 className={classes.sectionTitle}>Auction items</h1>
+                        <p className={classes.sectionDesc}>These items are available for other members to bid on.</p>
+                        
+                        <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
+                            <AddListing closeModal={this.closeHandler} 
+                                editingItem={this.state.editingItem} 
+                                category={this.state.itemToEdit.category} 
+                                itemName={this.state.itemToEdit.itemName} 
+                                id={this.state.itemToEdit.id} 
+                                desc={this.state.itemToEdit.desc} 
+                                imgURL={this.state.itemToEdit.imageURL}
+                                ItemType={this.state.itemToEdit.ItemType} />
 
-                </Modal>
-                <div>
-                    <Listing listing={this.state.listing.reverse()} editListingItemHandler={this.editListingItemHandler} 
-                    deleteItemHandler={this.deleteItemHandler}/>
+                        </Modal>
+                        <div>
+                            
+                            <Listing listing={this.state.listing} editListingItemHandler={this.editItemHandler} />
+                        </div>
+                       
+                    </div>
+                    
+                   
+                   
                 </div>
-                <div>
-                    <Inventory inventory={this.state.inventory.reverse()} editItemHandler={this.editItemHandler}/>
+                <div className={classes.row}>
+                    <h1 className={classes.sectionTitle}>Bid items</h1>
+                    <p className={classes.sectionDesc}>Use these items to bid on other members auction items.</p>
+                    <div className={classes.addItemButton}>
+                        <Button label="+ ITEM" clicked={this.addingItemHandler} />
+                    </div>
+                    <div className={classes.spacer}></div>
+                    <Inventory inventory={this.state.inventory} editItemHandler={this.editItemHandler}/>
                 </div>
+                
+                
             </div>
         );
     }

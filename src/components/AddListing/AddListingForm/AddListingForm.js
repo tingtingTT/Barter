@@ -123,14 +123,14 @@ class AddListingForm extends Component {
     };
 
     componentDidMount = () =>{
-        console.log(getUserListingsArray(this.props.userId));
+        //console.log(getUserListingsArray(this.props.userId));
         //console.log(this.props.userId);
     };
 
 
     // POSTS INPUT FIELDS TO DB
     addListingHandler = (event) => { 
-        console.log(this.props.userId);
+        console.log("addlisting userID:", this.props.userId);
         event.preventDefault();
 
     
@@ -171,8 +171,8 @@ class AddListingForm extends Component {
         // update existing item
         if(this.props.editingItem){
             //TODO: Convert this to firebase UserItems format
-
-            firebase.database().ref('inventory/').push({
+            console.log('attempting to push to user:slot',this.props.userId, this.props.id);
+            userItems.child(this.props.userId).child(this.props.id).set({
                 itemName: listing.itemName,
                 desc: listing.desc,
                 category: listing.category,
@@ -198,7 +198,6 @@ class AddListingForm extends Component {
                 location:'95060',
 
             }).then(response => {
-
                 console.log('Posted to central itemDb')
             });
 
@@ -207,18 +206,23 @@ class AddListingForm extends Component {
             userItems.child(this.props.userId).once('value', snapshot =>{
                 console.log(snapshot.val());
                 items = snapshot.val();
-            });
-            if(items === null){
-                console.log('items is null');
-                items = [];
-                items.push(listing);
-            }else{
-                items.push(listing);
-            }
+            }).then(()=>{
+                if(items === null){
+                    console.log('items is null');
+                    items = [];
+                    items.push(listing);
+                }else{
+                    items.push(listing);
+                }
 
-            userItems.child(this.props.userId+'/').set(items).then(response => {
+                userItems.child(this.props.userId+'/').set(items).then(response => {
+                    this.resetValues();
+                    console.log('listing sent adllisting userID', this.props.userId);
+                    this.props.closeModal();
+                });
+                //just in case it fucks up
+
                 this.resetValues();
-                console.log('listing sent adllisting userID', this.props.userId);
                 this.props.closeModal();
             });
             //
@@ -275,6 +279,7 @@ class AddListingForm extends Component {
 
     // Delete item handler
     deleteItem = () => {
+        console.log('registered delete');
         if(this.props.editingItem){
             firebase.database().ref('inventory/' + this.props.id).remove().then(response => {
                 this.resetValues();
