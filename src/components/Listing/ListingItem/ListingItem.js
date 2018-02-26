@@ -9,12 +9,11 @@ const listingItem = (props) => (
 
     <div className={classes.Item}>
         <img src={props.img} className={classes.Image} alt=''/>
-        <div> <FontAwesomeIcon icon="gamepad" size="3x"/></div>
+        <div> <FontAwesomeIcon icon={props.category} size="3x"/></div>
         <div className={classes.Textnum}>0 </div>
         <div className={classes.Textbid}> Bid </div>
         <div className={classes.Inside}>
-            <div> <FontAwesomeIcon icon="gamepad" size="3x"/></div>
-            <div className={classes.Line}>{props.name}</div>
+            <div> <FontAwesomeIcon icon={props.category} size="3x"/></div>
             <div className={classes.Line}>0 Bid</div>
             <div className={classes.Button2} style={{bottom: "100px"}}  onClick={props.clicked}><FontAwesomeIcon icon="edit"/></div>
             <div className={classes.Button2} onClick={props.deleteItem}><FontAwesomeIcon icon="trash-alt"/></div>

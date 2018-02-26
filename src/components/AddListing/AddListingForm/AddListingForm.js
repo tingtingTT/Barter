@@ -77,16 +77,16 @@ class AddListingForm extends Component {
                 elementType: 'select',
                 elementConfig: {
                     options: [
-                        {value: 'electronics', displayValue: 'Electronics'},
-                        {value: 'games', displayValue: 'Games'},
-                        {value: 'service', displayValue: 'Service'},
-                        {value: 'appliance', displayValue: 'Appliance'},
-                        {value: 'craft', displayValue: 'Craft'},
-                        {value: 'clothing', displayValue: 'Clothing'},
-                        {value: 'sporting', displayValue: 'Sporting Goods'},
-                        {value: 'jewelry', displayValue: 'Jewelry'},
+                        {value: 'tv', displayValue: 'Electronics'},
+                        {value: 'gamepad', displayValue: 'Games'},
+                        {value: 'briefcase', displayValue: 'Service'},
+                        {value: 'wrench', displayValue: 'Appliance'},
+                        {value: 'images', displayValue: 'Craft'},
+                        {value: 'female', displayValue: 'Clothing'},
+                        {value: 'futbol', displayValue: 'Sporting Goods'},
+                        {value: 'gem', displayValue: 'Jewelry'},
                         {value: 'home', displayValue: 'Home Goods'},
-                        {value: 'furniture', displayValue: 'Furniture'}
+                        {value: 'bath', displayValue: 'Furniture'}
                     ]
                 },
                 value: 'Electronics',
