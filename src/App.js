@@ -3,10 +3,14 @@ import React, { Component } from 'react'
 import Layout from './hoc/Layout/Layout';
 
 import { Route, Switch, IndexRoute } from 'react-router-dom';
+// Icon import
 import fontawesome from '@fortawesome/fontawesome';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import brands from '@fortawesome/fontawesome-free-brands';
-import { faGamepad } from '@fortawesome/fontawesome-free-solid';
+import { faGamepad, faEdit, faTrashAlt, faTv, faBriefcase, faWrench, faImages, faFemale, faFutbol, faGem,
+         faHome, faBath    } from '@fortawesome/fontawesome-free-solid';
+// electronics, game, service, appliance, craft, clothing, sporting good, jewery, home goods, furniture
+
 
 import Profile from './containers/Profile/Profile';
 import Login from './components/Login/Login';
@@ -14,7 +18,10 @@ import SignUp from './components/Login/SignUp/SignUp';
 import Banner from './components/Banner/Banner';
 import Home from './containers/Home/Home';
 
-fontawesome.library.add(brands, faGamepad);
+// Add icons to library
+fontawesome.library.add(brands, faGamepad, faEdit, faTrashAlt, faTv, faBriefcase, faWrench, faImages, faFemale, faFutbol, faGem,
+  faHome, faBath);
+
 class App extends Component {
   render() {
     return (
