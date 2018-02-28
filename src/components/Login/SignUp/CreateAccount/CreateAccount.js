@@ -16,7 +16,10 @@ class CreateAccount extends React.Component {
   }
 
   createUser(email, user, pass, zip){
-    firebase.database().ref('userInfo/' + user).set({
+    var strippedemail = email.replace(/\W/g, '');
+    console.log(strippedemail);
+    firebase.database().ref('userInfo/' + strippedemail).set({
+      username: user,
       email: email,
       password: pass,
       zipcode: zip
