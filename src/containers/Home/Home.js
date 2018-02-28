@@ -41,7 +41,7 @@ class Home extends Component {
 
     componentDidMount () {
         // let userItems = firebase.database().ref('/userItems');
-        var maxListings = 6; //can be modified later.
+        var maxListings = 12; //can be modified later.
         this.setState({currentUser: this.props.userId});
         var that = this;
         var fetchedItems = [];
@@ -115,7 +115,7 @@ class Home extends Component {
     filtZipcode = () => {
       var zc = document.getElementById('filterZip').value;
       //var count = 0;
-      const maxListings = 6; // can be dynamic later
+      const maxListings = 12; // can be dynamic later
       var fetchedItems = [];
       var itemType = 'auction'; //can be modified later
 
@@ -146,7 +146,7 @@ class Home extends Component {
 
     filtCategory = (category) => {
       //var count = 0;
-      var maxListings = 6; // can be dynamic later
+      var maxListings = 12; // can be dynamic later
       var fetchedItems = [];
       var that = this;
       var itemType = 'auction'; //can be modified later
