@@ -41,14 +41,29 @@ class Home extends Component {
 
     componentDidMount () {
         // let userItems = firebase.database().ref('/userItems');
+        var maxListings = 6; //can be modified later.
         this.setState({currentUser: this.props.userId});
-        firebase.database().ref('/userItems').child(this.state.currentUser).on('value', snapshot =>{
-            const items = snapshot.val();
+        var that = this;
+        var fetchedItems = [];
+        var itemType = 'auction'; //can be modified later
+
+        firebase.database().ref('/itemDb').orderByChild('ItemType').equalTo(itemType).limitToLast(maxListings).on('value', snapshot =>{
+          snapshot.forEach(function(childNodes){
+            //only check for public items
+            if (childNodes.val().public === true){
+              fetchedItems.push(childNodes.val());
+            }
+          });
+          console.log(fetchedItems);
+          if(fetchedItems !== null || fetchedItems !== []){
+            that.setState({listing: fetchedItems});
+          }
+            /*const items = snapshot.val();
             console.log(items);
             if(items != null){
                 this.setState({inventory: items});
                 this.setState({listing: items});
-            }
+            } */
 
         });
     }
