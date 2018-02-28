@@ -52,6 +52,9 @@ class Profile extends Component {
         inventory: [],
         listing: [],
         currentUser: 'none',
+        userName: '',
+        userEmail: '',
+        userZip: '',
         addingItem: false,
         editingItem: false,
         itemToEdit: {
@@ -79,6 +82,13 @@ class Profile extends Component {
                 this.setState({listing: items});
             }
         });
+        userInfo.child(name+ '/').on('value', snapshot =>{
+            const info = snapshot.val()
+            console.log('userInfo:');
+            console.log(info);
+            this.setState({userName: info['username'], userEmail: info['email'], userZip: info['zipcode']});
+        });
+
     }
 
 
@@ -118,42 +128,10 @@ class Profile extends Component {
 
 	render () {
         
-        
-		return (
-            <div className={classes.content}>
-                <div className={classes.row}>
-                    <div className={classes.col1of4}>
-                        <UserProfile profilePic="https://i.imgur.com/Ig7JBId.jpg"
-                            userName="PennyButt226"
-                            email="getdamouse@gmail.com"
-                            zipCode="94070"/>
-                    </div>
-                    <div className={classes.col3of4}>
-                        <h1 className={classes.sectionTitle}>Auction items</h1>
-                        <p className={classes.sectionDesc}>These items are available for other members to bid on.</p>
-                        
-                        <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
-                            <AddListing closeModal={this.closeHandler} 
-                                editingItem={this.state.editingItem} 
-                                category={this.state.itemToEdit.category} 
-                                itemName={this.state.itemToEdit.itemName} 
-                                id={this.state.itemToEdit.id} 
-                                desc={this.state.itemToEdit.desc} 
-                                imgURL={this.state.itemToEdit.imageURL}
-                                ItemType={this.state.itemToEdit.ItemType} />
-
-                        </Modal>
-                        <div>
-                            
-                            <Listing listing={this.state.listing} editListingItemHandler={this.editItemHandler} />
-                        </div>
-                       
-                    </div>
-                    
-                   
-                   
-                </div>
-                <div className={classes.row}>
+        let inventory = null;
+        if(this.state.inventory.length > 0){
+            inventory = (
+                <div>
                     <h1 className={classes.sectionTitle}>Bid items</h1>
                     <p className={classes.sectionDesc}>Use these items to bid on other members auction items.</p>
                     <div className={classes.addItemButton}>
@@ -161,6 +139,78 @@ class Profile extends Component {
                     </div>
                     <div className={classes.spacer}></div>
                     <Inventory inventory={this.state.inventory} editItemHandler={this.editItemHandler}/>
+
+                </div>
+                
+            );
+            
+        }
+
+        let auctions = (
+            <div>
+                <h1 className={classes.sectionTitle}>Add items to your profile!</h1>
+                <Button label="+ ITEM" clicked={this.addingItemHandler} />
+                <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
+                        <AddListing closeModal={this.closeHandler} 
+                            editingItem={this.state.editingItem} 
+                            category={this.state.itemToEdit.category} 
+                            itemName={this.state.itemToEdit.itemName} 
+                            id={this.state.itemToEdit.id} 
+                            desc={this.state.itemToEdit.desc} 
+                            imgURL={this.state.itemToEdit.imageURL}
+                            ItemType={this.state.itemToEdit.ItemType} />
+
+                    </Modal>
+            </div>
+
+        );
+        if(this.state.listing.length > 0){
+            auctions = (
+                <div>
+                    <h1 className={classes.sectionTitle}>Auction items</h1>
+                    <p className={classes.sectionDesc}>These items are available for other members to bid on.</p>
+                    
+                    <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
+                        <AddListing closeModal={this.closeHandler} 
+                            editingItem={this.state.editingItem} 
+                            category={this.state.itemToEdit.category} 
+                            itemName={this.state.itemToEdit.itemName} 
+                            id={this.state.itemToEdit.id} 
+                            desc={this.state.itemToEdit.desc} 
+                            imgURL={this.state.itemToEdit.imageURL}
+                            ItemType={this.state.itemToEdit.ItemType} />
+
+                    </Modal>
+                    <div>
+                        
+                        <Listing listing={this.state.listing} editListingItemHandler={this.editItemHandler} />
+                    </div>
+                </div>
+            );
+            
+        }
+        
+		return (
+            <div className={classes.content}>
+                <div className={classes.row}>
+                    <div className={classes.col1of4}>
+                        <UserProfile profilePic="https://i.imgur.com/Ig7JBId.jpg"
+                            userName={this.state.userName}
+                            email={this.state.userEmail}
+                            zipCode={this.state.userZip}/>
+                    </div>
+                    <div className={classes.col3of4}>
+                        
+                        {auctions}
+                    </div>
+                    
+                   
+                   
+                </div>
+                <div className={classes.row}>
+                    
+                    {inventory}
+                   
                 </div>
                 
                 
