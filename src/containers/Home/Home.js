@@ -117,22 +117,27 @@ class Home extends Component {
       //var count = 0;
       const maxListings = 6; // can be dynamic later
       var fetchedItems = [];
+      var itemType = 'auction'; //can be modified later
 
         var that = this;
         firebase.database().ref("/itemDb").orderByChild('location').equalTo(zc).limitToLast(maxListings).on("value", function(snapshot) {
           snapshot.forEach(function(childNodes) {
-            fetchedItems.push( childNodes.val());
+            if(childNodes.val().ItemType === 'auction' && childNodes.val().public === true){
+              fetchedItems.push( childNodes.val());
+            }
           });
             that.setState({listing: fetchedItems});
         });
 
         var that = this;
         if(zc === ""){ //if no filter, want to still show listings
-          firebase.database().ref("/itemDb").limitToLast(maxListings).on('value', function(snap){
+          firebase.database().ref("/itemDb").orderByChild('ItemType').equalTo(itemType).limitToLast(maxListings).on('value', function(snap){
              snap.forEach(function(childNodes){
-               fetchedItems.push(childNodes.val());
+               if (childNodes.val().public === true){
+                 fetchedItems.push(childNodes.val());
+               }
              });
-             if(fetchedItems !== null || fetchedItems !== []){
+             if(fetchedItems !== null || fetchedItems !== [] || fetchedItems !== undefined){
                that.setState({listing: fetchedItems});
              }
           });
@@ -144,10 +149,14 @@ class Home extends Component {
       var maxListings = 6; // can be dynamic later
       var fetchedItems = [];
       var that = this;
-      if (category === 'Select a Category' && this.state.listings === []){
-        firebase.database().ref("/itemDb").limitToLast(maxListings).on('value', function(snap){
+      var itemType = 'auction'; //can be modified later
+      if (category === 'Select a Category' && this.state.listings === undefined){
+        firebase.database().ref("/itemDb").orderByChild('ItemType').equalTo(itemType).limitToLast(maxListings).on('value', function(snap){
           snap.forEach(function(childNodes){
+            //only check for public items
+            if (childNodes.val().public === true){
               fetchedItems.push(childNodes.val());
+            }
           });
           that.setState({listing: fetchedItems});
         });
@@ -155,7 +164,9 @@ class Home extends Component {
       if(category !== 'Select a Category'){
         firebase.database().ref("/itemDb").orderByChild('category').equalTo(category).limitToLast(maxListings).on("value", function(snapshot) {
           snapshot.forEach(function(childNodes) {
-              fetchedItems.push( childNodes.val());
+              if(childNodes.val().public === true && childNodes.val().ItemType === 'auction'){
+                fetchedItems.push( childNodes.val());
+              }
           });
           that.setState({listing: fetchedItems});
         });
