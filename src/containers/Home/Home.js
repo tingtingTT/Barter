@@ -41,14 +41,29 @@ class Home extends Component {
 
     componentDidMount () {
         // let userItems = firebase.database().ref('/userItems');
+        var maxListings = 6; //can be modified later.
         this.setState({currentUser: this.props.userId});
-        firebase.database().ref('/userItems').child(this.state.currentUser).on('value', snapshot =>{
-            const items = snapshot.val();
+        var that = this;
+        var fetchedItems = [];
+        var itemType = 'auction'; //can be modified later
+
+        firebase.database().ref('/itemDb').orderByChild('ItemType').equalTo(itemType).limitToLast(maxListings).on('value', snapshot =>{
+          snapshot.forEach(function(childNodes){
+            //only check for public items
+            if (childNodes.val().public === true){
+              fetchedItems.push(childNodes.val());
+            }
+          });
+          console.log(fetchedItems);
+          if(fetchedItems !== null || fetchedItems !== []){
+            that.setState({listing: fetchedItems});
+          }
+            /*const items = snapshot.val();
             console.log(items);
             if(items != null){
                 this.setState({inventory: items});
                 this.setState({listing: items});
-            }
+            } */
 
         });
     }
@@ -102,22 +117,27 @@ class Home extends Component {
       //var count = 0;
       const maxListings = 6; // can be dynamic later
       var fetchedItems = [];
+      var itemType = 'auction'; //can be modified later
 
         var that = this;
         firebase.database().ref("/itemDb").orderByChild('location').equalTo(zc).limitToLast(maxListings).on("value", function(snapshot) {
           snapshot.forEach(function(childNodes) {
-            fetchedItems.push( childNodes.val());
+            if(childNodes.val().ItemType === 'auction' && childNodes.val().public === true){
+              fetchedItems.push( childNodes.val());
+            }
           });
             that.setState({listing: fetchedItems});
         });
 
         var that = this;
         if(zc === ""){ //if no filter, want to still show listings
-          firebase.database().ref("/itemDb").limitToLast(maxListings).on('value', function(snap){
+          firebase.database().ref("/itemDb").orderByChild('ItemType').equalTo(itemType).limitToLast(maxListings).on('value', function(snap){
              snap.forEach(function(childNodes){
-               fetchedItems.push(childNodes.val());
+               if (childNodes.val().public === true){
+                 fetchedItems.push(childNodes.val());
+               }
              });
-             if(fetchedItems !== null || fetchedItems !== []){
+             if(fetchedItems !== null || fetchedItems !== [] || fetchedItems !== undefined){
                that.setState({listing: fetchedItems});
              }
           });
@@ -129,10 +149,14 @@ class Home extends Component {
       var maxListings = 6; // can be dynamic later
       var fetchedItems = [];
       var that = this;
-      if (category === 'Select a Category' && this.state.listings === []){
-        firebase.database().ref("/itemDb").limitToLast(maxListings).on('value', function(snap){
+      var itemType = 'auction'; //can be modified later
+      if (category === 'Select a Category' && this.state.listings === undefined){
+        firebase.database().ref("/itemDb").orderByChild('ItemType').equalTo(itemType).limitToLast(maxListings).on('value', function(snap){
           snap.forEach(function(childNodes){
+            //only check for public items
+            if (childNodes.val().public === true){
               fetchedItems.push(childNodes.val());
+            }
           });
           that.setState({listing: fetchedItems});
         });
@@ -140,7 +164,9 @@ class Home extends Component {
       if(category !== 'Select a Category'){
         firebase.database().ref("/itemDb").orderByChild('category').equalTo(category).limitToLast(maxListings).on("value", function(snapshot) {
           snapshot.forEach(function(childNodes) {
-              fetchedItems.push( childNodes.val());
+              if(childNodes.val().public === true && childNodes.val().ItemType === 'auction'){
+                fetchedItems.push( childNodes.val());
+              }
           });
           that.setState({listing: fetchedItems});
         });
