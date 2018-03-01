@@ -21,7 +21,7 @@ const listing = (props)=> {
                 {...console.log(item.category)}
                 // numBid = {}
                 // {...console.log(item.name)}
-                clicked={() => props.editListingItemHandler(index)}
+                clicked={() => props.editListingItemHandler(index, 'auc')}
                 // Delete item handler
                 // TODO: need to re-populate listing items and delete listing items here
                 deleteItem={() => props.deleteItemHandler(index)}
