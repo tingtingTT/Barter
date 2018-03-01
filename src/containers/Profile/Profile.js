@@ -128,19 +128,27 @@ class Profile extends Component {
         this.props.history.replace( '/profile/addlisting' );
     };
 
-    editItemHandler = (itemID) => {
+    editItemHandler = (itemID, type) => {
 
-        console.log(itemID);
-        // makes an items object of the form --> itemID: {name: '', desc: '' ...}
         const items = {};
-        let itemToEdit = this.state.inventory[itemID];
-        itemToEdit.id = itemID; //Really just an index location
-        console.log(itemToEdit);
+        let itemToEdit = {}
+        if(type === 'auc'){
+            // Its in inventory
+            
+            // makes an items object of the form --> itemID: {name: '', desc: '' ...}
+            itemToEdit = this.state.listing[itemID];
+            itemToEdit.id = itemID; //Really just an index location
+            
+        }
+        else{
+            // its def in auction
+            itemToEdit = this.state.inventory[itemID];
+            itemToEdit.id = itemID; //Really just an index location
+        }
 
         const itemObj = {...items[itemID]};
-
-
         this.setState({itemToEdit: itemToEdit, editingItem: true});
+        
        
     };
 
