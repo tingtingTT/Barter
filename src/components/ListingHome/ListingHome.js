@@ -7,6 +7,8 @@ import classes from '../Listing/Listing.css';
 
 const listingHome = (props)=> {
 
+   
+
     const listingItemsHome = (
         props.listing.map(item => (
             <ListingItemHome key={item.id}
@@ -24,8 +26,8 @@ const listingHome = (props)=> {
         <div className={classes.ListingHome}>
             {listingItemsHome}
         </div>
-        
+
     )
 }
- 
+
 export default listingHome;

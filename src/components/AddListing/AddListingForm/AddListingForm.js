@@ -77,16 +77,16 @@ class AddListingForm extends Component {
                 elementType: 'select',
                 elementConfig: {
                     options: [
-                        {value: 'electronics', displayValue: 'Electronics'},
-                        {value: 'games', displayValue: 'Games'},
-                        {value: 'service', displayValue: 'Service'},
-                        {value: 'appliance', displayValue: 'Appliance'},
-                        {value: 'craft', displayValue: 'Craft'},
-                        {value: 'clothing', displayValue: 'Clothing'},
-                        {value: 'sporting', displayValue: 'Sporting Goods'},
-                        {value: 'jewelry', displayValue: 'Jewelry'},
+                        {value: 'tv', displayValue: 'Electronics'},
+                        {value: 'gamepad', displayValue: 'Games'},
+                        {value: 'briefcase', displayValue: 'Service'},
+                        {value: 'wrench', displayValue: 'Appliance'},
+                        {value: 'images', displayValue: 'Craft'},
+                        {value: 'female', displayValue: 'Clothing'},
+                        {value: 'futbol', displayValue: 'Sporting Goods'},
+                        {value: 'gem', displayValue: 'Jewelry'},
                         {value: 'home', displayValue: 'Home Goods'},
-                        {value: 'furniture', displayValue: 'Furniture'}
+                        {value: 'bath', displayValue: 'Furniture'}
                     ]
                 },
                 value: 'Electronics',
@@ -123,14 +123,14 @@ class AddListingForm extends Component {
     };
 
     componentDidMount = () =>{
-        console.log(getUserListingsArray(this.props.userId));
+        //console.log(getUserListingsArray(this.props.userId));
         //console.log(this.props.userId);
     };
 
 
     // POSTS INPUT FIELDS TO DB
     addListingHandler = (event) => { 
-        console.log(this.props.userId);
+        console.log("addlisting userID:", this.props.userId);
         event.preventDefault();
 
     
@@ -171,8 +171,8 @@ class AddListingForm extends Component {
         // update existing item
         if(this.props.editingItem){
             //TODO: Convert this to firebase UserItems format
-
-            firebase.database().ref('inventory/').push({
+            console.log('attempting to push to user:slot',this.props.userId, this.props.id);
+            userItems.child(this.props.userId).child(this.props.id).set({
                 itemName: listing.itemName,
                 desc: listing.desc,
                 category: listing.category,
@@ -187,40 +187,79 @@ class AddListingForm extends Component {
             });
         }else{
             //TODO: Add logic for determining if public or private listing and send to a separate database
-            firebase.database().ref('itemDb/').push({
-                itemName: listing.itemName,
-                desc: listing.desc,
-                category: listing.category,
-                imageURL: listing.imageURL,
-                ItemType: listing.ItemType,
-                ownerUser: this.props.userId,
-                public: true,
-                location:'95060',
+            if(listing.ItemType === 'auction'){
+                // PUSH to public AuctionDB
+                firebase.database().ref('auctionDB/').push({
+                    itemName: listing.itemName,
+                    desc: listing.desc,
+                    category: listing.category,
+                    imageURL: listing.imageURL,
+                    ItemType: listing.ItemType,
+                    ownerUser: this.props.userId,
+                    public: true,
+                    location:'95060',
+    
+                }).then(response => {
+                    console.log('Posted to central itemDb')
+                });
 
-            }).then(response => {
-
-                console.log('Posted to central itemDb')
-            });
+                // Items assoc. with user
+                userItems.child(this.props.userId).child('/auction').push({
+                    itemName: listing.itemName,
+                    desc: listing.desc,
+                    category: listing.category,
+                    imageURL: listing.imageURL,
+                    ItemType: listing.ItemType,
+                    ownerUser: this.props.userId,
+                    public: true,
+                    location:'95060'
+                }).then(response => {
+                    this.resetValues();
+                    this.props.closeModal();
+                });
+            }
+            else{
+                // PUSH to inventory
+                userItems.child(this.props.userId).child('/inventory').push({
+                    itemName: listing.itemName,
+                    desc: listing.desc,
+                    category: listing.category,
+                    imageURL: listing.imageURL,
+                    ItemType: listing.ItemType,
+                    ownerUser: this.props.userId,
+                    public: true,
+                    location:'95060'
+                }).then(response => {
+                    this.resetValues();
+                    this.props.closeModal();
+                });
+            }
+            
 
             // Add new item
-            let items = null;
-            userItems.child(this.props.userId).once('value', snapshot =>{
-                console.log(snapshot.val());
-                items = snapshot.val();
-            });
-            if(items === null){
-                console.log('items is null');
-                items = [];
-                items.push(listing);
-            }else{
-                items.push(listing);
-            }
+            // let items = null;
+            // userItems.child(this.props.userId).once('value', snapshot =>{
+            //     console.log(snapshot.val());
+            //     items = snapshot.val();
+            // }).then(()=>{
+            //     if(items === null){
+            //         console.log('items is null');
+            //         items = [];
+            //         items.push(listing);
+            //     }else{
+            //         items.push(listing);
+            //     }
 
-            userItems.child(this.props.userId+'/').set(items).then(response => {
-                this.resetValues();
-                console.log('listing sent adllisting userID', this.props.userId);
-                this.props.closeModal();
-            });
+            //     userItems.child(this.props.userId+'/').set(items).then(response => {
+            //         this.resetValues();
+            //         console.log('listing sent adllisting userID', this.props.userId);
+            //         this.props.closeModal();
+            //     });
+            //     //just in case it fucks up
+
+            //     this.resetValues();
+            //     this.props.closeModal();
+            // });
             //
             //
             // axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(response => {
@@ -275,6 +314,7 @@ class AddListingForm extends Component {
 
     // Delete item handler
     deleteItem = () => {
+        console.log('registered delete');
         if(this.props.editingItem){
             firebase.database().ref('inventory/' + this.props.id).remove().then(response => {
                 this.resetValues();
@@ -350,12 +390,13 @@ class AddListingForm extends Component {
         if (this.props.editingItem){
         
             for (let key in this.state.itemForm) {
+                console.log(key);
                 if (!this.state.itemForm[key].clicked){
                     const config = {
                         ...this.state.itemForm[key]
                     }
                     if(this.props.editingItem) {
-                       config.value = values[key]
+                        config.value = values[key]
                     }
                     
                     formElementsArray.push({

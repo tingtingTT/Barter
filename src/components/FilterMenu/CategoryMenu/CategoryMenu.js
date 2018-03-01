@@ -9,17 +9,17 @@ import classes from './CategoryMenu.css';
 const CategoryMenu = (props) => {
 
 const categoryList = [
-          {value: 'Select a Category', displayValue: 'Select a Category'},
-          {value: 'Electronics', displayValue: 'Electronics'},
-          {value: 'Games', displayValue: 'Games'},
-          {value: 'Service', displayValue: 'Service'},
-          {value: 'Appliance', displayValue: 'Appliance'},
-          {value: 'Craft', displayValue: 'Craft'},
-          {value: 'Clothing', displayValue: 'Clothing'},
-          {value: 'Sporting Goods', displayValue: 'Sporting Goods'},
-          {value: 'Jewelry', displayValue: 'Jewelry'},
-          {value: 'Home Goods', displayValue: 'Home Goods'},
-          {value: 'Furniture', displayValue: 'Furniture'}
+  {value: 'Select a Category', displayValue: 'Select a Category'},
+  {value: 'tv', displayValue: 'Electronics'},
+  {value: 'gamepad', displayValue: 'Games'},
+  {value: 'briefcase', displayValue: 'Service'},
+  {value: 'wrench', displayValue: 'Appliance'},
+  {value: 'images', displayValue: 'Craft'},
+  {value: 'female', displayValue: 'Clothing'},
+  {value: 'futbol', displayValue: 'Sporting Goods'},
+  {value: 'gem', displayValue: 'Jewelry'},
+  {value: 'home', displayValue: 'Home Goods'},
+  {value: 'bath', displayValue: 'Furniture'}
         ];
 
   return (

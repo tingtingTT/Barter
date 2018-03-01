@@ -15,6 +15,10 @@ import {database} from 'firebase';
 import Banner from '../../components/Banner/Banner';
 import FilterMenu from '../../components/FilterMenu/FilterMenu';
 
+
+
+import ItemDetails from '../../components/ItemDetails/ItemDetails';
+
 class Home extends Component {
 
     state = {
@@ -37,14 +41,29 @@ class Home extends Component {
 
     componentDidMount () {
         // let userItems = firebase.database().ref('/userItems');
+        var maxListings = 12; //can be modified later.
         this.setState({currentUser: this.props.userId});
-        firebase.database().ref('/userItems').child(this.state.currentUser).on('value', snapshot =>{
-            const items = snapshot.val();
+        var that = this;
+        var fetchedItems = [];
+        var itemType = 'auction'; //can be modified later
+
+        firebase.database().ref('/auctionDB').orderByChild('ItemType').equalTo(itemType).limitToLast(maxListings).on('value', snapshot =>{
+          snapshot.forEach(function(childNodes){
+            //only check for public items
+            if (childNodes.val().public === true){
+              fetchedItems.push(childNodes.val());
+            }
+          });
+          console.log(fetchedItems);
+          if(fetchedItems !== null || fetchedItems !== []){
+            that.setState({listing: fetchedItems});
+          }
+            /*const items = snapshot.val();
             console.log(items);
             if(items != null){
                 this.setState({inventory: items});
                 this.setState({listing: items});
-            }
+            } */
 
         });
     }
@@ -93,6 +112,68 @@ class Home extends Component {
 
     }
 
+    filtZipcode = () => {
+      var zc = document.getElementById('filterZip').value;
+      //var count = 0;
+      const maxListings = 12; // can be dynamic later
+      var fetchedItems = [];
+      var itemType = 'auction'; //can be modified later
+
+        var that = this;
+        firebase.database().ref("/auctionDB").orderByChild('location').equalTo(zc).limitToLast(maxListings).on("value", function(snapshot) {
+          snapshot.forEach(function(childNodes) {
+            if(childNodes.val().ItemType === 'auction' && childNodes.val().public === true){
+              fetchedItems.push( childNodes.val());
+            }
+          });
+            that.setState({listing: fetchedItems});
+        });
+
+        var that = this;
+        if(zc === ""){ //if no filter, want to still show listings
+          firebase.database().ref("/auctionDB").orderByChild('ItemType').equalTo(itemType).limitToLast(maxListings).on('value', function(snap){
+             snap.forEach(function(childNodes){
+               if (childNodes.val().public === true){
+                 fetchedItems.push(childNodes.val());
+               }
+             });
+             if(fetchedItems !== null || fetchedItems !== [] || fetchedItems !== undefined){
+               that.setState({listing: fetchedItems});
+             }
+          });
+        }
+    }
+
+    filtCategory = (category) => {
+      //var count = 0;
+      var maxListings = 12; // can be dynamic later
+      var fetchedItems = [];
+      var that = this;
+      var itemType = 'auction'; //can be modified later
+      if (category === 'Select a Category' && this.state.listings === undefined){
+        firebase.database().ref("/auctionDB").orderByChild('ItemType').equalTo(itemType).limitToLast(maxListings).on('value', function(snap){
+          snap.forEach(function(childNodes){
+            //only check for public items
+            if (childNodes.val().public === true){
+              fetchedItems.push(childNodes.val());
+            }
+          });
+          that.setState({listing: fetchedItems});
+        });
+      }
+      if(category !== 'Select a Category'){
+        firebase.database().ref("/auctionDB").orderByChild('category').equalTo(category).limitToLast(maxListings).on("value", function(snapshot) {
+          snapshot.forEach(function(childNodes) {
+              if(childNodes.val().public === true && childNodes.val().ItemType === 'auction'){
+                fetchedItems.push( childNodes.val());
+              }
+          });
+          that.setState({listing: fetchedItems});
+        });
+      }
+    }
+
+
 	render () {
 		return (
             <div className={classes.Home}>
@@ -100,7 +181,7 @@ class Home extends Component {
                     <Banner></Banner>
                 </div>
                 { <div>
-                    <FilterMenu/>
+                    <FilterMenu onChange={this.filtCategory} onClick={this.filtZipcode}/>
                 </div> }
                 <div>
                     <ListingHome listing={this.state.listing.reverse()} />
