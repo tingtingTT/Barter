@@ -40,7 +40,6 @@ const config = {
 
 let fb = firebase.initializeApp(config, 'profile');
 let userInfo = fb.database().ref('userInfo/');
-let itemDb = fb.database().ref('itemDb/');
 let userItems = fb.database().ref('userItems/');
 
 
@@ -69,17 +68,45 @@ class Profile extends Component {
 
 
     componentDidMount () {
+
+       
         // let userItems = firebase.database().ref('/userItems');
         console.log('setting uderId to', this.props.userId);
         this.setState({currentUser: this.props.userId});
         let name = this.props.userId;
-        userItems.child(name+ '/').on('value', snapshot =>{
+
+
+        userItems.child(name+ '/').child('/auction').on('value', snapshot=>{
             const items = snapshot.val();
             //console.log('in promise .on userid is', name)
-            console.log('items in compdidmount',items);
+            console.log('items in compdidmount');
+            console.log(items)
+            let returnArr = [];
+        
+            snapshot.forEach(childSnapshot => {
+                let item = childSnapshot.val(); 
+                item.key = childSnapshot.key;
+                returnArr.push(item);
+            });
             if(items != null){
-                this.setState({inventory: items});
-                this.setState({listing: items});
+                this.setState({listing: returnArr});
+            }
+        });
+        userItems.child(name+ '/').child('/inventory').on('value', snapshot =>{
+            const items = snapshot.val();
+           
+            let returnArr = [];
+        
+            snapshot.forEach(childSnapshot => {
+                let item = childSnapshot.val(); 
+                item.key = childSnapshot.key;
+                returnArr.push(item);
+            });
+            console.log('????????????????')
+            console.log(returnArr)
+        
+            if(items != null){
+                this.setState({inventory: returnArr});
             }
         });
         userInfo.child(name+ '/').on('value', snapshot =>{
@@ -90,6 +117,8 @@ class Profile extends Component {
         });
 
     }
+
+    
 
 
 
@@ -127,9 +156,13 @@ class Profile extends Component {
     };
 
 	render () {
+
+        console.log('inventory check')
+        console.log(this.state.inventory)
         
         let inventory = null;
-        if(this.state.inventory.length > 0){
+        if(this.state.inventory){
+           
             inventory = (
                 <div>
                     <h1 className={classes.sectionTitle}>Bid items</h1>

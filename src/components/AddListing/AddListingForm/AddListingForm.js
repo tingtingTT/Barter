@@ -187,44 +187,79 @@ class AddListingForm extends Component {
             });
         }else{
             //TODO: Add logic for determining if public or private listing and send to a separate database
-            firebase.database().ref('itemDb/').push({
-                itemName: listing.itemName,
-                desc: listing.desc,
-                category: listing.category,
-                imageURL: listing.imageURL,
-                ItemType: listing.ItemType,
-                ownerUser: this.props.userId,
-                public: true,
-                location:'95060',
+            if(listing.ItemType === 'auction'){
+                // PUSH to public AuctionDB
+                firebase.database().ref('auctionDB/').push({
+                    itemName: listing.itemName,
+                    desc: listing.desc,
+                    category: listing.category,
+                    imageURL: listing.imageURL,
+                    ItemType: listing.ItemType,
+                    ownerUser: this.props.userId,
+                    public: true,
+                    location:'95060',
+    
+                }).then(response => {
+                    console.log('Posted to central itemDb')
+                });
 
-            }).then(response => {
-                console.log('Posted to central itemDb')
-            });
-
-            // Add new item
-            let items = null;
-            userItems.child(this.props.userId).once('value', snapshot =>{
-                console.log(snapshot.val());
-                items = snapshot.val();
-            }).then(()=>{
-                if(items === null){
-                    console.log('items is null');
-                    items = [];
-                    items.push(listing);
-                }else{
-                    items.push(listing);
-                }
-
-                userItems.child(this.props.userId+'/').set(items).then(response => {
+                // Items assoc. with user
+                userItems.child(this.props.userId).child('/auction').push({
+                    itemName: listing.itemName,
+                    desc: listing.desc,
+                    category: listing.category,
+                    imageURL: listing.imageURL,
+                    ItemType: listing.ItemType,
+                    ownerUser: this.props.userId,
+                    public: true,
+                    location:'95060'
+                }).then(response => {
                     this.resetValues();
-                    console.log('listing sent adllisting userID', this.props.userId);
                     this.props.closeModal();
                 });
-                //just in case it fucks up
+            }
+            else{
+                // PUSH to inventory
+                userItems.child(this.props.userId).child('/inventory').push({
+                    itemName: listing.itemName,
+                    desc: listing.desc,
+                    category: listing.category,
+                    imageURL: listing.imageURL,
+                    ItemType: listing.ItemType,
+                    ownerUser: this.props.userId,
+                    public: true,
+                    location:'95060'
+                }).then(response => {
+                    this.resetValues();
+                    this.props.closeModal();
+                });
+            }
+            
 
-                this.resetValues();
-                this.props.closeModal();
-            });
+            // Add new item
+            // let items = null;
+            // userItems.child(this.props.userId).once('value', snapshot =>{
+            //     console.log(snapshot.val());
+            //     items = snapshot.val();
+            // }).then(()=>{
+            //     if(items === null){
+            //         console.log('items is null');
+            //         items = [];
+            //         items.push(listing);
+            //     }else{
+            //         items.push(listing);
+            //     }
+
+            //     userItems.child(this.props.userId+'/').set(items).then(response => {
+            //         this.resetValues();
+            //         console.log('listing sent adllisting userID', this.props.userId);
+            //         this.props.closeModal();
+            //     });
+            //     //just in case it fucks up
+
+            //     this.resetValues();
+            //     this.props.closeModal();
+            // });
             //
             //
             // axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(response => {
