@@ -88,6 +88,7 @@ class Profile extends Component {
                 item.key = childSnapshot.key;
                 returnArr.push(item);
             });
+            
             if(items != null){
                 this.setState({listing: returnArr});
             }
@@ -179,7 +180,7 @@ class Profile extends Component {
                         <Button label="+ ITEM" clicked={this.addingItemHandler} />
                     </div>
                     <div className={classes.spacer}></div>
-                    <Inventory inventory={this.state.inventory} editItemHandler={this.editItemHandler}/>
+                    <Inventory inventory={this.state.inventory} editItemHandler={this.editItemHandler} type='inv'/>
 
                 </div>
                 
@@ -224,7 +225,7 @@ class Profile extends Component {
                     </Modal>
                     <div>
                         
-                        <Listing listing={this.state.listing} editListingItemHandler={this.editItemHandler} />
+                        <Listing listing={this.state.listing} editListingItemHandler={this.editItemHandler} type='auc'/>
                     </div>
                 </div>
             );

@@ -172,19 +172,53 @@ class AddListingForm extends Component {
         if(this.props.editingItem){
             //TODO: Convert this to firebase UserItems format
             console.log('attempting to push to user:slot',this.props.userId, this.props.id);
-            userItems.child(this.props.userId).child(this.props.id).set({
-                itemName: listing.itemName,
-                desc: listing.desc,
-                category: listing.category,
-                imageURL: listing.imageURL,
-                ItemType: listing.ItemType,
-                ownerUser: this.props.userId,
-                public: true,
-                location:'95060'
-            }).then(response => {
-                this.resetValues();
-                this.props.closeModal();
-            });
+            if(listing.ItemType === 'auction'){
+                // Update top level
+                firebase.database().ref('/auctionDB/').child(this.props.id).set({
+                    itemName: listing.itemName,
+                    desc: listing.desc,
+                    category: listing.category,
+                    imageURL: listing.imageURL,
+                    ItemType: listing.ItemType,
+                    ownerUser: this.props.userId,
+                    public: true,
+                    location:'95060'
+                }).then(response => {
+                    this.resetValues();
+                    this.props.closeModal();
+                });
+                // Update user level
+                userItems.child(this.props.userId).child('/auction/').child(this.props.id).set({
+                    itemName: listing.itemName,
+                    desc: listing.desc,
+                    category: listing.category,
+                    imageURL: listing.imageURL,
+                    ItemType: listing.ItemType,
+                    ownerUser: this.props.userId,
+                    public: true,
+                    location:'95060'
+                }).then(response => {
+                    this.resetValues();
+                    this.props.closeModal();
+                });
+            }
+            else{
+                userItems.child(this.props.userId).child('/inventory/').child(this.props.id).set({
+                    itemName: listing.itemName,
+                    desc: listing.desc,
+                    category: listing.category,
+                    imageURL: listing.imageURL,
+                    ItemType: listing.ItemType,
+                    ownerUser: this.props.userId,
+                    public: true,
+                    location:'95060'
+                }).then(response => {
+                    this.resetValues();
+                    this.props.closeModal();
+                });
+
+            }
+            
         }else{
             //TODO: Add logic for determining if public or private listing and send to a separate database
             if(listing.ItemType === 'auction'){
