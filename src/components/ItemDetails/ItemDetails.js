@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
+import {database} from 'firebase';
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import classes from './ItemDetails.css';
@@ -24,7 +25,7 @@ class ItemDetails extends Component {
       console.log("isowner");
       console.log(owner);
       console.log(this.props.userId);
-      if (this.props.userId === owner){
+      if ('PennyMonster38' === owner){ //this.props.userId = owner
         return true;
       }
       return false;
@@ -36,6 +37,7 @@ class ItemDetails extends Component {
       //make Winner
       //remove items from invy
     }
+
     componentWillMount () {
         console.log('item');
         const query = new URLSearchParams(this.props.location.search);
@@ -92,13 +94,13 @@ class ItemDetails extends Component {
                     <h3>Item Description</h3>
                     <div className = {classes.description}>
                         <p className = {classes.descText}>{this.state.item.desc}</p>
-                  { this.isOwner(item.owner) ? <WinningBidButton onClick={this.setWinner}/> : null }
                     </div>
 
                 </div>
 
                 <div className={classes.row2}>
-                    <BidItems bidItems={this.state.bidItems}></BidItems>
+                    <BidItems bidItems={this.state.bidItems} onClick={this.setWinner} itemOwner={'PennyMonster38'}></BidItems> {/*item.owner*/}
+
                 </div>
 
 

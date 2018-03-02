@@ -1,11 +1,17 @@
 import React from 'react';
 import BidItem from './BidItem/BidItem';
-
 import classes from './BidItems.css';
+import { withRouter } from 'react-router-dom';
+
+
+
+
 
 const bidItems = (props) => {
 
+
     let bidItems = null
+    var that = this;
     if(props.bidItems){
         bidItems = (
             props.bidItems.map((item, index) => (
@@ -13,6 +19,8 @@ const bidItems = (props) => {
                     owner={item.owner}
                     title={item.title}
                     zipcode={item.zipcode}
+                    itemOwner={props.itemOwner}
+                    onClick={props.onClick}
                 />
             ))
         );
@@ -25,9 +33,9 @@ const bidItems = (props) => {
             </div>
             {bidItems}
         </div>
-        
+
     )
 }
-    
-    
-export default bidItems;
+
+
+export default withRouter(bidItems);

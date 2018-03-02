@@ -2,10 +2,13 @@
   display: inline;
   position: relative;
   right: 0px;
+  float: right;
   box-sizing: border-box;
-  width: 10%;
+  width: 15%;
+  height: 80%;
   outline: 0;
-  margin: 10px;
+  margin-left: 10px;
+  margin-top: 5px;
   border: 1px solid #373277;
   border-radius: 0;
   background: #E54A59;
