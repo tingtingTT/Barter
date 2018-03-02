@@ -238,7 +238,7 @@ class AddListingForm extends Component {
                 });
 
                 // Items assoc. with user
-                userItems.child(this.props.userId).child('/auction').push({
+                userItems.child(this.props.userId).child('/auction/').push({
                     itemName: listing.itemName,
                     desc: listing.desc,
                     category: listing.category,
@@ -254,7 +254,7 @@ class AddListingForm extends Component {
             }
             else{
                 // PUSH to inventory
-                userItems.child(this.props.userId).child('/inventory').push({
+                userItems.child(this.props.userId).child('/inventory/').push({
                     itemName: listing.itemName,
                     desc: listing.desc,
                     category: listing.category,
@@ -271,31 +271,31 @@ class AddListingForm extends Component {
             
 
             // Add new item
-            // let items = null;
-            // userItems.child(this.props.userId).once('value', snapshot =>{
-            //     console.log(snapshot.val());
-            //     items = snapshot.val();
-            // }).then(()=>{
-            //     if(items === null){
-            //         console.log('items is null');
-            //         items = [];
-            //         items.push(listing);
-            //     }else{
-            //         items.push(listing);
-            //     }
+            let items = null;
+            userItems.child(this.props.userId).once('value', snapshot =>{
+                console.log(snapshot.val());
+                items = snapshot.val();
+            }).then(()=>{
+                if(items === null){
+                    console.log('items is null');
+                    items = [];
+                    items.push(listing);
+                }else{
+                    items.push(listing);
+                }
 
-            //     userItems.child(this.props.userId+'/').set(items).then(response => {
-            //         this.resetValues();
-            //         console.log('listing sent adllisting userID', this.props.userId);
-            //         this.props.closeModal();
-            //     });
-            //     //just in case it fucks up
+                userItems.child(this.props.userId+'/').set(items).then(response => {
+                    this.resetValues();
+                    console.log('listing sent adllisting userID', this.props.userId);
+                    this.props.closeModal();
+                });
+                //just in case it fucks up
 
-            //     this.resetValues();
-            //     this.props.closeModal();
-            // });
-            //
-            //
+                this.resetValues();
+                this.props.closeModal();
+            });
+            
+            
             // axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(response => {
             //     this.resetValues();
             //     this.props.closeModal()
@@ -342,7 +342,8 @@ class AddListingForm extends Component {
             updatedFormElement.clicked = false;
             updatedForm[key] = updatedFormElement;
         }
-    
+        updatedForm['category'].value = 'electronics';
+        updatedForm['ItemType'].value = 'auction';
         this.setState({itemForm: updatedForm, imageURL: ''});
     }
 
