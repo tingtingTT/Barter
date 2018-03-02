@@ -97,7 +97,7 @@ class ItemDetails extends Component {
 
                 </div>
 
-                <div className={classes.row}>
+                <div className={classes.row2}>
                     <BidItems bidItems={this.state.bidItems}></BidItems>
                 </div>
 

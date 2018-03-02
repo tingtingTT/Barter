@@ -20,9 +20,10 @@ const bidItems = (props) => {
     return (
         <div className={classes.BidItems}>
             <div className={classes.content}>
-                <p>Current Bids</p>
+                <div className={classes.name}>Current Bids</div>
                 <div className={classes.bidbtn}>Add Bid(s)</div>
             </div>
+            {bidItems}
         </div>
         
     )
