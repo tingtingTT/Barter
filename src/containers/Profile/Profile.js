@@ -18,7 +18,7 @@ import {database} from 'firebase';
 
 
 
-/* 
+/*
 TODO:
     1. Style Profile Layout
     2. Add User info section
@@ -69,7 +69,7 @@ class Profile extends Component {
 
     componentDidMount () {
 
-       
+
         // let userItems = firebase.database().ref('/userItems');
         console.log('setting uderId to', this.props.userId);
         this.setState({currentUser: this.props.userId});
@@ -82,30 +82,30 @@ class Profile extends Component {
             console.log('items in compdidmount');
             console.log(items)
             let returnArr = [];
-        
+
             snapshot.forEach(childSnapshot => {
-                let item = childSnapshot.val(); 
+                let item = childSnapshot.val();
                 item.key = childSnapshot.key;
                 returnArr.push(item);
             });
-            
+
             if(items != null){
                 this.setState({listing: returnArr});
             }
         });
         userItems.child(name+ '/').child('/inventory').on('value', snapshot =>{
             const items = snapshot.val();
-           
+
             let returnArr = [];
-        
+
             snapshot.forEach(childSnapshot => {
-                let item = childSnapshot.val(); 
+                let item = childSnapshot.val();
                 item.key = childSnapshot.key;
                 returnArr.push(item);
             });
             console.log('????????????????')
             console.log(returnArr)
-        
+
             if(items != null){
                 this.setState({inventory: returnArr});
             }
@@ -119,10 +119,27 @@ class Profile extends Component {
 
     }
 
-    
 
 
+    removeAuction(user){
+      console.log("remove Auction");
+      console.log(user);
 
+    }
+
+    removeBid(user,item){
+       console.log("remove Bid");
+       console.log(user);
+       console.log(item.id);
+      // firebase.database().ref("/userItems/" + user + "/inventory/").orderByChild('location').equalTo(zc).limitToLast(maxListings).on("value", function(snapshot) {
+      //   snapshot.forEach(function(childNodes) {
+      //     if(childNodes.val().ItemType === 'auction' && childNodes.val().public === true){
+      //       fetchedItems.push( childNodes.val());
+      //     }
+      //   });
+      //     that.setState({listing: fetchedItems});
+      // });
+    }
 
     addingItemHandler = () => {
         this.setState({addingItem: true});
@@ -135,11 +152,11 @@ class Profile extends Component {
         let itemToEdit = {}
         if(type === 'auc'){
             // Its in inventory
-            
+
             // makes an items object of the form --> itemID: {name: '', desc: '' ...}
             itemToEdit = this.state.listing[itemID];
             itemToEdit.id = itemID; //Really just an index location
-            
+
         }
         else{
             // its def in auction
@@ -149,16 +166,16 @@ class Profile extends Component {
 
         const itemObj = {...items[itemID]};
         this.setState({itemToEdit: itemToEdit, editingItem: true});
-        
-       
+
+
     };
 
 
-
-    deleteItemHandler = (itemID) => {
-        console.log(itemID);
-        firebase.database().ref('inventory/' + itemID).remove();
-    };
+    //
+    // deleteItemHandler = (itemID) => {
+    //     console.log(itemID);
+    //     firebase.database().ref('inventory/' + itemID).remove();
+    // };
 
     closeHandler = () => {
         this.setState({addingItem: false, editingItem: false});
@@ -168,10 +185,10 @@ class Profile extends Component {
 
         console.log('inventory check')
         console.log(this.state.inventory)
-        
+
         let inventory = null;
         if(this.state.inventory){
-           
+
             inventory = (
                 <div>
                     <h1 className={classes.sectionTitle}>Bid items</h1>
@@ -183,9 +200,9 @@ class Profile extends Component {
                     <Inventory inventory={this.state.inventory} editItemHandler={this.editItemHandler} type='inv'/>
 
                 </div>
-                
+
             );
-            
+
         }
 
         let auctions = (
@@ -193,14 +210,14 @@ class Profile extends Component {
                 <h1 className={classes.sectionTitle}>Add items to your profile!</h1>
                 <Button label="+ ITEM" clicked={this.addingItemHandler} />
                 <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
-                        <AddListing closeModal={this.closeHandler} 
-                            editingItem={this.state.editingItem} 
-                            category={this.state.itemToEdit.category} 
-                            itemName={this.state.itemToEdit.itemName} 
-                            id={this.state.itemToEdit.id} 
-                            desc={this.state.itemToEdit.desc} 
+                        <AddListing closeModal={this.closeHandler}
+                            editingItem={this.state.editingItem}
+                            category={this.state.itemToEdit.category}
+                            itemName={this.state.itemToEdit.itemName}
+                            id={this.state.itemToEdit.id}
+                            desc={this.state.itemToEdit.desc}
                             imgURL={this.state.itemToEdit.imageURL}
-                            ItemType={this.state.itemToEdit.ItemType} />
+                            ItemType={this.state.itemToEdit.ItemType}/>
 
                     </Modal>
             </div>
@@ -211,27 +228,28 @@ class Profile extends Component {
                 <div>
                     <h1 className={classes.sectionTitle}>Auction items</h1>
                     <p className={classes.sectionDesc}>These items are available for other members to bid on.</p>
-                    
+
                     <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
-                        <AddListing closeModal={this.closeHandler} 
-                            editingItem={this.state.editingItem} 
-                            category={this.state.itemToEdit.category} 
-                            itemName={this.state.itemToEdit.itemName} 
-                            id={this.state.itemToEdit.id} 
-                            desc={this.state.itemToEdit.desc} 
+                        <AddListing closeModal={this.closeHandler}
+                            editingItem={this.state.editingItem}
+                            category={this.state.itemToEdit.category}
+                            itemName={this.state.itemToEdit.itemName}
+                            id={this.state.itemToEdit.id}
+                            desc={this.state.itemToEdit.desc}
                             imgURL={this.state.itemToEdit.imageURL}
-                            ItemType={this.state.itemToEdit.ItemType} />
+                            ItemType={this.state.itemToEdit.ItemType}
+                            onClick={ () => this.removeBid(this.state.currentUser, this.state.itemToEdit)} />
 
                     </Modal>
                     <div>
-                        
-                        <Listing listing={this.state.listing} editListingItemHandler={this.editItemHandler} type='auc'/>
+
+                        <Listing listing={this.state.listing} editListingItemHandler={this.editItemHandler} delclicked={this.removeAuction} type='auc'/>
                     </div>
                 </div>
             );
-            
+
         }
-        
+
 		return (
             <div className={classes.content}>
                 <div className={classes.row}>
@@ -242,24 +260,24 @@ class Profile extends Component {
                             zipCode={this.state.userZip}/>
                     </div>
                     <div className={classes.col3of4}>
-                        
+
                         {auctions}
                     </div>
-                    
-                   
-                   
+
+
+
                 </div>
                 <div className={classes.row}>
-                    
+
                     {inventory}
-                   
+
                 </div>
-                
-                
+
+
             </div>
         );
     }
-        
+
 }
 
 
