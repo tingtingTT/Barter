@@ -1,0 +1,39 @@
+.BidItems {
+    margin-top: 50px;
+    border: 2px solid #E54A59;
+    background: #E54A59;
+    border-radius: 2rem;
+    padding-left: 1.4rem;
+    padding-right: 1.4rem;
+    min-height: 7rem;
+    padding-bottom: 4rem;
+}
+
+
+.bidbtn {
+    border-radius: 2rem;
+    padding: 1rem;
+    color: #E54A59;
+    background-color: white;
+    font-size: 1.5rem;
+    position: absolute;
+    right: 2rem;
+    cursor: pointer;
+}
+
+ 
+.name {
+    font-size: 2rem;
+    color: white;
+    padding-top: 1rem;
+}
+
+
+.content {
+    width: 100%;
+    display: flex;
+    text-align: left;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+}

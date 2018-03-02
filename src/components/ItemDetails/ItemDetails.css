@@ -8,6 +8,14 @@
     clear: both;
 
 }
+
+.row2 {
+    width: 80%;
+    margin: 0 auto;
+    clear: both;
+    padding-bottom: 4rem;
+
+}
 .col1of2 {
     width: 50%;
     float: left;
@@ -61,7 +69,6 @@
     position: absolute;
     top: 0rem;
     left: 5.5rem
-
 }
 .rating {
     padding: 0;

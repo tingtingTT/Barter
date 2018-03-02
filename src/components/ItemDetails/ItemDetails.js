@@ -4,11 +4,19 @@ import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import classes from './ItemDetails.css';
 import WinningBidButton from './WinningBidButton/WinningBidButton';
+import BidItems from './BidItems/BidItems';
 
 class ItemDetails extends Component {
     //TODO: Get item from DB using props.itemID
     state = {
-        item: {}
+        item: {},
+        bidItems: [{owner: 'user1', zipcode: 95126, title: 'a used TV'},
+        {owner: 'user2', zipcode: 95127, title: 'a used bike'},
+        {owner: 'user3', zipcode: 95128, title: 'a used computer'},
+        {owner: 'user4', zipcode: 95129, title: 'a used cloth'},
+        {owner: 'user5', zipcode: 95120, title: 'a pair of used shoes'}]
+
+
 
     }
 
@@ -88,6 +96,11 @@ class ItemDetails extends Component {
                     </div>
 
                 </div>
+
+                <div className={classes.row2}>
+                    <BidItems bidItems={this.state.bidItems}></BidItems>
+                </div>
+
 
             </div>
         );
