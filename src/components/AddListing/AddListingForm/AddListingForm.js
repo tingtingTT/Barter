@@ -170,11 +170,12 @@ class AddListingForm extends Component {
 
         // update existing item
         if(this.props.editingItem){
-            //TODO: Convert this to firebase UserItems format
-            console.log('attempting to push to user:slot',this.props.userId, this.props.id);
+            //console.log('attempting to push to user:slot',this.props.userId, this.props.id, this.props.key);
+            //AUCTION ITEMS
+            console.log('attempting to push to user:slot',this.props.pushKey);
             if(listing.ItemType === 'auction'){
-                // Update top level
-                firebase.database().ref('/auctionDB/').child(this.props.id).set({
+                // PUSH TO SET OF ALL AUCTION ITEMS
+                firebase.database().ref('/auctionDB/').child(this.props.pushKey).set({
                     itemName: listing.itemName,
                     desc: listing.desc,
                     category: listing.category,
@@ -187,9 +188,8 @@ class AddListingForm extends Component {
                     this.resetValues();
                     this.props.closeModal();
                 });
-                // Update user level
-                console.log(this.props.id);
-                userItems.child(this.props.userId).child('/auction/').child(this.props.id).set({
+                // PUSH TO SINGLE USERS AUCTION ITEMS BUCKET
+                userItems.child(this.props.userId).child('/auction/').child(this.props.pushKey).set({
                     itemName: listing.itemName,
                     desc: listing.desc,
                     category: listing.category,
@@ -204,7 +204,9 @@ class AddListingForm extends Component {
                 });
             }
             else{
-                userItems.child(this.props.userId).child('/inventory/').child(this.props.id).set({
+                // IN CASE OF OPTION SWITCH CLEAR ANY ITEM IN AUCTIONDB with same key
+                firebase.database().ref('/auctionDB/').child(this.props.pushKey).remove();
+                userItems.child(this.props.userId).child('/inventory/').child(this.props.pushKey).set({
                     itemName: listing.itemName,
                     desc: listing.desc,
                     category: listing.category,
@@ -220,8 +222,12 @@ class AddListingForm extends Component {
 
             }
 
+
+
+        //ADDING A NEW ITEM
         }else{
-            //TODO: Add logic for determining if public or private listing and send to a separate database
+            //WE ADD A NEW ITEM
+            var tempKey = '';
             if(listing.ItemType === 'auction'){
                 // PUSH to public AuctionDB
                 firebase.database().ref('auctionDB/').push({
@@ -235,23 +241,25 @@ class AddListingForm extends Component {
                     location:'95060',
 
                 }).then(response => {
-                    console.log('Posted to central itemDb')
+                    tempKey = response.key;
+                    userItems.child(this.props.userId).child('/auction').child(tempKey).set({
+                        itemName: listing.itemName,
+                        desc: listing.desc,
+                        category: listing.category,
+                        imageURL: listing.imageURL,
+                        ItemType: listing.ItemType,
+                        ownerUser: this.props.userId,
+                        public: true,
+                        location:'95060'
+                    }).then(response => {
+                        this.resetValues();
+                        this.props.closeModal();
+                    });
+                    console.log('Posted to central itemDb',tempKey );
                 });
 
                 // Items assoc. with user
-                userItems.child(this.props.userId).child('/auction').push({
-                    itemName: listing.itemName,
-                    desc: listing.desc,
-                    category: listing.category,
-                    imageURL: listing.imageURL,
-                    ItemType: listing.ItemType,
-                    ownerUser: this.props.userId,
-                    public: true,
-                    location:'95060'
-                }).then(response => {
-                    this.resetValues();
-                    this.props.closeModal();
-                });
+
             }
             else{
                 // PUSH to inventory
