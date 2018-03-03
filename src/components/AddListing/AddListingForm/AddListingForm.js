@@ -89,7 +89,7 @@ class AddListingForm extends Component {
                         {value: 'bath', displayValue: 'Furniture'}
                     ]
                 },
-                value: 'Electronics',
+                value: 'tv',
                 clicked: false
             },
             ItemType: {
@@ -353,6 +353,9 @@ class AddListingForm extends Component {
             updatedFormElement.clicked = false;
             updatedForm[key] = updatedFormElement;
         }
+    
+        updatedForm["category"].value = 'tv';
+        updatedForm["ItemType"].value = 'auction';
 
         this.setState({itemForm: updatedForm, imageURL: ''});
     }
