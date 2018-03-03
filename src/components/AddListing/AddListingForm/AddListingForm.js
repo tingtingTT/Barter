@@ -188,6 +188,7 @@ class AddListingForm extends Component {
                     this.props.closeModal();
                 });
                 // Update user level
+                console.log(this.props.id);
                 userItems.child(this.props.userId).child('/auction/').child(this.props.id).set({
                     itemName: listing.itemName,
                     desc: listing.desc,
@@ -338,6 +339,8 @@ class AddListingForm extends Component {
             updatedFormElement = {
                 ...updatedForm[key]
             };
+            updatedForm['category'].value = 'tv';
+            updatedForm['ItemType'].value = 'auction';
             updatedFormElement.value = '';
             updatedFormElement.clicked = false;
             updatedForm[key] = updatedFormElement;
@@ -526,7 +529,6 @@ class AddListingForm extends Component {
                         value={formElement.config.value}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
                         clicked={() => this.inputClicked(formElement.id)}
-
                         />
                 ))}
 
