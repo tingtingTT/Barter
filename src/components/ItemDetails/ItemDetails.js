@@ -23,6 +23,8 @@ const config = {
 
 let fb = firebase.initializeApp(config, 'itemDetails');
 let auctionDB = fb.database().ref('auctionDB/');
+let userItems = fb.database().ref('userItems/');
+let userInfo = fb.database().ref('userInfo/');
 
 
 
@@ -30,17 +32,19 @@ class ItemDetails extends Component {
     //TODO: Get item from DB using props.itemID
     state = {
         item: {},
-        bidItems: [{owner: 'user1', zipcode: 95126, title: 'a used TV'},
-        {owner: 'user2', zipcode: 95127, title: 'a used bike'},
-        {owner: 'user3', zipcode: 95128, title: 'a used computer'},
-        {owner: 'user4', zipcode: 95129, title: 'a used cloth'},
-        {owner: 'user5', zipcode: 95120, title: 'a pair of used shoes'}],
-        showModal: false
+        bidItems: [],
+        showModal: false,
+        userInventory: [],
+        currentUser: 'none',
+        addedBids: []
 
 
 
     }
     componentWillMount () {
+
+        this.setState({currentUser: this.props.userId});
+        
         
         const query = new URLSearchParams(this.props.location.search);
         const item = {};
@@ -60,7 +64,11 @@ class ItemDetails extends Component {
         console.log(this.state.item);
         console.log('item key:')
         console.log(this.state.item.itemKey)
-        let key = 
+
+        
+        let name = this.state.currentUser;
+        console.log('NAME:')
+        console.log(name)
 
         // GET actual bids
         auctionDB.child(this.state.item.itemKey).child('/bids/').on('value', snapshot=>{
@@ -72,22 +80,64 @@ class ItemDetails extends Component {
                 item.key = childSnapshot.key;
                 returnArr.push(item);
             });
-            console.log('??????????????????????????')
-            console.log(returnArr);
 
             this.setState({bidItems: returnArr});
         });
 
+        // GET users inventory to pass to bid select component
+        userItems.child(name+'/').child('/inventory').on('value', snapshot=>{
+            let inv = snapshot.val()
+            let returnArr = [];
+            snapshot.forEach(childSnapshot => {
+                let item = childSnapshot.val();
+                item.key = childSnapshot.key;
+                returnArr.push(item);
+            });
+            console.log('??????????????????????????')
+            console.log(returnArr);
+
+            this.setState({userInventory: returnArr});
+        });
+
     }
 
-    addBid = (item) => {
-        console.log('IN ADD BID');
-        auctionDB.child(this.state.item.itemKey).child('/bids/').child(item.itemKey).set({
-            itemKey: item.itemKey,
-            owner: item.owner,
-            title: item.title,
-            zipcode: item.zipcode
+    setSelected = (itemKey) => {
+
+        // TODO: check if item is already in addedBids. if it is, remove it, else add
+        let bids = this.state.addedBids;
+
+        let inventory = {};
+        this.state.userInventory.map(item => {
+            inventory[item.itemKey] = item;
         });
+        let selected = inventory[itemKey]
+        bids.push(selected);
+        
+        console.log('BIDS !!!!!!');
+        console.log(bids);
+
+        this.setState({addedBids: bids})
+    }
+
+    addBid = () => {
+
+        let bidsToAdd = this.state.addedBids;
+
+        for (let index in bidsToAdd){
+            console.log(item);
+            let item = bidsToAdd[index];
+            // TODO: get real username
+
+            auctionDB.child(this.state.item.itemKey).child('/bids/').child(item.itemKey).set({
+                itemKey: item.itemKey,
+                owner: item.ownerUser,
+                title: item.itemName,
+                zipcode: item.location
+            });
+        }
+
+        console.log('IN ADD BID');
+        
         
         this.toggleModal();
     }
@@ -109,6 +159,7 @@ class ItemDetails extends Component {
       //make Winner
       //remove items from invy
     }
+
 
     
 
@@ -169,6 +220,7 @@ class ItemDetails extends Component {
                 <div className={classes.row2}>
 
                     <Modal show={this.state.showModal} modalClosed={this.toggleModal}>
+                        <SelectBidChart bidItems={this.state.userInventory} addBid={this.addBid} setSelected={this.setSelected}></SelectBidChart>
                         <SelectBid addBid={this.addBid}/>
                     </Modal>
                     
@@ -179,7 +231,7 @@ class ItemDetails extends Component {
                 </div>
 
                 <div className={classes.row3}>
-                    <SelectBidChart bidItems={this.state.bidItems} ></SelectBidChart>
+                    
                 </div>
 
 

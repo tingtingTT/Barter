@@ -8,7 +8,7 @@ const selctBidList = (props) => (
 
     <div className={classes.SelectBidList}>
         <div className={classes.textBorder}>
-            <label className={classes.container}><input type="checkbox" style={{background: 'hotpink'}}/>
+            <label className={classes.container}><input type="checkbox" style={{background: 'hotpink'}} onChange={props.onSelected}/>
             <span className={classes.checkmark}></span>{props.title}</label>
         </div>
     </div>

@@ -15,8 +15,9 @@ const selectBidChart = (props) => {
     if(props.bidItems){
         bidItems = (
             props.bidItems.map((item, index) => (
-                <BidItem key={index}
-                    title={item.title}
+                <BidItem key={item.itemKey}
+                    title={item.itemName}
+                    onSelected={() => props.setSelected(item.itemKey)}
                 />
             ))
         );
@@ -25,7 +26,7 @@ const selectBidChart = (props) => {
         <div className={classes.SelectBidChart}>
             <div className={classes.name}>Add Bid</div>
             <div className={classes.content}>{bidItems}</div>
-            <div className={classes.bidbtn}>Bid Item(s)</div>
+            <div className={classes.bidbtn} onClick={props.addBid}>Bid Item(s)</div>
         </div>
 
     )
