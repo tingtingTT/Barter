@@ -78,6 +78,18 @@ class ItemDetails extends Component {
 
     }
 
+    addBid = (item) => {
+        console.log('IN ADD BID');
+        auctionDB.child(this.state.item.itemKey).child('/bids/').child(item.itemKey).set({
+            itemKey: item.itemKey,
+            owner: item.owner,
+            title: item.title,
+            zipcode: item.zipcode
+        });
+        
+        this.toggleModal();
+    }
+
     isOwner(owner){
       console.log("isowner");
       console.log(owner);
@@ -155,7 +167,7 @@ class ItemDetails extends Component {
                 <div className={classes.row2}>
 
                     <Modal show={this.state.showModal} modalClosed={this.toggleModal}>
-                        <SelectBid />
+                        <SelectBid addBid={this.addBid}/>
                     </Modal>
                     
                     
