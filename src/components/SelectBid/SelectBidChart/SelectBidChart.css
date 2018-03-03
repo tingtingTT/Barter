@@ -6,7 +6,8 @@
     padding-left: 2rem;
     padding-right: 2rem;
     min-height: 7rem;
-    padding-bottom: 4rem;
+    padding-bottom: 2rem;
+    overflow: hidden;
 }
 
 
@@ -16,9 +17,11 @@
     color: #E54A59;
     background-color: white;
     font-size: 1.5rem;
-    position: absolute;
     right: 0.5rem;
     cursor: pointer;
+    width: 12%;
+    float: right;
+    
 }
 
  
@@ -38,7 +41,5 @@
     margin-bottom: 1rem;
     position: relative;
     border-radius: 2rem;
-    border: 2px solid black;
-
-
+    overflow: hidden;
 }
