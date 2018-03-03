@@ -9,7 +9,7 @@ import Input from '../../UI/Input/Input';
 
 import classes from './AddListingForm.css';
 
-/* 
+/*
 TODO (in priority order):
     1. Fix Modal popup positiion
     2. Add form Validation
@@ -129,11 +129,11 @@ class AddListingForm extends Component {
 
 
     // POSTS INPUT FIELDS TO DB
-    addListingHandler = (event) => { 
+    addListingHandler = (event) => {
         console.log("addlisting userID:", this.props.userId);
         event.preventDefault();
 
-    
+
         const listing = {};
         // Create listing obj with values depending if they were updated while editing, or if its a new value
         for (let formElementIdentifier in this.state.itemForm) {
@@ -149,11 +149,11 @@ class AddListingForm extends Component {
                 listing[formElementIdentifier] = values[formElementIdentifier]
 
             }else {
-                
+
                 listing[formElementIdentifier] = this.state.itemForm[formElementIdentifier].value;
-               
+
             }
-            
+
         }
 
         // Set the img url depending if it was updated while editing, or if its a new image
@@ -162,12 +162,12 @@ class AddListingForm extends Component {
                 listing['imageURL'] = this.props.imgURL;
             }else{
                 listing['imageURL'] = this.state.imageURL;
-            }   
+            }
         }else {
             listing['imageURL'] = this.state.imageURL;
         }
-        
-        
+
+
         // update existing item
         if(this.props.editingItem){
             //TODO: Convert this to firebase UserItems format
@@ -218,7 +218,7 @@ class AddListingForm extends Component {
                 });
 
             }
-            
+
         }else{
             //TODO: Add logic for determining if public or private listing and send to a separate database
             if(listing.ItemType === 'auction'){
@@ -232,7 +232,7 @@ class AddListingForm extends Component {
                     ownerUser: this.props.userId,
                     public: true,
                     location:'95060',
-    
+
                 }).then(response => {
                     console.log('Posted to central itemDb')
                 });
@@ -268,7 +268,7 @@ class AddListingForm extends Component {
                     this.props.closeModal();
                 });
             }
-            
+
 
             // Add new item
             // let items = null;
@@ -300,9 +300,9 @@ class AddListingForm extends Component {
             //     this.resetValues();
             //     this.props.closeModal()
             // });
-        
+
         }
-        
+
         listing['imageURL'] = this.state.imageURL;
 
 
@@ -322,8 +322,8 @@ class AddListingForm extends Component {
         // axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(response => {
         //     this.props.closeModal()
         // });
-           
-        
+
+
 
     };
 
@@ -342,27 +342,31 @@ class AddListingForm extends Component {
             updatedFormElement.clicked = false;
             updatedForm[key] = updatedFormElement;
         }
+<<<<<<< HEAD
     
         updatedForm["category"].value = 'tv';
         updatedForm["ItemType"].value = 'auction';
+=======
+
+>>>>>>> 1b4166a24710cf234d66bfcf219c1ba0caf16037
         this.setState({itemForm: updatedForm, imageURL: ''});
     }
 
-    // Delete item handler
-    deleteItem = () => {
-        console.log('registered delete');
-        if(this.props.editingItem){
-            firebase.database().ref('inventory/' + this.props.id).remove().then(response => {
-                this.resetValues();
-                this.props.closeModal();
-            });
-        }
-    }
+    // // Delete item handler
+    // deleteItem = () => {
+    //     console.log('registered delete');
+    //     if(this.props.editingItem){
+    //         firebase.database().ref('inventory/' + this.props.id).remove().then(response => {
+    //             this.resetValues();
+    //             this.props.closeModal();
+    //         });
+    //     }
+    // }
 
     // TWO-WAY BINDING WITH INPUT FIELDS
     inputChangedHandler = (event, inputIdentifier) => {
-        
-            
+
+
         const updatedForm = {
             ...this.state.itemForm
         };
@@ -373,14 +377,14 @@ class AddListingForm extends Component {
         updatedFormElement.value = event.target.value;
         updatedForm[inputIdentifier] = updatedFormElement;
 
-        
+
         this.setState({itemForm: updatedForm});
 
     }
 
     inputClicked = (element) => {
 
-        
+
         // Copy state
         let updatedForm = {
             ...this.state.itemForm
@@ -390,7 +394,7 @@ class AddListingForm extends Component {
         }
         updatedState.clicked = true;
 
-        // Set the config value to the prepopulated value 
+        // Set the config value to the prepopulated value
         if(this.props.editingItem){
             const values = {
                 itemName: this.props.itemName,
@@ -400,12 +404,12 @@ class AddListingForm extends Component {
             }
             updatedState.value = values[element];
         }
-        
+
         updatedForm[element] = updatedState;
         this.setState({itemForm: updatedForm});
     }
-   
-    
+
+
 
 	render () {
 
@@ -416,7 +420,7 @@ class AddListingForm extends Component {
             category: this.props.category,
             ItemType: this.props.ItemType
         }
-    
+
 
 
         // MAKE ARRAY OF INPUT OBJECTS
@@ -424,7 +428,7 @@ class AddListingForm extends Component {
 
         // Show the values of the item if one is being edited
         if (this.props.editingItem){
-        
+
             for (let key in this.state.itemForm) {
                 console.log(key);
                 if (!this.state.itemForm[key].clicked){
@@ -434,21 +438,21 @@ class AddListingForm extends Component {
                     if(this.props.editingItem) {
                         config.value = values[key]
                     }
-                    
+
                     formElementsArray.push({
                         id: key,
                         config: config
                     });
                 }
                 else {
-                    
+
                     formElementsArray.push({
                         id: key,
                         config: this.state.itemForm[key]
                     });
-                    
+
                 }
-    
+
             }
         }else {
             // Show empy form
@@ -459,9 +463,9 @@ class AddListingForm extends Component {
                     config: this.state.itemForm[key]
                 });
             }
-                
+
         }
-       
+
 
         // DISPLAY IMAGE AFTER UPLOAD
         let image = null
@@ -474,7 +478,7 @@ class AddListingForm extends Component {
                 {'background-image': 'url(' + this.props.imgURL + ')'}
             )
         }
-       
+
         // FORM DISPLAY
         let form = null;
 
@@ -494,13 +498,13 @@ class AddListingForm extends Component {
         let deleteBut = null;
         if (this.props.editingItem) {
             deleteBut = (
-                <p className={classes.Delete} onClick={this.deleteItem}>Delete</p>
+                <p className={classes.Delete} onClick={this.props.onClick}>Delete</p>
             )
         }
-        
+
         form = (
             <form className={classes.Form} onSubmit={this.addListingHandler}>
-                 
+
                 <div className={classes.FileLoader} style={image}>
                     <label>
                         <i className="fa fa-pencil fa-2x" aria-hidden="true"></i>
@@ -516,10 +520,10 @@ class AddListingForm extends Component {
                             onProgress={this.handleProgress}
                         />
                     </label>
-                    
+
                 </div>
-            
-            
+
+
                 {formElementsArray.map(formElement =>(
                     <Input
                         key={formElement.id}
@@ -528,10 +532,10 @@ class AddListingForm extends Component {
                         value={formElement.config.value}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
                         clicked={() => this.inputClicked(formElement.id)}
-                        
+
                         />
                 ))}
-                
+
                 {deleteBut}
                 {button}
             </form>
