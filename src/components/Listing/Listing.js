@@ -21,10 +21,12 @@ const listing = (props)=> {
                 {...console.log(item.category)}
                 // numBid = {}
                 // {...console.log(item.name)}
-                clicked={() => props.editListingItemHandler(index, 'auc')}
+
+                clicked={() => props.editListingItemHandler(index, 'bidItem')}
+
                 // Delete item handler
                 // TODO: need to re-populate listing items and delete listing items here
-                deleteItem={() => props.deleteItemHandler(index)}
+                delclicked={() => props.delclicked(index)}
             />
         ))
     )
@@ -33,8 +35,8 @@ const listing = (props)=> {
         <div className={classes.Listing}>
             {listingItems}
         </div>
-        
+
     )
 }
- 
+
 export default listing;

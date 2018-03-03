@@ -34,6 +34,7 @@ class ItemDetails extends Component {
 
     setWinner(){
       console.log('winner!');
+
       //make code later when other items implemented.
       //make Winner
       //remove items from invy
