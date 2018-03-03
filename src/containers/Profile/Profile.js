@@ -142,14 +142,7 @@ class Profile extends Component {
        firebase.database().ref('/auctionDB/').child(pushKey.key).remove();
         userItems.child(this.props.userId).child('auction').child(pushKey.key).remove();
         userItems.child(this.props.userId).child('inventory').child(pushKey.key).remove();
-      // firebase.database().ref("/userItems/" + user + "/inventory/").orderByChild('location').equalTo(zc).limitToLast(maxListings).on("value", function(snapshot) {
-      //   snapshot.forEach(function(childNodes) {
-      //     if(childNodes.val().ItemType === 'auction' && childNodes.val().public === true){
-      //       fetchedItems.push( childNodes.val());
-      //     }
-      //   });
-      //     that.setState({listing: fetchedItems});
-      // });
+        this.setState({editingItem: false});
     }
 
     addingItemHandler = () => {
