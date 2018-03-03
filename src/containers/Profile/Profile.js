@@ -119,9 +119,38 @@ class Profile extends Component {
 
     }
 
+    removeFromAllbuckets = (pushKey) =>{
+        //delete from auction DB
+        firebase.database().ref('/auctionDB/').child(pushKey).remove();
+        userItems.child(this.props.userId).child('/auction/').child(pushKey).remove();
+        userItems.child(this.props.userId).child('/inventory/').child(pushKey).remove();
+    };
 
-    //JS is bullshit I can call this.removeFromAllBuckets above and it works but I try it here and it throws a shitfit
 
+    removeAuction =(itemID)=> {
+      console.log("remove Auction");
+      let key = this.state.listing[itemID].key;
+      this.removeFromAllbuckets(key);
+      console.log(key);
+    };
+
+    removeBid(pushKey){
+       console.log("remove Bid item");
+       //console.log(user);
+        console.log(this.props.userId);
+       console.log(pushKey.key);
+       firebase.database().ref('/auctionDB/').child(pushKey.key).remove();
+        userItems.child(this.props.userId).child('auction').child(pushKey.key).remove();
+        userItems.child(this.props.userId).child('inventory').child(pushKey.key).remove();
+      // firebase.database().ref("/userItems/" + user + "/inventory/").orderByChild('location').equalTo(zc).limitToLast(maxListings).on("value", function(snapshot) {
+      //   snapshot.forEach(function(childNodes) {
+      //     if(childNodes.val().ItemType === 'auction' && childNodes.val().public === true){
+      //       fetchedItems.push( childNodes.val());
+      //     }
+      //   });
+      //     that.setState({listing: fetchedItems});
+      // });
+    }
 
     addingItemHandler = () => {
         this.setState({addingItem: true});
@@ -159,28 +188,17 @@ class Profile extends Component {
 
     };
 
-    removeFromAllbuckets = (pushKey) =>{
-        //delete from auction DB
-        firebase.database().ref('/auctionDB/').child(pushKey).remove();
-        userItems.child(this.props.userId).child('/auction/').child(pushKey).remove();
-        userItems.child(this.props.userId).child('/inventory/').child(pushKey).remove();
+
+    deleteItemHandler = (itemID) => {
+
+        //this is going to delete an item from the users inventory/ auction/ auctionDb
+        //get the key
+
+
+        console.log(itemID);
+
+        firebase.database().ref('inventory/' + itemID).remove();
     };
-
-    removeAuction(itemID){
-        console.log("remove Auction");
-        let key = this.state.listing[itemID].key;
-        this.removeFromAlluckets(key);
-        console.log(key);
-    };
-
-
-    removeBid=(item)=>{
-        console.log("remove Bid item");
-        //console.log(user);
-        console.log(item.key);
-        this.removeFromAllbuckets(item);
-    };
-
 
     closeHandler = () => {
         this.setState({addingItem: false, editingItem: false});
