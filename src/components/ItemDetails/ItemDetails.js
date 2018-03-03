@@ -9,6 +9,21 @@ import BidItems from './BidItems/BidItems';
 import SelectBid from '../SelectBid/SelectBid';
 import Modal from '../UI/Modal/Modal';
 
+const config = {
+
+    apiKey: "AIzaSyDfRWLuvzYmSV3TwmLOppZT0ZZbtIZRlrs",
+    authDomain: "barterbuddy-4b41a.firebaseapp.com",
+    databaseURL: "https://barterbuddy-4b41a.firebaseio.com",
+    projectId: "barterbuddy-4b41a",
+    storageBucket: "barterbuddy-4b41a.appspot.com",
+    messagingSenderId: "879139739414"
+
+};
+
+let fb = firebase.initializeApp(config, 'itemDetails');
+let auctionDB = fb.database().ref('auctionDB/');
+
+
 class ItemDetails extends Component {
     //TODO: Get item from DB using props.itemID
     state = {
@@ -21,6 +36,10 @@ class ItemDetails extends Component {
         showModal: false
 
 
+
+    }
+
+    componentDidMount() {
 
     }
 

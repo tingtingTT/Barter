@@ -239,6 +239,7 @@ class AddListingForm extends Component {
                     ownerUser: this.props.userId,
                     public: true,
                     location:'95060',
+                    bids: []
 
                 }).then(response => {
                     tempKey = response.key;
@@ -250,7 +251,8 @@ class AddListingForm extends Component {
                         ItemType: listing.ItemType,
                         ownerUser: this.props.userId,
                         public: true,
-                        location:'95060'
+                        location:'95060',
+                        numBids: 0
                     }).then(response => {
                         this.resetValues();
                         this.props.closeModal();
@@ -258,20 +260,20 @@ class AddListingForm extends Component {
                     console.log('Posted to central itemDb',tempKey );
                 });
 
-                // Items assoc. with user
-                userItems.child(this.props.userId).child('/auction/').push({
-                    itemName: listing.itemName,
-                    desc: listing.desc,
-                    category: listing.category,
-                    imageURL: listing.imageURL,
-                    ItemType: listing.ItemType,
-                    ownerUser: this.props.userId,
-                    public: true,
-                    location:'95060'
-                }).then(response => {
-                    this.resetValues();
-                    this.props.closeModal();
-                });
+                // // Items assoc. with user
+                // userItems.child(this.props.userId).child('/auction/').push({
+                //     itemName: listing.itemName,
+                //     desc: listing.desc,
+                //     category: listing.category,
+                //     imageURL: listing.imageURL,
+                //     ItemType: listing.ItemType,
+                //     ownerUser: this.props.userId,
+                //     public: true,
+                //     location:'95060'
+                // }).then(response => {
+                //     this.resetValues();
+                //     this.props.closeModal();
+                // });
             }
             else{
                 // PUSH to inventory
