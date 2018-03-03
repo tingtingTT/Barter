@@ -38,9 +38,24 @@ class ItemDetails extends Component {
 
 
     }
+    componentWillMount () {
+        
+        const query = new URLSearchParams(this.props.location.search);
+        const item = {};
+        for (let param of query.entries()){
+
+            item[param[0]] = param[1];
+        }
+
+        this.setState({item: item});
+
+
+        
+    }
 
     componentDidMount() {
-
+        console.log('item in did mount');
+        console.log(this.state.item);
     }
 
     isOwner(owner){
@@ -61,19 +76,7 @@ class ItemDetails extends Component {
       //remove items from invy
     }
 
-    componentWillMount () {
-        console.log('item');
-        const query = new URLSearchParams(this.props.location.search);
-        const item = {};
-        for (let param of query.entries()){
-
-            item[param[0]] = param[1];
-        }
-
-        this.setState({item: item});
-
-
-    }
+    
 
     toggleModal = () => {
         let newState = (this.state.showModal ? false : true);
@@ -93,6 +96,8 @@ class ItemDetails extends Component {
         }
         console.log('this.state.item');
         console.log(this.state.item);
+        console.log('item key:')
+        console.log(this.state.item.itemKey)
 
         return (
 
