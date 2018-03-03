@@ -30,7 +30,7 @@ const inventory = (props) => {
                     img={item.imageURL}
                     name={item.itemName}
                     desc={item.desc}
-                    clicked={() => props.editItemHandler(index, 'inv')}
+                    clicked={() => props.editItemHandler(index)}
                 />
             ))
         );
