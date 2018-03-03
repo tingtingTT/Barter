@@ -7,6 +7,7 @@ import classes from './ItemDetails.css';
 import WinningBidButton from './WinningBidButton/WinningBidButton';
 import BidItems from './BidItems/BidItems';
 import SelectBid from '../SelectBid/SelectBid';
+import Modal from '../UI/Modal/Modal';
 
 class ItemDetails extends Component {
     //TODO: Get item from DB using props.itemID
@@ -16,7 +17,8 @@ class ItemDetails extends Component {
         {owner: 'user2', zipcode: 95127, title: 'a used bike'},
         {owner: 'user3', zipcode: 95128, title: 'a used computer'},
         {owner: 'user4', zipcode: 95129, title: 'a used cloth'},
-        {owner: 'user5', zipcode: 95120, title: 'a pair of used shoes'}]
+        {owner: 'user5', zipcode: 95120, title: 'a pair of used shoes'}],
+        showModal: false
 
 
 
@@ -52,6 +54,11 @@ class ItemDetails extends Component {
         this.setState({item: item});
 
 
+    }
+
+    toggleModal = () => {
+        let newState = (this.state.showModal ? false : true);
+        this.setState({showModal: newState});
     }
 
     // //Dummy Item
@@ -102,11 +109,13 @@ class ItemDetails extends Component {
 
                 <div className={classes.row2}>
 
-                    {/* Select Bid should be wrapped in a modal */}
-                    <SelectBid />
+                    <Modal show={this.state.showModal} modalClosed={this.toggleModal}>
+                        <SelectBid />
+                    </Modal>
                     
                     
-                    <BidItems bidItems={this.state.bidItems} onClick={this.setWinner} itemOwner={'PennyMonster38'}></BidItems> {/*item.owner*/}
+                    
+                    <BidItems bidItems={this.state.bidItems} onClick={this.setWinner} itemOwner={'PennyMonster38'} toggleModal={this.toggleModal}></BidItems> {/*item.owner*/}
 
                 </div>
 

@@ -29,7 +29,7 @@ const bidItems = (props) => {
         <div className={classes.BidItems}>
             <div className={classes.content}>
                 <div className={classes.name}>Current Bids</div>
-                <div className={classes.bidbtn}>Add Bid(s)</div>
+                <div className={classes.bidbtn} onClick={props.toggleModal}>Add Bid(s)</div>
             </div>
             {bidItems}
         </div>
