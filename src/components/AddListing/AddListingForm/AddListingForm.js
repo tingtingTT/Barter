@@ -342,13 +342,10 @@ class AddListingForm extends Component {
             updatedFormElement.clicked = false;
             updatedForm[key] = updatedFormElement;
         }
-<<<<<<< HEAD
     
         updatedForm["category"].value = 'tv';
         updatedForm["ItemType"].value = 'auction';
-=======
 
->>>>>>> 1b4166a24710cf234d66bfcf219c1ba0caf16037
         this.setState({itemForm: updatedForm, imageURL: ''});
     }
 
