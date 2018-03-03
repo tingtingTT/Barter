@@ -3,8 +3,8 @@
     border: 2px solid #E54A59;
     background: #E54A59;
     border-radius: 2rem;
-    padding-left: 1.4rem;
-    padding-right: 1.4rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
     min-height: 7rem;
     padding-bottom: 4rem;
 }
@@ -33,7 +33,7 @@
     width: 100%;
     display: flex;
     text-align: left;
-    margin-top: 1rem;
+    margin-top: 2rem;
     margin-bottom: 1rem;
     position: relative;
 }

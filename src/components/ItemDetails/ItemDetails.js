@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import classes from './ItemDetails.css';
 import WinningBidButton from './WinningBidButton/WinningBidButton';
 import BidItems from './BidItems/BidItems';
+import SelectBidChart from '../SelectBid/SelectBidChart/SelectBidChart';
 
 class ItemDetails extends Component {
     //TODO: Get item from DB using props.itemID
@@ -102,6 +103,10 @@ class ItemDetails extends Component {
                 <div className={classes.row2}>
                     <BidItems bidItems={this.state.bidItems} onClick={this.setWinner} itemOwner={'PennyMonster38'}></BidItems> {/*item.owner*/}
 
+                </div>
+
+                <div className={classes.row3}>
+                    <SelectBidChart bidItems={this.state.bidItems} ></SelectBidChart>
                 </div>
 
 
