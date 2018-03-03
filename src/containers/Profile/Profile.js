@@ -103,8 +103,6 @@ class Profile extends Component {
                 item.key = childSnapshot.key;
                 returnArr.push(item);
             });
-            console.log('????????????????');
-            console.log(returnArr);
 
             if(items != null){
                 this.setState({inventory: returnArr});

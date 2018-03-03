@@ -56,6 +56,26 @@ class ItemDetails extends Component {
     componentDidMount() {
         console.log('item in did mount');
         console.log(this.state.item);
+        console.log('item key:')
+        console.log(this.state.item.itemKey)
+        let key = 
+
+        // GET actual bids
+        auctionDB.child(this.state.item.itemKey).child('/bids/').on('value', snapshot=>{
+            let bids = snapshot.val();
+
+            let returnArr = [];
+            snapshot.forEach(childSnapshot => {
+                let item = childSnapshot.val();
+                item.key = childSnapshot.key;
+                returnArr.push(item);
+            });
+            console.log('??????????????????????????')
+            console.log(returnArr);
+
+            this.setState({bidItems: returnArr});
+        });
+
     }
 
     isOwner(owner){
@@ -96,8 +116,9 @@ class ItemDetails extends Component {
         }
         console.log('this.state.item');
         console.log(this.state.item);
-        console.log('item key:')
-        console.log(this.state.item.itemKey)
+        
+
+        //
 
         return (
 
