@@ -20,7 +20,7 @@ const bidItem = (props) => (
 
     <div className={classes.BidItem}>
         <div className={classes.rowIcon}>
-            <div className={classes.userIcon}></div>
+            {props.owner}
             <div className={classes.mapIcon}><FontAwesomeIcon icon="map-marker" size="1x"/></div>
             {props.zipcode}
             { isOwner(props.itemOwner) ? <WinningBidButton onClick={props.onClick}/> : null }
