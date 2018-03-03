@@ -88,6 +88,7 @@ class Profile extends Component {
             });
 
             if(items != null){
+                console.log(returnArr);
                 this.setState({listing: returnArr});
             }
         });
@@ -119,26 +120,8 @@ class Profile extends Component {
     }
 
 
+    //JS is bullshit I can call this.removeFromAllBuckets above and it works but I try it here and it throws a shitfit
 
-    removeAuction(user){
-      console.log("remove Auction");
-      console.log(user);
-
-    }
-
-    removeBid(user,item){
-       console.log("remove Bid");
-       console.log(user);
-       console.log(item.id);
-      // firebase.database().ref("/userItems/" + user + "/inventory/").orderByChild('location').equalTo(zc).limitToLast(maxListings).on("value", function(snapshot) {
-      //   snapshot.forEach(function(childNodes) {
-      //     if(childNodes.val().ItemType === 'auction' && childNodes.val().public === true){
-      //       fetchedItems.push( childNodes.val());
-      //     }
-      //   });
-      //     that.setState({listing: fetchedItems});
-      // });
-    }
 
     addingItemHandler = () => {
         this.setState({addingItem: true});
@@ -175,18 +158,29 @@ class Profile extends Component {
 
 
     };
+
     removeFromAllbuckets = (pushKey) =>{
         //delete from auction DB
+        firebase.database().ref('/auctionDB/').child(pushKey).remove();
+        userItems.child(this.props.userId).child('/auction/').child(pushKey).remove();
+        userItems.child(this.props.userId).child('/inventory/').child(pushKey).remove();
+    };
 
-
+    removeAuction(itemID){
+        console.log("remove Auction");
+        let key = this.state.listing[itemID].key;
+        this.removeFromAlluckets(key);
+        console.log(key);
     };
 
 
-    deleteItemHandler = (itemID) => {
-        console.log(this.getKeyById(itemID));
-
-        firebase.database().ref('inventory/' + itemID).remove();
+    removeBid=(item)=>{
+        console.log("remove Bid item");
+        //console.log(user);
+        console.log(item.key);
+        this.removeFromAllbuckets(item);
     };
+
 
     closeHandler = () => {
         this.setState({addingItem: false, editingItem: false});
@@ -229,7 +223,8 @@ class Profile extends Component {
                             desc={this.state.itemToEdit.desc}
                             imgURL={this.state.itemToEdit.imageURL}
                             ItemType={this.state.itemToEdit.ItemType}
-                                    key={this.state.itemToEdit.key}
+                                    pushKey={this.state.itemToEdit.key}
+                                    onClick={() => this.removeBid(this.state.itemToEdit)}
                         />
 
                     </Modal>
@@ -251,7 +246,7 @@ class Profile extends Component {
                             desc={this.state.itemToEdit.desc}
                             imgURL={this.state.itemToEdit.imageURL}
                             ItemType={this.state.itemToEdit.ItemType}
-                            onClick={ () => this.removeBid(this.state.currentUser, this.state.itemToEdit)}
+                            onClick={() => this.removeBid(this.state.itemToEdit)}
                                     pushKey={this.state.itemToEdit.key}
                         />
 

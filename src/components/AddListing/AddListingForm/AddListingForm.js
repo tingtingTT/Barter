@@ -204,8 +204,8 @@ class AddListingForm extends Component {
                 });
             }
             else{
-                // IN CASE OF OPTION SWITCH CLEAR ANY ITEM IN AUCTIONDB with same key
-                firebase.database().ref('/auctionDB/').child(this.props.pushKey).remove();
+
+                console.log(listing);
                 userItems.child(this.props.userId).child('/inventory/').child(this.props.pushKey).set({
                     itemName: listing.itemName,
                     desc: listing.desc,
