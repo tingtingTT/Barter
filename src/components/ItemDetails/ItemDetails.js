@@ -7,6 +7,7 @@ import classes from './ItemDetails.css';
 import WinningBidButton from './WinningBidButton/WinningBidButton';
 import BidItems from './BidItems/BidItems';
 import SelectBid from '../SelectBid/SelectBid';
+import SelectBidChart from '../SelectBid/SelectBidChart/SelectBidChart';
 import Modal from '../UI/Modal/Modal';
 
 const config = {
@@ -22,6 +23,7 @@ const config = {
 
 let fb = firebase.initializeApp(config, 'itemDetails');
 let auctionDB = fb.database().ref('auctionDB/');
+
 
 
 class ItemDetails extends Component {
@@ -174,6 +176,10 @@ class ItemDetails extends Component {
                     
                     <BidItems bidItems={this.state.bidItems} onClick={this.setWinner} itemOwner={'PennyMonster38'} toggleModal={this.toggleModal}></BidItems> {/*item.owner*/}
 
+                </div>
+
+                <div className={classes.row3}>
+                    <SelectBidChart bidItems={this.state.bidItems} ></SelectBidChart>
                 </div>
 
 

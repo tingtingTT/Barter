@@ -1,0 +1,100 @@
+.SelectBidList{
+    width: 100%;
+    min-height: 5rem;
+    background-color: white;
+    color: black;
+    font-size: 2rem;
+    position: relative;
+    margin: auto;
+}
+
+.container input{
+    cursor: pointer;
+    position: absolute;
+    opacity: 0;
+     top: 1rem;
+    left: 0;
+}
+
+/* The container */
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    height: 1.8rem;
+    width: 1.8rem;
+    border: 2px solid #E54A59;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    background-color: #E54A59;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.textBorder{
+    height: 4rem;
+    line-height: 4rem;
+    font-size: 1.5rem;
+    padding: 0.5rem 5rem 0.5rem 2rem; 
+    border-bottom: 1px solid black;
+
+}
+
+.rowIcon{
+    background-color:rgb(200,200,200);
+    padding-bottom: 0.5rem;
+    height: 4rem;
+    line-height: 4rem;
+    padding: 0.5rem 5rem 0.5rem 2rem; 
+}
+
+
+.mapIcon {
+    margin-left: 4rem;
+    width: 3rem;
+    height: 3rem;
+    line-height: 3rem;
+    display: inline-block;
+}
