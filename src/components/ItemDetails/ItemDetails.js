@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import classes from './ItemDetails.css';
 import WinningBidButton from './WinningBidButton/WinningBidButton';
 import BidItems from './BidItems/BidItems';
+import SelectBid from '../SelectBid/SelectBid';
 
 class ItemDetails extends Component {
     //TODO: Get item from DB using props.itemID
@@ -99,6 +100,11 @@ class ItemDetails extends Component {
                 </div>
 
                 <div className={classes.row2}>
+
+                    {/* Select Bid should be wrapped in a modal */}
+                    <SelectBid />
+                    
+                    
                     <BidItems bidItems={this.state.bidItems} onClick={this.setWinner} itemOwner={'PennyMonster38'}></BidItems> {/*item.owner*/}
 
                 </div>
