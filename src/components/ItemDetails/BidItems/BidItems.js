@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom';
 
 const bidItems = (props) => {
 
-    // check if the owner already exists in the target object 
+    // check if the owner already exists in the target object
     function isInTarget(targetObj, owner){
         console.log(targetObj);
         console.log(owner);
@@ -50,7 +50,7 @@ const bidItems = (props) => {
                     title={item.title}
                     zipcode={item.zipcode}
                     itemOwner={props.itemOwner}
-                    onClick={props.onClick}
+                    onClick={(bidderid) => props.onClick(item.owner, bidderid)}
                 />
             ))
         );

@@ -44,8 +44,8 @@ class ItemDetails extends Component {
     componentWillMount () {
 
         this.setState({currentUser: this.props.userId});
-        
-        
+
+
         const query = new URLSearchParams(this.props.location.search);
         const item = {};
         for (let param of query.entries()){
@@ -56,7 +56,7 @@ class ItemDetails extends Component {
         this.setState({item: item});
 
 
-        
+
     }
 
     componentDidMount() {
@@ -71,7 +71,7 @@ class ItemDetails extends Component {
 
 
 
-        
+
         let name = this.state.currentUser;
 
         // GET actual bids
@@ -116,8 +116,8 @@ class ItemDetails extends Component {
         });
         let selected = inventory[itemKey]
         bids.push(selected);
-        
-        
+
+
 
         this.setState({addedBids: bids})
     }
@@ -134,7 +134,7 @@ class ItemDetails extends Component {
                 const info = snapshot.val();
                 console.log('USERNAME');
                 console.log(info.username);
-                ownerUsername = info.username;  
+                ownerUsername = info.username;
 
                 // ADD item to bids list
                 auctionDB.child(this.state.item.itemKey).child('/bids/').child(item.itemKey).set({
@@ -144,33 +144,63 @@ class ItemDetails extends Component {
                     zipcode: item.location
                 });
             });
-  
-         
+
+
         }
 
         this.toggleModal();
     }
 
-    isOwner(owner){
-      console.log("isowner");
-      console.log(owner);
-      console.log(this.props.userId);
-      if ('PennyMonster38' === owner){ //this.props.userId = owner
-        return true;
-      }
-      return false;
-    }
 
-    setWinner(){
+
+    setWinner(bidder, bidderid, auction){
       console.log('winner!');
+      console.log(bidder);
+      var winningBids = [];
+      console.log(bidder);
+      var biduser = '';
+      console.log(bidderid);
+       var that = this;
+       var itemString = '';
+      // console.log(this.auctionOwner);
+      auctionDB.child(auction.itemKey).child('/bids/').orderByChild('owner').equalTo(bidder).on('value', function(snap){
+           snap.forEach(function(childNodes){
+               winningBids.push(childNodes.val());
+           });
 
-      //make code later when other items implemented.
-      //make Winner
-      //remove items from invy
+        });
+
+        for (var i = 0; i < winningBids.length; i++){
+         userItems.child(bidderid).child('/inventory/').child(winningBids[i].itemKey).remove();
+         itemString += winningBids[i].title;
+         biduser = winningBids[i].ownerUser;
+         console.log(winningBids[i].title);
+         if(i !== ((winningBids.length) - 1)){
+           itemString += ", ";
+         } else {
+           itemString += " ";
+         }
+
+        }
+
+
+        auctionDB.child(auction.itemKey).remove();
+
+        userItems.child(auction.owner).child('/auction/').child(auction.itemKey).remove();
+        console.log(winningBids);
+        console.log(auction);
+        that.props.history.push('/'); //PUSH TO HOME OR NOTIFICATION PAGE
+
+        //SET NOTIFICATION FOR AUCTION OWNER
+        var onotes = 'You auctioned off: ' + auction.name + ' for: ' + itemString + ' from: ' + bidder + ' \n';
+        firebase.database().ref('userItems/' + auction.owner + '/log/' ).push(onotes);
+        //SET NOTIFICATION FOR BIDDER
+        var bnotes = 'You won: ' + auction.name + ' from: ' + bidder + ' in exchange for: ' + itemString + ' \n';
+        firebase.database().ref('userItems/' + bidderid + '/log/' ).push(bnotes);
+
+
     }
 
-
-    
 
     toggleModal = () => {
         let newState = (this.state.showModal ? false : true);
@@ -190,7 +220,6 @@ class ItemDetails extends Component {
         }
         console.log('this.state.item');
         console.log(this.state.item);
-        
 
         //
 
@@ -231,15 +260,15 @@ class ItemDetails extends Component {
                     <Modal show={this.state.showModal} modalClosed={this.toggleModal}>
                         <SelectBidChart bidItems={this.state.userInventory} addBid={this.addBid} setSelected={this.setSelected}></SelectBidChart>
                     </Modal>
-                    
-                    
-                    
-                    <BidItems bidItems={this.state.bidItems} onClick={this.setWinner} itemOwner={'PennyMonster38'} toggleModal={this.toggleModal}></BidItems> {/*item.owner*/}
+
+
+
+                    <BidItems bidItems={this.state.bidItems} onClick={(bidder, bidderid) => this.setWinner(bidder, bidderid, this.state.item)} itemOwner={this.state.item.owner} toggleModal={this.toggleModal}></BidItems> {/*item.owner*/}
 
                 </div>
 
                 <div className={classes.row3}>
-                    
+
                 </div>
 
 
