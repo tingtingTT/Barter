@@ -6,19 +6,139 @@ import {connect} from 'react-redux';
 import classes from './ItemDetails.css';
 import WinningBidButton from './WinningBidButton/WinningBidButton';
 import BidItems from './BidItems/BidItems';
+import SelectBidChart from '../SelectBid/SelectBidChart/SelectBidChart';
+import Modal from '../UI/Modal/Modal';
+
+const config = {
+
+    apiKey: "AIzaSyDfRWLuvzYmSV3TwmLOppZT0ZZbtIZRlrs",
+    authDomain: "barterbuddy-4b41a.firebaseapp.com",
+    databaseURL: "https://barterbuddy-4b41a.firebaseio.com",
+    projectId: "barterbuddy-4b41a",
+    storageBucket: "barterbuddy-4b41a.appspot.com",
+    messagingSenderId: "879139739414"
+
+};
+
+let fb = firebase.initializeApp(config, 'itemDetails');
+let auctionDB = fb.database().ref('auctionDB/');
+let userItems = fb.database().ref('userItems/');
+let userInfo = fb.database().ref('userInfo/');
+
+
 
 class ItemDetails extends Component {
     //TODO: Get item from DB using props.itemID
     state = {
         item: {},
-        bidItems: [{owner: 'user1', zipcode: 95126, title: 'a used TV'},
-        {owner: 'user2', zipcode: 95127, title: 'a used bike'},
-        {owner: 'user3', zipcode: 95128, title: 'a used computer'},
-        {owner: 'user4', zipcode: 95129, title: 'a used cloth'},
-        {owner: 'user5', zipcode: 95120, title: 'a pair of used shoes'}]
+        bidItems: [],
+        showModal: false,
+        userInventory: [],
+        currentUser: 'none',
+        addedBids: []
 
 
 
+    }
+    componentWillMount () {
+
+        this.setState({currentUser: this.props.userId});
+        
+        
+        const query = new URLSearchParams(this.props.location.search);
+        const item = {};
+        for (let param of query.entries()){
+
+            item[param[0]] = param[1];
+        }
+
+        this.setState({item: item});
+
+
+        
+    }
+
+    componentDidMount() {
+
+
+        
+        let name = this.state.currentUser;
+
+        // GET actual bids
+        auctionDB.child(this.state.item.itemKey).child('/bids/').on('value', snapshot=>{
+            let bids = snapshot.val();
+
+            let returnArr = [];
+            snapshot.forEach(childSnapshot => {
+                let item = childSnapshot.val();
+                item.key = childSnapshot.key;
+                returnArr.push(item);
+            });
+
+            this.setState({bidItems: returnArr});
+        });
+
+        // GET users inventory to pass to bid select component
+        userItems.child(name+'/').child('/inventory').on('value', snapshot=>{
+            let inv = snapshot.val()
+            let returnArr = [];
+            snapshot.forEach(childSnapshot => {
+                let item = childSnapshot.val();
+                item.key = childSnapshot.key;
+                returnArr.push(item);
+            });
+            console.log('??????????????????????????')
+            console.log(returnArr);
+
+            this.setState({userInventory: returnArr});
+        });
+
+    }
+
+    setSelected = (itemKey) => {
+
+        // TODO: check if item is already in addedBids. if it is, remove it, else add
+        let bids = this.state.addedBids;
+
+        let inventory = {};
+        this.state.userInventory.map(item => {
+            inventory[item.itemKey] = item;
+        });
+        let selected = inventory[itemKey]
+        bids.push(selected);
+        
+        
+
+        this.setState({addedBids: bids})
+    }
+
+    addBid = () => {
+
+        let bidsToAdd = this.state.addedBids;
+        let ownerUsername = '';
+
+        for (let index in bidsToAdd){
+            let item = bidsToAdd[index];
+            userInfo.child(item.ownerUser+'/').on('value', snapshot => {
+                // GET real username
+                const info = snapshot.val();
+                console.log('USERNAME');
+                console.log(info.username);
+                ownerUsername = info.username;  
+
+                // ADD item to bids list
+                auctionDB.child(this.state.item.itemKey).child('/bids/').child(item.itemKey).set({
+                    itemKey: item.itemKey,
+                    owner: ownerUsername,
+                    title: item.itemName,
+                    zipcode: item.location
+                });
+            });
+  
+         
+        }
+
+        this.toggleModal();
     }
 
     isOwner(owner){
@@ -39,18 +159,12 @@ class ItemDetails extends Component {
       //remove items from invy
     }
 
-    componentWillMount () {
-        console.log('item');
-        const query = new URLSearchParams(this.props.location.search);
-        const item = {};
-        for (let param of query.entries()){
 
-            item[param[0]] = param[1];
-        }
+    
 
-        this.setState({item: item});
-
-
+    toggleModal = () => {
+        let newState = (this.state.showModal ? false : true);
+        this.setState({showModal: newState});
     }
 
     // //Dummy Item
@@ -66,6 +180,9 @@ class ItemDetails extends Component {
         }
         console.log('this.state.item');
         console.log(this.state.item);
+        
+
+        //
 
         return (
 
@@ -100,8 +217,19 @@ class ItemDetails extends Component {
                 </div>
 
                 <div className={classes.row2}>
-                    <BidItems bidItems={this.state.bidItems} onClick={this.setWinner} itemOwner={'PennyMonster38'}></BidItems> {/*item.owner*/}
 
+                    <Modal show={this.state.showModal} modalClosed={this.toggleModal}>
+                        <SelectBidChart bidItems={this.state.userInventory} addBid={this.addBid} setSelected={this.setSelected}></SelectBidChart>
+                    </Modal>
+                    
+                    
+                    
+                    <BidItems bidItems={this.state.bidItems} onClick={this.setWinner} itemOwner={'PennyMonster38'} toggleModal={this.toggleModal}></BidItems> {/*item.owner*/}
+
+                </div>
+
+                <div className={classes.row3}>
+                    
                 </div>
 
 

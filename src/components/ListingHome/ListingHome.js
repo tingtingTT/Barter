@@ -11,12 +11,12 @@ const listingHome = (props)=> {
 
     const listingItemsHome = (
         props.listing.map(item => (
-            <ListingItemHome key={item.id}
+            <ListingItemHome key={item.itemKey}
                 img={item.imageURL}
                 name={item.itemName}
                 desc={item.desc}
                 category={item.category}
-                // numBid = {}
+                itemKey={item.itemKey}
                 // clicked={() => this.itemClicked(item.id)}
             />
         ))

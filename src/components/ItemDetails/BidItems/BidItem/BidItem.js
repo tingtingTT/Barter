@@ -16,18 +16,24 @@ function isOwner(owner){
   return false;
 }
 
-const bidItem = (props) => (
+const bidItem = (props) => {
+    console.log(props.isNew);
 
-    <div className={classes.BidItem}>
-        <div className={classes.rowIcon}>
-            {props.owner}
-            <div className={classes.mapIcon}><FontAwesomeIcon icon="map-marker" size="1x"/></div>
-            {props.zipcode}
-            { isOwner(props.itemOwner) ? <WinningBidButton onClick={props.onClick}/> : null }
+    return(
+        <div className={classes.BidItem}>
+        {props.isNew
+            ? <div className={classes.rowIcon}>
+                {props.owner}
+                <div className={classes.mapIcon}><FontAwesomeIcon icon="map-marker" size="1x"/></div>
+                {props.zipcode}
+                { isOwner(props.itemOwner) ? <WinningBidButton onClick={props.onClick}/> : null }
             </div>
-        <div className={classes.textnBorder}>{props.title}</div>
-    </div>
-
-);
+            : null
+        }
+            
+            <div className={classes.textnBorder}>{props.title}</div>
+        </div>
+    )
+}
 
 export default withRouter(bidItem);
