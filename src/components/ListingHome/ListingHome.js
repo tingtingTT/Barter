@@ -17,6 +17,7 @@ const listingHome = (props)=> {
                 desc={item.desc}
                 category={item.category}
                 itemKey={item.itemKey}
+                owner={item.ownerUser}
                 // clicked={() => this.itemClicked(item.id)}
             />
         ))

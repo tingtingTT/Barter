@@ -31,6 +31,7 @@ class ItemDetails extends Component {
     //TODO: Get item from DB using props.itemID
     state = {
         item: {},
+        auctionOwner: 'none',
         bidItems: [],
         showModal: false,
         userInventory: [],
@@ -59,6 +60,15 @@ class ItemDetails extends Component {
     }
 
     componentDidMount() {
+
+        console.log('auction Item User:');
+        console.log(this.state.item.owner);
+
+        userInfo.child(this.state.item.owner).on('value', snapshot => {
+            let info = snapshot.val();
+            this.setState({auctionOwner: info.username});
+        });
+
 
 
         
@@ -195,7 +205,7 @@ class ItemDetails extends Component {
                         <div className={classes.ownerDetails}>
                             {/* this is a placeholder for now, it should be the userIcon */}
                             <div className={classes.userIcon}></div>
-                            <p className = {classes.owner}>{item.owner}</p>
+                            <p className = {classes.owner}>{this.state.auctionOwner}</p>
                             {/* <p className = {classes.owner}>[rating]</p> */}
                         </div>
 
