@@ -6,7 +6,6 @@ import {connect} from 'react-redux';
 import classes from './ItemDetails.css';
 import WinningBidButton from './WinningBidButton/WinningBidButton';
 import BidItems from './BidItems/BidItems';
-import SelectBid from '../SelectBid/SelectBid';
 import SelectBidChart from '../SelectBid/SelectBidChart/SelectBidChart';
 import Modal from '../UI/Modal/Modal';
 
@@ -60,15 +59,10 @@ class ItemDetails extends Component {
     }
 
     componentDidMount() {
-        console.log('item in did mount');
-        console.log(this.state.item);
-        console.log('item key:')
-        console.log(this.state.item.itemKey)
+
 
         
         let name = this.state.currentUser;
-        console.log('NAME:')
-        console.log(name)
 
         // GET actual bids
         auctionDB.child(this.state.item.itemKey).child('/bids/').on('value', snapshot=>{
@@ -113,8 +107,7 @@ class ItemDetails extends Component {
         let selected = inventory[itemKey]
         bids.push(selected);
         
-        console.log('BIDS !!!!!!');
-        console.log(bids);
+        
 
         this.setState({addedBids: bids})
     }
@@ -122,23 +115,29 @@ class ItemDetails extends Component {
     addBid = () => {
 
         let bidsToAdd = this.state.addedBids;
+        let ownerUsername = '';
 
         for (let index in bidsToAdd){
-            console.log(item);
             let item = bidsToAdd[index];
-            // TODO: get real username
+            userInfo.child(item.ownerUser+'/').on('value', snapshot => {
+                // GET real username
+                const info = snapshot.val();
+                console.log('USERNAME');
+                console.log(info.username);
+                ownerUsername = info.username;  
 
-            auctionDB.child(this.state.item.itemKey).child('/bids/').child(item.itemKey).set({
-                itemKey: item.itemKey,
-                owner: item.ownerUser,
-                title: item.itemName,
-                zipcode: item.location
+                // ADD item to bids list
+                auctionDB.child(this.state.item.itemKey).child('/bids/').child(item.itemKey).set({
+                    itemKey: item.itemKey,
+                    owner: ownerUsername,
+                    title: item.itemName,
+                    zipcode: item.location
+                });
             });
+  
+         
         }
 
-        console.log('IN ADD BID');
-        
-        
         this.toggleModal();
     }
 
@@ -221,7 +220,6 @@ class ItemDetails extends Component {
 
                     <Modal show={this.state.showModal} modalClosed={this.toggleModal}>
                         <SelectBidChart bidItems={this.state.userInventory} addBid={this.addBid} setSelected={this.setSelected}></SelectBidChart>
-                        <SelectBid addBid={this.addBid}/>
                     </Modal>
                     
                     
