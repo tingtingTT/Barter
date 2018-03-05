@@ -1,3 +1,8 @@
+## Project Overview
+
+The product is an online platform for facilitating the exchange of goods. Users can place bids on other peoples goods using items from their own personal inventory. 
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>

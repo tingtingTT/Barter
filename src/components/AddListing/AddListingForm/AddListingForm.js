@@ -123,7 +123,7 @@ class AddListingForm extends Component {
     };
 
     componentDidMount = () =>{
-        //console.log(getUserListingsArray(this.props.userId));
+        console.log(getUserListingsArray(this.props.userId));
         //console.log(this.props.userId);
     };
 

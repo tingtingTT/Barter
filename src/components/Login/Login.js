@@ -6,8 +6,8 @@ import classes from './Login.css';
 
 class Login extends React.Component {
 
-  render() {
 
+  render() {
     return (
       <div className={classes.content}>
           <LogInForm title='Log in'/>
