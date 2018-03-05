@@ -9,10 +9,40 @@
     text-align: center;
     margin-top: 60px;
 }
-
-.Inventory{
-    flex-flow: row;
+.row {
+    width: 80%;
+    margin: 0 auto;
+    clear: both;
+    position: relative;
 }
+.col1of4{
+    width: 23%;
+    margin-right: 4%;
+    float: left;
+}
+.col3of4{
+    width: 73%;
+    float: left;
+}
+
+.sectionTitle {
+    font-size: 3.5rem;
+    margin: 0;
+    text-transform: capitalize;
+}
+.sectionDesc {
+    margin: 0;
+    font-size: 1.6rem;
+}
+.addItemButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.spacer {
+    margin-bottom: 4rem;
+}
+
 
 .content {
     margin-top: 7rem;

@@ -19,18 +19,23 @@ import classes from './Inventory.css';
 
 const inventory = (props) => {
 
+    console.log('props.inventory')
+    console.log(props.inventory)
    
-   
-    const inventoryItems = (
-        props.inventory.map(item => (
-            <InventoryItem key={item.id}
-                img={item.imageURL}
-                name={item.itemName}
-                desc={item.desc}
-                clicked={() => props.editItemHandler(item.id)}
-            />
-        ))
-    )
+    let inventoryItems = null
+    if(props.inventory){
+        inventoryItems = (
+            props.inventory.map((item, index) => (
+                <InventoryItem key={index}
+                    img={item.imageURL}
+                    name={item.itemName}
+                    desc={item.desc}
+                    clicked={() => props.editItemHandler(index)}
+                />
+            ))
+        );
+    }
+    
     
     return (
         <div className={classes.Inventory}>

@@ -9,9 +9,9 @@ class Login extends React.Component {
 
   render() {
     return (
-          <div className={classes.content}>
-              <LogInForm title='Log in'/>
-          </div>
+      <div className={classes.content}>
+          <LogInForm title='Log in'/>
+      </div>
     );
   }
 

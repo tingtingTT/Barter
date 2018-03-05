@@ -1,0 +1,39 @@
+.BidItem{
+    width: 100%;
+    min-height: 5rem;
+    background-color: white;
+    color: black;
+    font-size: 2rem;
+    position: relative;
+    margin: auto;
+}
+
+.textBorder{
+    font-size: 1.5rem;
+    border-bottom: 1px solid black;
+}
+
+.textnBorder{
+    height: 4rem;
+    line-height: 4rem;
+    font-size: 1.5rem;
+    padding: 0.5rem 5rem 0.5rem 2rem; 
+    border-bottom: 1px solid black;
+}
+
+.rowIcon{
+    background-color:rgb(200,200,200);
+    padding-bottom: 0.5rem;
+    height: 4rem;
+    line-height: 4rem;
+    padding: 0.5rem 5rem 0.5rem 2rem; 
+}
+
+
+.mapIcon {
+    margin-left: 4rem;
+    width: 3rem;
+    height: 3rem;
+    line-height: 3rem;
+    display: inline-block;
+}

@@ -2,22 +2,22 @@ import React from 'react';
 
 import classes from './ListingItem.css'
 import Button from '../../UI/Button/Button';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+
 
 const listingItem = (props) => (
 
-    <div className={classes.Item} onClick={props.clicked}>
+    <div className={classes.Item}>
         <img src={props.img} className={classes.Image} alt=''/>
-        <p>{props.category || "None"}</p>
-        <p> 0 </p>
-        <p> Bid </p>
+        <div> <FontAwesomeIcon icon={props.category} size="3x"/></div>
+        <div className={classes.Textnum}>0 </div>
+        <div className={classes.Textbid}> Bid </div>
         <div className={classes.Inside}>
-            <h1>{props.category || "None"}</h1>
-            <h1>{props.name}</h1>
-            <h1>0 Bid</h1>
-            <h2>Place Holder</h2>
-            <h1>Edit</h1>
-            <h2>Plcae Holder</h2>
-            <Button label="Delete"></Button>
+            <div> <FontAwesomeIcon icon={props.category} size="3x"/></div>
+            <div className={classes.Line}>{props.name}</div>
+            <div className={classes.Line}>0 Bid</div>
+            <div className={classes.Button2} style={{bottom: "100px"}} onClick={props.clicked}><FontAwesomeIcon icon="edit"/></div>
+            <div className={classes.Button2} key={props.key} onClick={props.delclicked}><FontAwesomeIcon icon="trash-alt"/></div>
         </div>
     </div>
 

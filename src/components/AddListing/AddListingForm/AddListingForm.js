@@ -9,7 +9,7 @@ import Input from '../../UI/Input/Input';
 
 import classes from './AddListingForm.css';
 
-/* 
+/*
 TODO (in priority order):
     1. Fix Modal popup positiion
     2. Add form Validation
@@ -77,19 +77,19 @@ class AddListingForm extends Component {
                 elementType: 'select',
                 elementConfig: {
                     options: [
-                        {value: 'electronics', displayValue: 'Electronics'},
-                        {value: 'games', displayValue: 'Games'},
-                        {value: 'service', displayValue: 'Service'},
-                        {value: 'appliance', displayValue: 'Appliance'},
-                        {value: 'craft', displayValue: 'Craft'},
-                        {value: 'clothing', displayValue: 'Clothing'},
-                        {value: 'sporting', displayValue: 'Sporting Goods'},
-                        {value: 'jewelry', displayValue: 'Jewelry'},
+                        {value: 'tv', displayValue: 'Electronics'},
+                        {value: 'gamepad', displayValue: 'Games'},
+                        {value: 'briefcase', displayValue: 'Service'},
+                        {value: 'wrench', displayValue: 'Appliance'},
+                        {value: 'images', displayValue: 'Craft'},
+                        {value: 'female', displayValue: 'Clothing'},
+                        {value: 'futbol', displayValue: 'Sporting Goods'},
+                        {value: 'gem', displayValue: 'Jewelry'},
                         {value: 'home', displayValue: 'Home Goods'},
-                        {value: 'furniture', displayValue: 'Furniture'}
+                        {value: 'bath', displayValue: 'Furniture'}
                     ]
                 },
-                value: 'Electronics',
+                value: 'tv',
                 clicked: false
             },
             ItemType: {
@@ -129,11 +129,11 @@ class AddListingForm extends Component {
 
 
     // POSTS INPUT FIELDS TO DB
-    addListingHandler = (event) => { 
-        console.log(this.props.userId);
+    addListingHandler = (event) => {
+        console.log("addlisting userID:", this.props.userId);
         event.preventDefault();
 
-    
+
         const listing = {};
         // Create listing obj with values depending if they were updated while editing, or if its a new value
         for (let formElementIdentifier in this.state.itemForm) {
@@ -149,11 +149,11 @@ class AddListingForm extends Component {
                 listing[formElementIdentifier] = values[formElementIdentifier]
 
             }else {
-                
+
                 listing[formElementIdentifier] = this.state.itemForm[formElementIdentifier].value;
-               
+
             }
-            
+
         }
 
         // Set the img url depending if it was updated while editing, or if its a new image
@@ -162,95 +162,138 @@ class AddListingForm extends Component {
                 listing['imageURL'] = this.props.imgURL;
             }else{
                 listing['imageURL'] = this.state.imageURL;
-            }   
+            }
         }else {
             listing['imageURL'] = this.state.imageURL;
         }
-        
-        
+
+
         // update existing item
         if(this.props.editingItem){
-            //TODO: Convert this to firebase UserItems format
+            //console.log('attempting to push to user:slot',this.props.userId, this.props.id, this.props.key);
+            //AUCTION ITEMS
+            console.log('attempting to push to user:slot',this.props.pushKey);
+            if(listing.ItemType === 'auction'){
+                // PUSH TO SET OF ALL AUCTION ITEMS
+                firebase.database().ref('/auctionDB/').child(this.props.pushKey).set({
+                    itemName: listing.itemName,
+                    desc: listing.desc,
+                    category: listing.category,
+                    imageURL: listing.imageURL,
+                    ItemType: listing.ItemType,
+                    ownerUser: this.props.userId,
+                    public: true,
+                    location:'95060',
+                    itemKey: this.props.pushKey
+                }).then(response => {
+                    this.resetValues();
+                    this.props.closeModal();
+                });
+                // PUSH TO SINGLE USERS AUCTION ITEMS BUCKET
+                userItems.child(this.props.userId).child('/auction/').child(this.props.pushKey).set({
+                    itemName: listing.itemName,
+                    desc: listing.desc,
+                    category: listing.category,
+                    imageURL: listing.imageURL,
+                    ItemType: listing.ItemType,
+                    ownerUser: this.props.userId,
+                    public: true,
+                    location:'95060',
+                    itemKey: this.props.pushKey
+                }).then(response => {
+                    this.resetValues();
+                    this.props.closeModal();
+                });
+            }
+            else{
 
-            firebase.database().ref('inventory/').push({
-                itemName: listing.itemName,
-                desc: listing.desc,
-                category: listing.category,
-                imageURL: listing.imageURL,
-                ItemType: listing.ItemType,
-                ownerUser: this.props.userId,
-                public: true,
-                location:'95060'
-            }).then(response => {
-                this.resetValues();
-                this.props.closeModal();
-            });
-        }else{
-            //TODO: Add logic for determining if public or private listing and send to a separate database
-            firebase.database().ref('itemDb/').push({
-                itemName: listing.itemName,
-                desc: listing.desc,
-                category: listing.category,
-                imageURL: listing.imageURL,
-                ItemType: listing.ItemType,
-                ownerUser: this.props.userId,
-                public: true,
-                location:'95060',
+                console.log(listing);
+                userItems.child(this.props.userId).child('/inventory/').child(this.props.pushKey).set({
+                    itemName: listing.itemName,
+                    desc: listing.desc,
+                    category: listing.category,
+                    imageURL: listing.imageURL,
+                    ItemType: listing.ItemType,
+                    ownerUser: this.props.userId,
+                    public: true,
+                    location:'95060',
+                    itemKey: this.props.pushKey
+                    
+                }).then(response => {
+                    this.resetValues();
+                    this.props.closeModal();
+                });
 
-            }).then(response => {
-
-                console.log('Posted to central itemDb')
-            });
-
-            // Add new item
-            let items = null;
-            userItems.child(this.props.userId).once('value', snapshot =>{
-                console.log(snapshot.val());
-                items = snapshot.val();
-            });
-            if(items === null){
-                console.log('items is null');
-                items = [];
-                items.push(listing);
-            }else{
-                items.push(listing);
             }
 
-            userItems.child(this.props.userId+'/').set(items).then(response => {
-                this.resetValues();
-                console.log('listing sent adllisting userID', this.props.userId);
-                this.props.closeModal();
-            });
-            //
-            //
-            // axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(response => {
-            //     this.resetValues();
-            //     this.props.closeModal()
-            // });
-        
+
+
+        //ADDING A NEW ITEM
+        }else{
+            //WE ADD A NEW ITEM
+            var tempKey = '';
+            if(listing.ItemType === 'auction'){
+                // PUSH to public AuctionDB
+                let aucRef = firebase.database().ref('auctionDB/').push();
+                let newKey = aucRef.key;
+                let newItem = {
+                    itemName: listing.itemName,
+                    desc: listing.desc,
+                    category: listing.category,
+                    imageURL: listing.imageURL,
+                    ItemType: listing.ItemType,
+                    ownerUser: this.props.userId,
+                    public: true,
+                    location:'95060',
+                    itemKey: newKey
+                }
+                aucRef.set(newItem).then(response => {
+                    // Using newKey instead. Turns out response doesn't have a key property when using set
+                    // tempKey = response.key;
+                    userItems.child(this.props.userId).child('/auction').child(newKey).set({
+                        itemName: listing.itemName,
+                        desc: listing.desc,
+                        category: listing.category,
+                        imageURL: listing.imageURL,
+                        ItemType: listing.ItemType,
+                        ownerUser: this.props.userId,
+                        public: true,
+                        location:'95060',
+                        numBids: 0,
+                        itemKey: newKey
+                    }).then(response => {
+                        this.resetValues();
+                        this.props.closeModal();
+                    });
+                    console.log('Posted to central itemDb',tempKey );
+                });
+
+            }
+            else{
+                // PUSH to inventory
+                let invRef = userItems.child(this.props.userId).child('/inventory/').push();
+                let newKey = invRef.key;
+                let newItem = {
+                    itemName: listing.itemName,
+                    desc: listing.desc,
+                    category: listing.category,
+                    imageURL: listing.imageURL,
+                    ItemType: listing.ItemType,
+                    ownerUser: this.props.userId,
+                    public: true,
+                    location:'95060',
+                    itemKey: newKey
+                }
+                invRef.set(newItem).then(response => {
+                    this.resetValues();
+                    this.props.closeModal();
+                });
+            }
+
+
         }
-        
+
         listing['imageURL'] = this.state.imageURL;
-
-
-    // TODO: NEEDS REVIEW
-        // let items = null;
-        // userItems.child(this.props.userId).on('value', snapshot =>{
-        //     //console.log(snapshot.val());
-        //     items = snapshot.val();
-        // });
-        // if(items == null){
-        //     items = [];
-        // };
-        // items.push(listing);
-        // userItems.child(this.props.userId+'/').set(items).then(response => {this.props.closeModal()});
-
-        //
-        // axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(response => {
-        //     this.props.closeModal()
-        // });
-           
-        
 
     };
 
@@ -265,28 +308,33 @@ class AddListingForm extends Component {
             updatedFormElement = {
                 ...updatedForm[key]
             };
+            updatedForm['category'].value = 'tv';
+            updatedForm['ItemType'].value = 'auction';
             updatedFormElement.value = '';
             updatedFormElement.clicked = false;
             updatedForm[key] = updatedFormElement;
         }
     
+        updatedForm["category"].value = 'tv';
+        updatedForm["ItemType"].value = 'auction';
         this.setState({itemForm: updatedForm, imageURL: ''});
     }
 
-    // Delete item handler
-    deleteItem = () => {
-        if(this.props.editingItem){
-            firebase.database().ref('inventory/' + this.props.id).remove().then(response => {
-                this.resetValues();
-                this.props.closeModal();
-            });
-        }
-    }
+    // // Delete item handler
+    // deleteItem = () => {
+    //     console.log('registered delete');
+    //     if(this.props.editingItem){
+    //         firebase.database().ref('inventory/' + this.props.id).remove().then(response => {
+    //             this.resetValues();
+    //             this.props.closeModal();
+    //         });
+    //     }
+    // }
 
     // TWO-WAY BINDING WITH INPUT FIELDS
     inputChangedHandler = (event, inputIdentifier) => {
-        
-            
+
+
         const updatedForm = {
             ...this.state.itemForm
         };
@@ -297,14 +345,14 @@ class AddListingForm extends Component {
         updatedFormElement.value = event.target.value;
         updatedForm[inputIdentifier] = updatedFormElement;
 
-        
+
         this.setState({itemForm: updatedForm});
 
     }
 
     inputClicked = (element) => {
 
-        
+
         // Copy state
         let updatedForm = {
             ...this.state.itemForm
@@ -314,7 +362,7 @@ class AddListingForm extends Component {
         }
         updatedState.clicked = true;
 
-        // Set the config value to the prepopulated value 
+        // Set the config value to the prepopulated value
         if(this.props.editingItem){
             const values = {
                 itemName: this.props.itemName,
@@ -324,12 +372,12 @@ class AddListingForm extends Component {
             }
             updatedState.value = values[element];
         }
-        
+
         updatedForm[element] = updatedState;
         this.setState({itemForm: updatedForm});
     }
-   
-    
+
+
 
 	render () {
 
@@ -340,7 +388,7 @@ class AddListingForm extends Component {
             category: this.props.category,
             ItemType: this.props.ItemType
         }
-    
+
 
 
         // MAKE ARRAY OF INPUT OBJECTS
@@ -348,30 +396,31 @@ class AddListingForm extends Component {
 
         // Show the values of the item if one is being edited
         if (this.props.editingItem){
-        
+
             for (let key in this.state.itemForm) {
+                console.log(key);
                 if (!this.state.itemForm[key].clicked){
                     const config = {
                         ...this.state.itemForm[key]
                     }
                     if(this.props.editingItem) {
-                       config.value = values[key]
+                        config.value = values[key]
                     }
-                    
+
                     formElementsArray.push({
                         id: key,
                         config: config
                     });
                 }
                 else {
-                    
+
                     formElementsArray.push({
                         id: key,
                         config: this.state.itemForm[key]
                     });
-                    
+
                 }
-    
+
             }
         }else {
             // Show empy form
@@ -382,9 +431,9 @@ class AddListingForm extends Component {
                     config: this.state.itemForm[key]
                 });
             }
-                
+
         }
-       
+
 
         // DISPLAY IMAGE AFTER UPLOAD
         let image = null
@@ -397,7 +446,7 @@ class AddListingForm extends Component {
                 {'background-image': 'url(' + this.props.imgURL + ')'}
             )
         }
-       
+
         // FORM DISPLAY
         let form = null;
 
@@ -417,13 +466,13 @@ class AddListingForm extends Component {
         let deleteBut = null;
         if (this.props.editingItem) {
             deleteBut = (
-                <p className={classes.Delete} onClick={this.deleteItem}>Delete</p>
+                <p className={classes.Delete} onClick={this.props.onClick}>Delete</p>
             )
         }
-        
+
         form = (
             <form className={classes.Form} onSubmit={this.addListingHandler}>
-                 
+
                 <div className={classes.FileLoader} style={image}>
                     <label>
                         <i className="fa fa-pencil fa-2x" aria-hidden="true"></i>
@@ -439,10 +488,10 @@ class AddListingForm extends Component {
                             onProgress={this.handleProgress}
                         />
                     </label>
-                    
+
                 </div>
-            
-            
+
+
                 {formElementsArray.map(formElement =>(
                     <Input
                         key={formElement.id}
@@ -451,10 +500,9 @@ class AddListingForm extends Component {
                         value={formElement.config.value}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)}
                         clicked={() => this.inputClicked(formElement.id)}
-                        
                         />
                 ))}
-                
+
                 {deleteBut}
                 {button}
             </form>

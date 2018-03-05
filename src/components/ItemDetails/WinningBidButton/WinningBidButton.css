@@ -1,0 +1,22 @@
+.button {
+  display: inline;
+  position: relative;
+  right: 0px;
+  float: right;
+  box-sizing: border-box;
+  width: 15%;
+  height: 80%;
+  outline: 0;
+  margin-left: 10px;
+  margin-top: 5px;
+  /* border: 1px solid #242052; */
+  border-radius: 0;
+  background: #E54A59;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  
+  
+}

@@ -7,7 +7,7 @@ import classes from './Header.css';
 const Header = (props) => (
     <header className={classes.Header}>
         <div className={classes.Logo}>
-            LOGO
+            BARTER
         </div>
         <div>
             <nav>
