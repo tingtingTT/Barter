@@ -54,6 +54,9 @@ class Home extends Component {
             if (item.val().public === true){
                 let itemToStore = item.val();
                 itemToStore.itemKey = item.key;
+                if(!itemToStore.bidcount){
+                    itemToStore.bidcount = 0;
+                }
               fetchedItems.push(itemToStore);
             }
           });
@@ -71,6 +74,9 @@ class Home extends Component {
                 if (item.val().public === true){
                     let itemToStore = item.val();
                     itemToStore.itemKey = item.key;
+                    if(!itemToStore.bidcount){
+                        itemToStore.bidcount = 0;
+                    }
                     hotItems.push(itemToStore);
                 }
             });
@@ -136,6 +142,9 @@ class Home extends Component {
             if(item.val().ItemType === 'auction' && item.val().public === true){
                 let itemToStore = item.val();
                 itemToStore.itemKey = item.key;
+                if(!itemToStore.bidcount){
+                    itemToStore.bidcount = 0;
+                }
                 fetchedItems.push(itemToStore);
             }
           });
@@ -150,6 +159,9 @@ class Home extends Component {
                  if (item.val().public === true){
                      let itemToStore = item.val();
                      itemToStore.itemKey = item.key;
+                     if(!itemToStore.bidcount){
+                         itemToStore.bidcount = 0;
+                     }
                      fetchedItems.push(itemToStore);
                  }
              });
