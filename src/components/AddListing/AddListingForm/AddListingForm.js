@@ -175,6 +175,15 @@ class AddListingForm extends Component {
             console.log('attempting to push to user:slot',this.props.pushKey);
             if(listing.ItemType === 'auction'){
                 // PUSH TO SET OF ALL AUCTION ITEMS
+                console.log('attempting to push to user:slot',this.props.pushKey);
+                    // PUSH TO SET OF ALL AUCTION ITEMS
+                    //if it is an edit, remove any possible copies present in the inventory
+                userItems.child(this.props.userId)
+                    .child('/inventory/')
+                    .child(this.props.pushKey)
+                    .remove().then(response =>{
+                    console.log('removed', response);
+                });
                 firebase.database().ref('/auctionDB/').child(this.props.pushKey).set({
                     itemName: listing.itemName,
                     desc: listing.desc,
@@ -206,7 +215,10 @@ class AddListingForm extends Component {
                 });
             }
             else{
-
+                //what do we do for a bid item that has been edited from auction to be a bid??
+                //we make sure that it does not appear in auction, or auction db
+                userItems.child(this.props.userId).child('/auction/').child(this.props.pushKey).remove();
+                firebase.database().ref('/auctionDB/').child(this.props.pushKey).remove();
                 console.log(listing);
                 userItems.child(this.props.userId).child('/inventory/').child(this.props.pushKey).set({
                     itemName: listing.itemName,
