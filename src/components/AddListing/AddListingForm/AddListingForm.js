@@ -183,7 +183,7 @@ class AddListingForm extends Component {
                     ItemType: listing.ItemType,
                     ownerUser: this.props.userId,
                     public: true,
-                    location:'95060',
+                    location: this.props.location,
                     itemKey: this.props.pushKey
                 }).then(response => {
                     this.resetValues();
@@ -198,7 +198,7 @@ class AddListingForm extends Component {
                     ItemType: listing.ItemType,
                     ownerUser: this.props.userId,
                     public: true,
-                    location:'95060',
+                    location: this.props.location,
                     itemKey: this.props.pushKey
                 }).then(response => {
                     this.resetValues();
@@ -216,7 +216,7 @@ class AddListingForm extends Component {
                     ItemType: listing.ItemType,
                     ownerUser: this.props.userId,
                     public: true,
-                    location:'95060',
+                    location: this.props.location,
                     itemKey: this.props.pushKey
                     
                 }).then(response => {
@@ -244,7 +244,7 @@ class AddListingForm extends Component {
                     ItemType: listing.ItemType,
                     ownerUser: this.props.userId,
                     public: true,
-                    location:'95060',
+                    location: this.props.location,
                     itemKey: newKey
                 }
                 aucRef.set(newItem).then(response => {
@@ -258,7 +258,7 @@ class AddListingForm extends Component {
                         ItemType: listing.ItemType,
                         ownerUser: this.props.userId,
                         public: true,
-                        location:'95060',
+                        location: this.props.location,
                         numBids: 0,
                         itemKey: newKey
                     }).then(response => {
@@ -281,7 +281,7 @@ class AddListingForm extends Component {
                     ItemType: listing.ItemType,
                     ownerUser: this.props.userId,
                     public: true,
-                    location:'95060',
+                    location: this.props.location,
                     itemKey: newKey
                 }
                 invRef.set(newItem).then(response => {

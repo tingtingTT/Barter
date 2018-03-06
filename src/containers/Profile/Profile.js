@@ -232,8 +232,9 @@ class Profile extends Component {
                             desc={this.state.itemToEdit.desc}
                             imgURL={this.state.itemToEdit.imageURL}
                             ItemType={this.state.itemToEdit.ItemType}
-                                    pushKey={this.state.itemToEdit.key}
-                                    onClick={() => this.removeBid(this.state.itemToEdit)}
+                            pushKey={this.state.itemToEdit.key}
+                            onClick={() => this.removeBid(this.state.itemToEdit)}
+                            location={this.state.userZip}
                         />
 
                     </Modal>
