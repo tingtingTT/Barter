@@ -280,7 +280,8 @@ class Profile extends Component {
                         <UserProfile profilePic={this.state.profilePic}
                             userName={this.state.userName}
                             email={this.state.userEmail}
-                            zipCode={this.state.userZip}/>
+                            zipCode={this.state.userZip}
+                            userId={this.props.userId}/>
                     </div>
                     <div className={classes.col3of4}>
 
