@@ -197,8 +197,8 @@ class Profile extends Component {
 
 	render () {
 
-        console.log('inventory check')
-        console.log(this.state.inventory)
+        console.log('ZIP');
+        console.log(this.state.userZip);
 
         let inventory = null;
         if(this.state.inventory){
@@ -234,7 +234,7 @@ class Profile extends Component {
                             ItemType={this.state.itemToEdit.ItemType}
                             pushKey={this.state.itemToEdit.key}
                             onClick={() => this.removeBid(this.state.itemToEdit)}
-                            location={this.state.userZip}
+                            zipCode={this.state.userZip}
                         />
 
                     </Modal>
@@ -257,7 +257,8 @@ class Profile extends Component {
                             imgURL={this.state.itemToEdit.imageURL}
                             ItemType={this.state.itemToEdit.ItemType}
                             onClick={() => this.removeBid(this.state.itemToEdit)}
-                                    pushKey={this.state.itemToEdit.key}
+                            pushKey={this.state.itemToEdit.key}
+                            zipCode={this.state.userZip}
                         />
 
                     </Modal>
