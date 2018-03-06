@@ -17,16 +17,16 @@ function grabAcc(){
     } else {
       localStorage.setItem("logged",'none');
     }
-    console.log("grab acc");
-    console.log(user);
+    //console.log("grab acc");
+    //console.log(user);
     return user;
 }
 
 //currently id passed to save login is email stripped of info
 //THIS MAY BE THE WRONG USERID!!!
 function saveLogged(id){
-  console.log('id');
-  console.log(id);
+  //console.log('id');
+  //console.log(id);
   localStorage.setItem("logged",id);
 }
 

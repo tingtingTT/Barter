@@ -234,7 +234,7 @@ class AddListingForm extends Component {
                     this.resetValues();
                     this.props.closeModal();
                 });
-            this.forceUpdate();
+
             }
 
 

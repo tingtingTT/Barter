@@ -8,9 +8,9 @@ import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 
 function isOwner(owner,loggeduser){
-  console.log("isowner");
-  console.log(owner);
-  console.log(loggeduser);
+  //console.log("isowner");
+  //console.log(owner);
+  //console.log(loggeduser);
   if (loggeduser === owner){
     return true;
   }
@@ -19,7 +19,7 @@ function isOwner(owner,loggeduser){
 }
 
 const bidItem = (props) => {
-    console.log(props.isNew);
+    //console.log(props.isNew);
 
     return(
         <div className={classes.BidItem}>

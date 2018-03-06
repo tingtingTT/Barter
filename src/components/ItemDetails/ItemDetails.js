@@ -77,14 +77,12 @@ class ItemDetails extends Component {
         // GET actual bids
         auctionDB.child(this.state.item.itemKey).child('/bids/').on('value', snapshot=>{
             let bids = snapshot.val();
-
             let returnArr = [];
             snapshot.forEach(childSnapshot => {
                 let item = childSnapshot.val();
                 item.key = childSnapshot.key;
                 returnArr.push(item);
             });
-
             this.setState({bidItems: returnArr});
         });
 
@@ -126,9 +124,12 @@ class ItemDetails extends Component {
 
         let bidsToAdd = this.state.addedBids;
         let ownerUsername = '';
+        let bidcount = 0;
 
+        //grab all bids from addedBids and push them to
         for (let index in bidsToAdd){
             let item = bidsToAdd[index];
+            console.log('Item key being bid on:',this.state.item.itemKey);
             userInfo.child(item.ownerUser+'/').on('value', snapshot => {
                 // GET real username
                 const info = snapshot.val();
@@ -218,8 +219,8 @@ class ItemDetails extends Component {
             zipCode: 92004,
             owner: 'PennyMonster38'
         }
-        console.log('this.state.item');
-        console.log(this.state.item);
+        //console.log('this.state.item');
+        //console.log(this.state.item);
 
         //
 

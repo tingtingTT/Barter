@@ -54,7 +54,7 @@ class Home extends Component {
               fetchedItems.push(childNodes.val());
             }
           });
-          console.log(fetchedItems);
+          //console.log(fetchedItems);
           if(fetchedItems !== null || fetchedItems !== []){
             that.setState({listing: fetchedItems});
           }
