@@ -133,7 +133,6 @@ class AddListingForm extends Component {
         console.log("addlisting userID:", this.props.userId);
         event.preventDefault();
 
-
         const listing = {};
         // Create listing obj with values depending if they were updated while editing, or if its a new value
         for (let formElementIdentifier in this.state.itemForm) {
@@ -235,7 +234,7 @@ class AddListingForm extends Component {
                     this.resetValues();
                     this.props.closeModal();
                 });
-
+            this.forceUpdate();
             }
 
 
@@ -330,6 +329,7 @@ class AddListingForm extends Component {
         updatedForm["category"].value = 'tv';
         updatedForm["ItemType"].value = 'auction';
         this.setState({itemForm: updatedForm, imageURL: ''});
+
     }
 
     // // Delete item handler
