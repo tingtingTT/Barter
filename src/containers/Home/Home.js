@@ -63,7 +63,7 @@ class Home extends Component {
 
           //console.log(fetchedItems);
           if(fetchedItems !== null || fetchedItems !== []){
-            that.setState({listing: fetchedItems});
+            this.setState({listing: fetchedItems});
           }
 
         });

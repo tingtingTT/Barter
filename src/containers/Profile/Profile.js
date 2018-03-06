@@ -87,6 +87,7 @@ class Profile extends Component {
                 returnArr.push(item);
             });
 
+
             if(items != null){
                 console.log(returnArr);
                 this.setState({listing: returnArr});

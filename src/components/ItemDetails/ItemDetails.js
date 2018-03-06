@@ -125,6 +125,7 @@ class ItemDetails extends Component {
 
         //get the current bid count in the auctionDb item
         let bidcount = '';
+        let ownerName = '';
         auctionDB.child(keyToIncrement).once('value', snapshot=>{
             let item = snapshot.val();
             bidcount = item.bidcount;
@@ -133,10 +134,17 @@ class ItemDetails extends Component {
             }else{
                 bidcount = bidcount + 1;
             }
+            ownerName = item.ownerUser;
+
 
         }).then(()=>{
             console.log('incrementing bid count to:', bidcount);
-            auctionDB.child(keyToIncrement).child('bidcount').set(bidcount)
+            auctionDB.child(keyToIncrement).child('bidcount').set(bidcount);
+            userItems
+                .child(ownerName)
+                .child('auction')
+                .child(keyToIncrement)
+                .child('bidcount').set(bidcount);
         });
 
         //check for null
