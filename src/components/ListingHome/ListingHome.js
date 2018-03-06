@@ -11,7 +11,9 @@ const listingHome = (props)=> {
 
     const listingItemsHome = (
         props.listing.map(item => (
-            <ListingItemHome key={item.itemKey}
+            <ListingItemHome
+                key={item.itemKey}
+                bidcount={item.bidcount}
                 img={item.imageURL}
                 name={item.itemName}
                 desc={item.desc}

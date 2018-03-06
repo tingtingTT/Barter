@@ -24,6 +24,7 @@ class Home extends Component {
     state = {
         inventory: [],
         listing: [],
+        hotListings: [],
         currentUser: 'none',
         addingItem: false,
         editingItem: false,
@@ -37,12 +38,14 @@ class Home extends Component {
         }
     }
 
+
     componentDidMount () {
         // let userItems = firebase.database().ref('/userItems');
         var maxListings = 12; //can be modified later.
         this.setState({currentUser: this.props.userId});
         var that = this;
         var fetchedItems = [];
+        var hotItems = [];
         var itemType = 'auction'; //can be modified later
 
         firebase.database().ref('/auctionDB').orderByChild('ItemType').equalTo(itemType).limitToLast(maxListings).on('value', snapshot =>{
@@ -54,12 +57,28 @@ class Home extends Component {
               fetchedItems.push(itemToStore);
             }
           });
+
           //console.log(fetchedItems);
           if(fetchedItems !== null || fetchedItems !== []){
             that.setState({listing: fetchedItems});
           }
 
         });
+
+        firebase.database().ref('/auctionDB').orderByChild('bidcount').limitToLast(5).on('value', snap=>{
+            snap.forEach(function(item){
+                //only check for public items
+                if (item.val().public === true){
+                    let itemToStore = item.val();
+                    itemToStore.itemKey = item.key;
+                    hotItems.push(itemToStore);
+                }
+            });
+            console.log(hotItems);
+            if(hotItems !== null || hotItems !== []){
+                this.setState({hotListings: hotItems});
+            }
+        })
     }
 
     addingItemHandler = () => {
@@ -184,6 +203,12 @@ class Home extends Component {
                 { <div>
                     <FilterMenu onChange={this.filtCategory} onClick={this.filtZipcode}/>
                 </div> }
+                <div>
+                    <h1>Hot Listings!</h1>
+                    <ListingHome listing={this.state.hotListings}/>
+                <hr/><hr/><hr/>
+                </div>
+
                 <div>
                     <ListingHome listing={this.state.listing.reverse()} />
                 </div>
