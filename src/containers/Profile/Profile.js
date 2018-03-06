@@ -54,6 +54,7 @@ class Profile extends Component {
         userName: '',
         userEmail: '',
         userZip: '',
+        profilePic: '',
         addingItem: false,
         editingItem: false,
         itemToEdit: {
@@ -112,7 +113,7 @@ class Profile extends Component {
             const info = snapshot.val();
             console.log('userInfo:');
             console.log(info);
-            this.setState({userName: info['username'], userEmail: info['email'], userZip: info['zipcode']});
+            this.setState({userName: info['username'], userEmail: info['email'], userZip: info['zipcode'], profilePic: info['picture']});
         });
 
     }
@@ -275,7 +276,8 @@ class Profile extends Component {
             <div className={classes.content}>
                 <div className={classes.row}>
                     <div className={classes.col1of4}>
-                        <UserProfile profilePic="https://i.imgur.com/Ig7JBId.jpg"
+
+                        <UserProfile profilePic={this.state.profilePic}
                             userName={this.state.userName}
                             email={this.state.userEmail}
                             zipCode={this.state.userZip}/>
