@@ -18,6 +18,7 @@ import Login from './components/Login/Login';
 import SignUp from './components/Login/SignUp/SignUp';
 import Banner from './components/Banner/Banner';
 import Home from './containers/Home/Home';
+import ProfileLogs from './components/UserProfile/ProfileLogs/ProfileLogs';
 
 // Add icons to library
 fontawesome.library.add(brands, faGamepad, faEdit, faTrashAlt, faTv, faBriefcase, faWrench, faImages, faFemale, faFutbol, faGem,
@@ -32,6 +33,7 @@ class App extends Component {
                 <Route path='/profile' component = {Profile} />
                 <Route path='/details' component = {ItemDetails} />
                 <Route path='/login' component = {Login} />
+                <Route path='/logs' component = {ProfileLogs} />
                 <Route path='/join' component = {SignUp} />
                 <Route path='/' component = {Home} />
             </Switch>

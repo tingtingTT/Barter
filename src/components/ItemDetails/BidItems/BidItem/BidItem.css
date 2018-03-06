@@ -18,6 +18,7 @@
     line-height: 4rem;
     font-size: 1.5rem;
     padding: 0.5rem 5rem 0.5rem 2rem; 
+    border-bottom: 1px solid black;
 }
 
 .rowIcon{

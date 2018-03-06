@@ -183,7 +183,8 @@ class AddListingForm extends Component {
                     ItemType: listing.ItemType,
                     ownerUser: this.props.userId,
                     public: true,
-                    location:'95060'
+                    location:'95060',
+                    itemKey: this.props.pushKey
                 }).then(response => {
                     this.resetValues();
                     this.props.closeModal();
@@ -197,7 +198,8 @@ class AddListingForm extends Component {
                     ItemType: listing.ItemType,
                     ownerUser: this.props.userId,
                     public: true,
-                    location:'95060'
+                    location:'95060',
+                    itemKey: this.props.pushKey
                 }).then(response => {
                     this.resetValues();
                     this.props.closeModal();
@@ -214,7 +216,9 @@ class AddListingForm extends Component {
                     ItemType: listing.ItemType,
                     ownerUser: this.props.userId,
                     public: true,
-                    location:'95060'
+                    location:'95060',
+                    itemKey: this.props.pushKey
+                    
                 }).then(response => {
                     this.resetValues();
                     this.props.closeModal();
@@ -230,7 +234,9 @@ class AddListingForm extends Component {
             var tempKey = '';
             if(listing.ItemType === 'auction'){
                 // PUSH to public AuctionDB
-                firebase.database().ref('auctionDB/').push({
+                let aucRef = firebase.database().ref('auctionDB/').push();
+                let newKey = aucRef.key;
+                let newItem = {
                     itemName: listing.itemName,
                     desc: listing.desc,
                     category: listing.category,
@@ -239,10 +245,12 @@ class AddListingForm extends Component {
                     ownerUser: this.props.userId,
                     public: true,
                     location:'95060',
-
-                }).then(response => {
-                    tempKey = response.key;
-                    userItems.child(this.props.userId).child('/auction').child(tempKey).set({
+                    itemKey: newKey
+                }
+                aucRef.set(newItem).then(response => {
+                    // Using newKey instead. Turns out response doesn't have a key property when using set
+                    // tempKey = response.key;
+                    userItems.child(this.props.userId).child('/auction').child(newKey).set({
                         itemName: listing.itemName,
                         desc: listing.desc,
                         category: listing.category,
@@ -250,7 +258,9 @@ class AddListingForm extends Component {
                         ItemType: listing.ItemType,
                         ownerUser: this.props.userId,
                         public: true,
-                        location:'95060'
+                        location:'95060',
+                        numBids: 0,
+                        itemKey: newKey
                     }).then(response => {
                         this.resetValues();
                         this.props.closeModal();
@@ -258,12 +268,12 @@ class AddListingForm extends Component {
                     console.log('Posted to central itemDb',tempKey );
                 });
 
-                // Items assoc. with user
-
             }
             else{
                 // PUSH to inventory
-                userItems.child(this.props.userId).child('/inventory').push({
+                let invRef = userItems.child(this.props.userId).child('/inventory/').push();
+                let newKey = invRef.key;
+                let newItem = {
                     itemName: listing.itemName,
                     desc: listing.desc,
                     category: listing.category,
@@ -271,68 +281,19 @@ class AddListingForm extends Component {
                     ItemType: listing.ItemType,
                     ownerUser: this.props.userId,
                     public: true,
-                    location:'95060'
-                }).then(response => {
+                    location:'95060',
+                    itemKey: newKey
+                }
+                invRef.set(newItem).then(response => {
                     this.resetValues();
                     this.props.closeModal();
                 });
             }
 
 
-            // Add new item
-            // let items = null;
-            // userItems.child(this.props.userId).once('value', snapshot =>{
-            //     console.log(snapshot.val());
-            //     items = snapshot.val();
-            // }).then(()=>{
-            //     if(items === null){
-            //         console.log('items is null');
-            //         items = [];
-            //         items.push(listing);
-            //     }else{
-            //         items.push(listing);
-            //     }
-
-            //     userItems.child(this.props.userId+'/').set(items).then(response => {
-            //         this.resetValues();
-            //         console.log('listing sent adllisting userID', this.props.userId);
-            //         this.props.closeModal();
-            //     });
-            //     //just in case it fucks up
-
-            //     this.resetValues();
-            //     this.props.closeModal();
-            // });
-            //
-            //
-            // axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(response => {
-            //     this.resetValues();
-            //     this.props.closeModal()
-            // });
-
         }
 
         listing['imageURL'] = this.state.imageURL;
-
-
-    // TODO: NEEDS REVIEW
-        // let items = null;
-        // userItems.child(this.props.userId).on('value', snapshot =>{
-        //     //console.log(snapshot.val());
-        //     items = snapshot.val();
-        // });
-        // if(items == null){
-        //     items = [];
-        // };
-        // items.push(listing);
-        // userItems.child(this.props.userId+'/').set(items).then(response => {this.props.closeModal()});
-
-        //
-        // axios.post('https://barterbuddy-4b41a.firebaseio.com/inventory.json', listing).then(response => {
-        //     this.props.closeModal()
-        // });
-
-
 
     };
 
