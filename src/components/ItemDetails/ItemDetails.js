@@ -25,10 +25,10 @@ let auctionDB = fb.database().ref('auctionDB/');
 let userItems = fb.database().ref('userItems/');
 let userInfo = fb.database().ref('userInfo/');
 
-
+// ZIP CODE: this.state.item.zipCode
 
 class ItemDetails extends Component {
-    //TODO: Get item from DB using props.itemID
+    
     state = {
         item: {},
         auctionOwner: 'none',
@@ -283,7 +283,7 @@ class ItemDetails extends Component {
                     </div>
 
                     <div className = {classes.col1of2}>
-                        {/*pass in item.zipCode as props to the map*/}
+                        {/*pass in this.state.item.zipCode as props to the map*/}
                         MAP
                     </div>
 
