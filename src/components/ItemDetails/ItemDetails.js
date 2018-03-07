@@ -224,7 +224,7 @@ class ItemDetails extends Component {
          userItems.child(bidderid).child('/inventory/').child(winningBids[i].itemKey).remove();
          itemString += winningBids[i].title;
          biduser = winningBids[i].ownerUser;
-         if(i !== ((winningBids.length) - 1)){
+         if(i !== ((winningBids.length) - 1)){ //this part may not work?
            itemString += ", ";
          } else {
            itemString += " ";
