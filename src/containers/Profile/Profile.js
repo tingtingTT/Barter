@@ -227,9 +227,6 @@ class Profile extends Component {
 
 	render () {
 
-        console.log('ZIP');
-        console.log(this.state.userZip);
-
         let extraButton = null;
          if (this.state.listing.length > 0 && this.state.inventory.length === 0){
              extraButton = (
