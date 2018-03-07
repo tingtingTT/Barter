@@ -68,12 +68,16 @@ class ItemDetails extends Component {
         userInfo.child(this.state.item.owner).on('value', snapshot => {
             let info = snapshot.val();
             this.setState({auctionOwner: info.username});
+
+
         });
 
 
 
 
         let name = this.state.currentUser;
+        this.setState({isOwner: (name === this.state.item.owner)});
+        console.log(this.state.isOwner);
 
         // GET actual bids
         auctionDB.child(this.state.item.itemKey).child('/bids/').on('value', snapshot=>{
@@ -175,13 +179,9 @@ class ItemDetails extends Component {
             userInfo.child(item.ownerUser+'/').on('value', snapshot => {
                 // GET real username
                 const info = snapshot.val();
-                console.log('USERNAME');
+                console.log('USERNAME...');
                 console.log(info.username);
                 ownerUsername = info.username;
-                if(ownerUsername === this.state.auctionOwner){
-                    this.setState({isOwner: true});
-                }
-
                 // ADD item to bids list
                 auctionDB.child(this.state.item.itemKey).child('/bids/').child(item.itemKey).set({
                     itemKey: item.itemKey,
@@ -265,14 +265,7 @@ class ItemDetails extends Component {
             owner: 'PennyMonster38'
         }
         //console.log('this.state.item');
-        //console.log(this.state.item);
-
-        //
-        let bidItems = null;
-        if(!this.state.isOwner){
-            bidItems = 
-                <BidItems bidItems={this.state.bidItems} onClick={(bidder, bidderid) => this.setWinner(bidder, bidderid, this.state.item)} itemOwner={this.state.item.owner} toggleModal={this.toggleModal}></BidItems> {/*item.owner*/};
-        }        
+        //console.log(this.state.item);   
 
         return (
 
@@ -312,9 +305,7 @@ class ItemDetails extends Component {
                         <SelectBidChart bidItems={this.state.userInventory} addBid={this.addBid} setSelected={this.setSelected}></SelectBidChart>
                     </Modal>
 
-                {bidItems}
-
-                    
+                    <BidItems bidItems={this.state.bidItems} isOwner={this.state.isOwner} onClick={(bidder, bidderid) => this.setWinner(bidder, bidderid, this.state.item)} itemOwner={this.state.item.owner} toggleModal={this.toggleModal}></BidItems> {/*item.owner*/};
 
                 </div>
 
