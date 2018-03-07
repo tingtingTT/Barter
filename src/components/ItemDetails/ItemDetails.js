@@ -175,7 +175,6 @@ class ItemDetails extends Component {
         //grab all bids from addedBids and push them to
         for (let index in bidsToAdd){
             let item = bidsToAdd[index];
-
             console.log('Item being bid on:',this.state.item);
             userInfo.child(item.ownerUser+'/').on('value', snapshot => {
                 // GET real username
@@ -188,7 +187,7 @@ class ItemDetails extends Component {
                 auctionDB.child(this.state.item.itemKey).child('/bids/').child(item.itemKey).set({
                     itemKey: item.itemKey,
                     owner: ownerUsername,
-                    username: info.username,
+                    userid: item.ownerUser,
                     title: item.itemName,
                     zipcode: item.location
                 });
@@ -204,17 +203,19 @@ class ItemDetails extends Component {
 
     setWinner(bidder, bidderid, auction){
       console.log('winner!');
-      console.log(bidder);
       var winningBids = [];
-      console.log(bidder);
       var biduser = '';
-      console.log(bidderid);
        var that = this;
        var itemString = '';
-      // console.log(this.auctionOwner);
-      auctionDB.child(auction.itemKey).child('/bids/').orderByChild('owner').equalTo(bidder).on('value', function(snap){
+
+      auctionDB.child(auction.itemKey).child('/bids/').orderByChild('owner').on('value', function(snap){
            snap.forEach(function(childNodes){
+             if(childNodes.val().owner === bidder){
                winningBids.push(childNodes.val());
+             } else {
+               var lnotes = 'The auction for: ' + auction.name + 'has ended! Unfortunately, you lost!';
+               firebase.database().ref('userItems/' + childNodes.val().userid + '/log/lBid/').push(lnotes);
+             }
            });
 
         });
@@ -223,7 +224,6 @@ class ItemDetails extends Component {
          userItems.child(bidderid).child('/inventory/').child(winningBids[i].itemKey).remove();
          itemString += winningBids[i].title;
          biduser = winningBids[i].ownerUser;
-         console.log(winningBids[i].title);
          if(i !== ((winningBids.length) - 1)){
            itemString += ", ";
          } else {
@@ -234,36 +234,18 @@ class ItemDetails extends Component {
 
 
         auctionDB.child(auction.itemKey).remove();
-
         userItems.child(auction.owner).child('/auction/').child(auction.itemKey).remove();
-        console.log(winningBids);
-        console.log(auction);
-        that.props.history.push('/'); //PUSH TO HOME OR NOTIFICATION PAGE
 
+        that.props.history.push('/'); //PUSH TO HOME OR NOTIFICATION PAGE
         var auctionowner = auction.owner;
         var winnerbidder = bidderid;
 
-        auctionDB.child(this.state.item.itemKey).child('/bids/').orderByChild('owner').on('value', function(snap){
-             snap.forEach(function(childNodes){
-                 if(childNodes.val().owner === this.state.auctionOwner){ //NOTIFICATION FOR OWNER
-                   var onotes = 'You auctioned off: ' + auction.name + ' for: ' + itemString + ' from: ' + bidder + ' \n';
-                   firebase.database().ref('userItems/' + auction.owner + '/log/aWin/' ).push(onotes);
-                 } else if(childNodes.val().owner === bidder){ // NOTIFICATION FOR WINNING BIDDER
-                   var bnotes = 'You won: ' + auction.name + ' from: ' + bidder + ' in exchange for: ' + itemString + ' \n';
-                   firebase.database().ref('userItems/' + bidderid + '/log/bWin/' ).push(bnotes);
-                 } else{ //NOTIFICATION FOR EVERYONE ELSE
-                   var lnotes = 'The auction for: ' + auction.name + 'has ended! Unfortunately, you lost!';
-                   firebase.database().ref('userItems/' + childNodes.val().username + '/log/lose/').push(lnotes);
-                 }
-             });
-
-          });
         //SET NOTIFICATION FOR AUCTION OWNER
-        // var onotes = 'You auctioned off: ' + auction.name + ' for: ' + itemString + ' from: ' + bidder + ' \n';
-        // firebase.database().ref('userItems/' + auction.owner + '/log/' ).push(onotes);
-        // //SET NOTIFICATION FOR BIDDER
-        // var bnotes = 'You won: ' + auction.name + ' from: ' + bidder + ' in exchange for: ' + itemString + ' \n';
-        // firebase.database().ref('userItems/' + bidderid + '/log/' ).push(bnotes);
+        var onotes = 'You auctioned off: ' + auction.name + ' for: ' + itemString + ' from: ' + bidder + ' \n';
+        firebase.database().ref('userItems/' + auction.owner + '/log/aWin/' ).push(onotes);
+        //SET NOTIFICATION FOR BIDDER
+        var bnotes = 'You won: ' + auction.name + ' from: ' + bidder + ' in exchange for: ' + itemString + ' \n';
+        firebase.database().ref('userItems/' + bidderid + '/log/bWin/' ).push(bnotes);
 
 
     }
