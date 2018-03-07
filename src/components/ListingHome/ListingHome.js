@@ -20,6 +20,7 @@ const listingHome = (props)=> {
                 category={item.category}
                 itemKey={item.itemKey}
                 owner={item.ownerUser}
+                zipCode={item.location}
                 // clicked={() => this.itemClicked(item.id)}
             />
         ))
