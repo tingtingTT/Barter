@@ -36,7 +36,8 @@ class ItemDetails extends Component {
         showModal: false,
         userInventory: [],
         currentUser: 'none',
-        addedBids: []
+        addedBids: [],
+        isOwner: false,
 
 
 
@@ -177,6 +178,9 @@ class ItemDetails extends Component {
                 console.log('USERNAME');
                 console.log(info.username);
                 ownerUsername = info.username;
+                if(ownerUsername === this.state.auctionOwner){
+                    this.setState({isOwner: true});
+                }
 
                 // ADD item to bids list
                 auctionDB.child(this.state.item.itemKey).child('/bids/').child(item.itemKey).set({
@@ -264,6 +268,11 @@ class ItemDetails extends Component {
         //console.log(this.state.item);
 
         //
+        let bidItems = null;
+        if(!this.state.isOwner){
+            bidItems = 
+                <BidItems bidItems={this.state.bidItems} onClick={(bidder, bidderid) => this.setWinner(bidder, bidderid, this.state.item)} itemOwner={this.state.item.owner} toggleModal={this.toggleModal}></BidItems> {/*item.owner*/};
+        }        
 
         return (
 
@@ -303,9 +312,9 @@ class ItemDetails extends Component {
                         <SelectBidChart bidItems={this.state.userInventory} addBid={this.addBid} setSelected={this.setSelected}></SelectBidChart>
                     </Modal>
 
+                {bidItems}
 
-
-                    <BidItems bidItems={this.state.bidItems} onClick={(bidder, bidderid) => this.setWinner(bidder, bidderid, this.state.item)} itemOwner={this.state.item.owner} toggleModal={this.toggleModal}></BidItems> {/*item.owner*/}
+                    
 
                 </div>
 
