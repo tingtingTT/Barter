@@ -230,8 +230,36 @@ class Profile extends Component {
         console.log('ZIP');
         console.log(this.state.userZip);
 
+        let extraButton = null;
+         if (this.state.listing.length > 0 && this.state.inventory.length === 0){
+             extraButton = (
+                 <div>
+                     <div className={classes.addItemButton}>
+                    <Button label="+ ITEM" clicked={this.addingItemHandler} />
+                    </div>
+                    <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
+                
+                    <AddListing closeModal={this.closeHandler}
+                        editingItem={this.state.editingItem}
+                        category={this.state.itemToEdit.category}
+                        itemName={this.state.itemToEdit.itemName}
+                        id={this.state.itemToEdit.id}
+                        desc={this.state.itemToEdit.desc}
+                        imgURL={this.state.itemToEdit.imageURL}
+                        ItemType={this.state.itemToEdit.ItemType}
+                        pushKey={this.state.itemToEdit.key}
+                        onClick={() => this.removeBid(this.state.itemToEdit)}
+                        zipCode={this.state.userZip}
+                    />
+
+                </Modal>
+                 </div>
+                
+            );
+       }
+
         let inventory = null;
-        if(this.state.inventory){
+        if(this.state.inventory.length > 0){
 
             inventory = (
                 <div>
@@ -251,8 +279,9 @@ class Profile extends Component {
 
         let auctions = (
             <div>
-                <h1 className={classes.sectionTitle}>Add items to your profile!</h1>
+                <h1 className={classes.sectionTitle}>Add items!</h1>
                 <Button label="+ ITEM" clicked={this.addingItemHandler} />
+                <div className={classes.bigSpacer}></div>
                 <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
                         <AddListing closeModal={this.closeHandler}
                             editingItem={this.state.editingItem}
@@ -276,7 +305,7 @@ class Profile extends Component {
                 <div>
                     <h1 className={classes.sectionTitle}>Auction items</h1>
                     <p className={classes.sectionDesc}>These items are available for other members to bid on.</p>
-
+                    {extraButton}
                     <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
                         <AddListing closeModal={this.closeHandler}
                             editingItem={this.state.editingItem}
