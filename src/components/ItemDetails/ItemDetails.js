@@ -204,6 +204,8 @@ class ItemDetails extends Component {
 
     setWinner(bidder, bidderid, auction){
       console.log('winner!');
+      console.log(bidder);
+      console.log(bidderid);
       var today = new Date();
       var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
       var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -226,9 +228,9 @@ class ItemDetails extends Component {
         });
 
         for (var i = 0; i < winningBids.length; i++){
-         userItems.child(bidderid).child('/inventory/').child(winningBids[i].itemKey).remove();
          itemString += winningBids[i].title;
          biduser = winningBids[i].ownerUser;
+         userItems.child(bidderuser).child('/inventory/').child(winningBids[i].itemKey).remove();
          if(i !== ((winningBids.length) - 1)){ //this part may not work?
            itemString += ", ";
          } else {
@@ -250,7 +252,8 @@ class ItemDetails extends Component {
         firebase.database().ref('userItems/' + auction.owner + '/log/aWin/' ).push(onotes);
         //SET NOTIFICATION FOR BIDDER
         var bnotes = '[' + dateTime + ']: ' +'You won: ' + auction.name + ' from: ' + bidder + ' in exchange for: ' + itemString + ' \n';
-        firebase.database().ref('userItems/' + bidderid + '/log/bWin/' ).push(bnotes);
+        firebase.database().ref('userItems/' + biduser + '/log/bWin/' ).push(bnotes);
+
 
 
     }
