@@ -11,8 +11,8 @@ const bidItems = (props) => {
 
     // check if the owner already exists in the target object
     function isInTarget(targetObj, owner){
-        console.log(targetObj);
-        console.log(owner);
+        //console.log(targetObj);
+        //console.log(owner);
         for (var i=0; i< targetObj.length; i++){
             if(targetObj[i].owner === owner){
                 return true;
@@ -33,14 +33,14 @@ const bidItems = (props) => {
                 bidItemsComb.push(newItem);
             }
             else{
-                console.log(bidItemsComb);
-                console.log(item.title);
+                //console.log(bidItemsComb);
+                //console.log(item.title);
                 newItem['isNew'] = false;
                 bidItemsComb.push(newItem);
             }
         });
 
-        console.log(bidItemsComb);
+        //console.log(bidItemsComb);
 
         bidItems = (
             bidItemsComb.map((item, index) => (

@@ -54,6 +54,7 @@ class Profile extends Component {
         userName: '',
         userEmail: '',
         userZip: '',
+        profilePic: '',
         addingItem: false,
         editingItem: false,
         itemToEdit: {
@@ -87,10 +88,16 @@ class Profile extends Component {
                 returnArr.push(item);
             });
 
+
             if(items != null){
                 console.log(returnArr);
                 this.setState({listing: returnArr});
+            }else{
+                var emptyArray = [];
+                this.setState({inventory: emptyArray});
+
             }
+
         });
 
         userItems.child(name+ '/').child('/inventory').on('value', snapshot =>{
@@ -106,22 +113,40 @@ class Profile extends Component {
 
             if(items != null){
                 this.setState({inventory: returnArr});
+            }else{
+                var emptyArray = [];
+                this.setState({inventory: emptyArray});
             }
+
         });
         userInfo.child(name+ '/').on('value', snapshot =>{
             const info = snapshot.val();
             console.log('userInfo:');
             console.log(info);
+
             this.setState({userName: info['username'], userEmail: info['email'], userZip: info['zipcode']});
+            this.forceUpdate()
+
         });
 
     }
 
     removeFromAllbuckets = (pushKey) =>{
         //delete from auction DB
-        firebase.database().ref('/auctionDB/').child(pushKey).remove();
-        userItems.child(this.props.userId).child('/auction/').child(pushKey).remove();
-        userItems.child(this.props.userId).child('/inventory/').child(pushKey).remove();
+        firebase.database().ref('/auctionDB/').child(pushKey).remove().then(() =>{
+            console.log(pushKey);
+            this.forceUpdate();
+        });
+
+        userItems.child(this.props.userId).child('/auction/').child(pushKey).remove().then(() =>{
+            console.log(pushKey);
+            this.forceUpdate();
+        });;
+        userItems.child(this.props.userId).child('/inventory/').child(pushKey).remove().then(() =>{
+            console.log(pushKey);
+            this.forceUpdate();
+        });
+
     };
 
 
@@ -129,10 +154,14 @@ class Profile extends Component {
       console.log("remove Auction");
       let key = this.state.listing[itemID].key;
       this.removeFromAllbuckets(key);
-      console.log(key);
+        window.setTimeout(()=>{
+            window.location.reload(true);
+        }, 200);
+
+      // delay then force update
     };
 
-    removeBid(pushKey){
+    removeBid=(pushKey)=>{
        console.log("remove Bid item");
        //console.log(user);
         console.log(this.props.userId);
@@ -141,7 +170,8 @@ class Profile extends Component {
         userItems.child(this.props.userId).child('auction').child(pushKey.key).remove();
         userItems.child(this.props.userId).child('inventory').child(pushKey.key).remove();
         this.setState({editingItem: false});
-    }
+        this.forceUpdate();
+    };
 
     addingItemHandler = () => {
         this.setState({addingItem: true});
@@ -197,8 +227,8 @@ class Profile extends Component {
 
 	render () {
 
-        console.log('inventory check')
-        console.log(this.state.inventory)
+        console.log('ZIP');
+        console.log(this.state.userZip);
 
         let inventory = null;
         if(this.state.inventory){
@@ -232,8 +262,9 @@ class Profile extends Component {
                             desc={this.state.itemToEdit.desc}
                             imgURL={this.state.itemToEdit.imageURL}
                             ItemType={this.state.itemToEdit.ItemType}
-                                    pushKey={this.state.itemToEdit.key}
-                                    onClick={() => this.removeBid(this.state.itemToEdit)}
+                            pushKey={this.state.itemToEdit.key}
+                            onClick={() => this.removeBid(this.state.itemToEdit)}
+                            zipCode={this.state.userZip}
                         />
 
                     </Modal>
@@ -256,7 +287,8 @@ class Profile extends Component {
                             imgURL={this.state.itemToEdit.imageURL}
                             ItemType={this.state.itemToEdit.ItemType}
                             onClick={() => this.removeBid(this.state.itemToEdit)}
-                                    pushKey={this.state.itemToEdit.key}
+                            pushKey={this.state.itemToEdit.key}
+                            zipCode={this.state.userZip}
                         />
 
                     </Modal>
@@ -273,10 +305,12 @@ class Profile extends Component {
             <div className={classes.content}>
                 <div className={classes.row}>
                     <div className={classes.col1of4}>
-                        <UserProfile profilePic="https://i.imgur.com/Ig7JBId.jpg"
+
+                        <UserProfile profilePic={this.state.profilePic}
                             userName={this.state.userName}
                             email={this.state.userEmail}
-                            zipCode={this.state.userZip}/>
+                            zipCode={this.state.userZip}
+                            userId={this.props.userId}/>
                     </div>
                     <div className={classes.col3of4}>
 

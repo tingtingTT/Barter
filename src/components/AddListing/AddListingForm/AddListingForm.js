@@ -133,7 +133,6 @@ class AddListingForm extends Component {
         console.log("addlisting userID:", this.props.userId);
         event.preventDefault();
 
-
         const listing = {};
         // Create listing obj with values depending if they were updated while editing, or if its a new value
         for (let formElementIdentifier in this.state.itemForm) {
@@ -175,6 +174,15 @@ class AddListingForm extends Component {
             console.log('attempting to push to user:slot',this.props.pushKey);
             if(listing.ItemType === 'auction'){
                 // PUSH TO SET OF ALL AUCTION ITEMS
+                console.log('attempting to push to user:slot',this.props.pushKey);
+                    // PUSH TO SET OF ALL AUCTION ITEMS
+                    //if it is an edit, remove any possible copies present in the inventory
+                userItems.child(this.props.userId)
+                    .child('/inventory/')
+                    .child(this.props.pushKey)
+                    .remove().then(response =>{
+                    console.log('removed', response);
+                });
                 firebase.database().ref('/auctionDB/').child(this.props.pushKey).set({
                     itemName: listing.itemName,
                     desc: listing.desc,
@@ -183,7 +191,7 @@ class AddListingForm extends Component {
                     ItemType: listing.ItemType,
                     ownerUser: this.props.userId,
                     public: true,
-                    location:'95060',
+                    location: this.props.zipCode,
                     itemKey: this.props.pushKey
                 }).then(response => {
                     this.resetValues();
@@ -198,7 +206,7 @@ class AddListingForm extends Component {
                     ItemType: listing.ItemType,
                     ownerUser: this.props.userId,
                     public: true,
-                    location:'95060',
+                    location: this.props.zipCode,
                     itemKey: this.props.pushKey
                 }).then(response => {
                     this.resetValues();
@@ -206,7 +214,10 @@ class AddListingForm extends Component {
                 });
             }
             else{
-
+                //what do we do for a bid item that has been edited from auction to be a bid??
+                //we make sure that it does not appear in auction, or auction db
+                userItems.child(this.props.userId).child('/auction/').child(this.props.pushKey).remove();
+                firebase.database().ref('/auctionDB/').child(this.props.pushKey).remove();
                 console.log(listing);
                 userItems.child(this.props.userId).child('/inventory/').child(this.props.pushKey).set({
                     itemName: listing.itemName,
@@ -216,7 +227,7 @@ class AddListingForm extends Component {
                     ItemType: listing.ItemType,
                     ownerUser: this.props.userId,
                     public: true,
-                    location:'95060',
+                    location: this.props.zipCode,
                     itemKey: this.props.pushKey
                     
                 }).then(response => {
@@ -244,7 +255,7 @@ class AddListingForm extends Component {
                     ItemType: listing.ItemType,
                     ownerUser: this.props.userId,
                     public: true,
-                    location:'95060',
+                    location: this.props.zipCode,
                     itemKey: newKey
                 }
                 aucRef.set(newItem).then(response => {
@@ -258,7 +269,7 @@ class AddListingForm extends Component {
                         ItemType: listing.ItemType,
                         ownerUser: this.props.userId,
                         public: true,
-                        location:'95060',
+                        location: this.props.zipCode,
                         numBids: 0,
                         itemKey: newKey
                     }).then(response => {
@@ -281,7 +292,7 @@ class AddListingForm extends Component {
                     ItemType: listing.ItemType,
                     ownerUser: this.props.userId,
                     public: true,
-                    location:'95060',
+                    location: this.props.zipCode,
                     itemKey: newKey
                 }
                 invRef.set(newItem).then(response => {
@@ -321,6 +332,7 @@ class AddListingForm extends Component {
         updatedForm['category'].value = 'tv';
         updatedForm['ItemType'].value = 'auction';
         this.setState({itemForm: updatedForm, imageURL: ''});
+
     }
 
     // // Delete item handler
@@ -383,6 +395,7 @@ class AddListingForm extends Component {
 
 
 	render () {
+    
 
         // Create values array with props values so they are easy to use
         const values = {
