@@ -9,6 +9,7 @@ import BidItems from './BidItems/BidItems';
 import SelectBidChart from '../SelectBid/SelectBidChart/SelectBidChart';
 import Modal from '../UI/Modal/Modal';
 
+
 const config = {
 
     apiKey: "AIzaSyDfRWLuvzYmSV3TwmLOppZT0ZZbtIZRlrs",
@@ -203,6 +204,10 @@ class ItemDetails extends Component {
 
     setWinner(bidder, bidderid, auction){
       console.log('winner!');
+      var today = new Date();
+      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      var dateTime = date+' '+time;
       var winningBids = [];
       var biduser = '';
        var that = this;
@@ -213,7 +218,7 @@ class ItemDetails extends Component {
              if(childNodes.val().owner === bidder){
                winningBids.push(childNodes.val());
              } else {
-               var lnotes = 'The auction for: ' + auction.name + 'has ended! Unfortunately, you lost!';
+               var lnotes = '[' + dateTime + ']: ' + 'The auction for: ' + auction.name + 'has ended! Unfortunately, you lost!' + '\n';
                firebase.database().ref('userItems/' + childNodes.val().userid + '/log/lBid/').push(lnotes);
              }
            });
@@ -241,10 +246,10 @@ class ItemDetails extends Component {
         var winnerbidder = bidderid;
 
         //SET NOTIFICATION FOR AUCTION OWNER
-        var onotes = 'You auctioned off: ' + auction.name + ' for: ' + itemString + ' from: ' + bidder + ' \n';
+        var onotes = '[' + dateTime + ']: ' + 'You auctioned off: ' + auction.name + ' for: ' + itemString + ' from: ' + bidder + ' \n';
         firebase.database().ref('userItems/' + auction.owner + '/log/aWin/' ).push(onotes);
         //SET NOTIFICATION FOR BIDDER
-        var bnotes = 'You won: ' + auction.name + ' from: ' + bidder + ' in exchange for: ' + itemString + ' \n';
+        var bnotes = '[' + dateTime + ']: ' +'You won: ' + auction.name + ' from: ' + bidder + ' in exchange for: ' + itemString + ' \n';
         firebase.database().ref('userItems/' + bidderid + '/log/bWin/' ).push(bnotes);
 
 
