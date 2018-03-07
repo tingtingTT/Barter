@@ -19,7 +19,7 @@ const listing = (props)=> {
                 desc={item.desc}
                 category={item.category}
                 {...console.log(item.category)}
-                // numBid = {}
+                bidcount={item.bidcount}
                 // {...console.log(item.name)}
 
                 clicked={() => props.editListingItemHandler(index, 'bidItem')}

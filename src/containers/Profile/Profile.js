@@ -88,10 +88,16 @@ class Profile extends Component {
                 returnArr.push(item);
             });
 
+
             if(items != null){
                 console.log(returnArr);
                 this.setState({listing: returnArr});
+            }else{
+                var emptyArray = [];
+                this.setState({inventory: emptyArray});
+
             }
+
         });
 
         userItems.child(name+ '/').child('/inventory').on('value', snapshot =>{
@@ -107,22 +113,40 @@ class Profile extends Component {
 
             if(items != null){
                 this.setState({inventory: returnArr});
+            }else{
+                var emptyArray = [];
+                this.setState({inventory: emptyArray});
             }
+
         });
         userInfo.child(name+ '/').on('value', snapshot =>{
             const info = snapshot.val();
             console.log('userInfo:');
             console.log(info);
-            this.setState({userName: info['username'], userEmail: info['email'], userZip: info['zipcode'], profilePic: info['picture']});
+
+            this.setState({userName: info['username'], userEmail: info['email'], userZip: info['zipcode']});
+            this.forceUpdate()
+
         });
 
     }
 
     removeFromAllbuckets = (pushKey) =>{
         //delete from auction DB
-        firebase.database().ref('/auctionDB/').child(pushKey).remove();
-        userItems.child(this.props.userId).child('/auction/').child(pushKey).remove();
-        userItems.child(this.props.userId).child('/inventory/').child(pushKey).remove();
+        firebase.database().ref('/auctionDB/').child(pushKey).remove().then(() =>{
+            console.log(pushKey);
+            this.forceUpdate();
+        });
+
+        userItems.child(this.props.userId).child('/auction/').child(pushKey).remove().then(() =>{
+            console.log(pushKey);
+            this.forceUpdate();
+        });;
+        userItems.child(this.props.userId).child('/inventory/').child(pushKey).remove().then(() =>{
+            console.log(pushKey);
+            this.forceUpdate();
+        });
+
     };
 
 
@@ -130,10 +154,14 @@ class Profile extends Component {
       console.log("remove Auction");
       let key = this.state.listing[itemID].key;
       this.removeFromAllbuckets(key);
-      console.log(key);
+        window.setTimeout(()=>{
+            window.location.reload(true);
+        }, 200);
+
+      // delay then force update
     };
 
-    removeBid(pushKey){
+    removeBid=(pushKey)=>{
        console.log("remove Bid item");
        //console.log(user);
         console.log(this.props.userId);
@@ -142,7 +170,8 @@ class Profile extends Component {
         userItems.child(this.props.userId).child('auction').child(pushKey.key).remove();
         userItems.child(this.props.userId).child('inventory').child(pushKey.key).remove();
         this.setState({editingItem: false});
-    }
+        this.forceUpdate();
+    };
 
     addingItemHandler = () => {
         this.setState({addingItem: true});

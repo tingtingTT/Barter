@@ -30,7 +30,7 @@ const listingItemHome = (props) => {
         <div className={classes.Inside} onClick={openDetails}>
             <div> <FontAwesomeIcon icon={props.category} size="3x"/></div>
             <div className={classes.Text}>{props.name}</div>
-            <div className={classes.Textnum}>0 </div>
+            <div className={classes.Textnum}>{props.bidcount} </div>
             <div className={classes.Textbid}> Bid </div>
         </div>
         </div>
