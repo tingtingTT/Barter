@@ -124,7 +124,7 @@ class Profile extends Component {
             console.log('userInfo:');
             console.log(info);
 
-            this.setState({userName: info['username'], userEmail: info['email'], userZip: info['zipcode']});
+            this.setState({userName: info['username'], userEmail: info['email'], userZip: info['zipcode'], profilePic: info['picture']});
             this.forceUpdate()
 
         });

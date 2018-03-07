@@ -31,8 +31,8 @@ const userProfile = (props) => {
     );
 
     // FILE UPLOADER HANDLERS
-    const handleUploadStart = () => this.setState({isUploading: true, progress: 0});
-    const handleProgress = (progress) => this.setState({progress});
+    
+    
     const handleUploadError = (error) => {
         
         console.error(error);
@@ -58,10 +58,8 @@ const userProfile = (props) => {
                             name="item"
                             randomizeFilename
                             storageRef={firebase.storage().ref('images')}
-                            onUploadStart={handleUploadStart}
                             onUploadError={handleUploadError}
-                            onUploadSuccess={handleUploadSuccess}
-                            onProgress={this.handleProgress}
+                            onUploadSuccess={handleUploadSuccess}                            
                         />
                         </label>
                 </div>
