@@ -77,14 +77,12 @@ class ItemDetails extends Component {
         // GET actual bids
         auctionDB.child(this.state.item.itemKey).child('/bids/').on('value', snapshot=>{
             let bids = snapshot.val();
-
             let returnArr = [];
             snapshot.forEach(childSnapshot => {
                 let item = childSnapshot.val();
                 item.key = childSnapshot.key;
                 returnArr.push(item);
             });
-
             this.setState({bidItems: returnArr});
         });
 
@@ -122,13 +120,57 @@ class ItemDetails extends Component {
         this.setState({addedBids: bids})
     }
 
+    updateBidCount = (keyToIncrement, owner) =>{
+
+
+        //get the current bid count in the auctionDb item
+        let bidcount = '';
+        let ownerName = '';
+        auctionDB.child(keyToIncrement).once('value', snapshot=>{
+            let item = snapshot.val();
+            bidcount = item.bidcount;
+            if(bidcount == null){
+                bidcount = 1;
+            }else{
+                bidcount = bidcount + 1;
+            }
+            ownerName = item.ownerUser;
+
+
+        }).then(()=>{
+            console.log('incrementing bid count to:', bidcount);
+            auctionDB.child(keyToIncrement).child('bidcount').set(bidcount);
+            userItems
+                .child(ownerName)
+                .child('auction')
+                .child(keyToIncrement)
+                .child('bidcount').set(bidcount);
+        });
+
+        //check for null
+
+        //increment the key in the owners auction pane
+
+        //increment the key in the auctionDB pane
+
+        //increment the count, or set to 1 if it is null
+
+        //push the count to the correct locations
+
+
+
+    };
+
     addBid = () => {
 
         let bidsToAdd = this.state.addedBids;
         let ownerUsername = '';
+        let bidcount = 0;
 
+        //grab all bids from addedBids and push them to
         for (let index in bidsToAdd){
             let item = bidsToAdd[index];
+            console.log('Item being bid on:',this.state.item);
             userInfo.child(item.ownerUser+'/').on('value', snapshot => {
                 // GET real username
                 const info = snapshot.val();
@@ -147,7 +189,7 @@ class ItemDetails extends Component {
 
 
         }
-
+        this.updateBidCount(this.state.item.itemKey,'');
         this.toggleModal();
     }
 
@@ -218,8 +260,8 @@ class ItemDetails extends Component {
             zipCode: 92004,
             owner: 'PennyMonster38'
         }
-        console.log('this.state.item');
-        console.log(this.state.item);
+        //console.log('this.state.item');
+        //console.log(this.state.item);
 
         //
 
