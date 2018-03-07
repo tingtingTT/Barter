@@ -230,7 +230,7 @@ class ItemDetails extends Component {
         for (var i = 0; i < winningBids.length; i++){
          itemString += winningBids[i].title;
          biduser = winningBids[i].ownerUser;
-         userItems.child(bidderuser).child('/inventory/').child(winningBids[i].itemKey).remove();
+         userItems.child(biduser).child('/inventory/').child(winningBids[i].itemKey).remove();
          if(i !== ((winningBids.length) - 1)){ //this part may not work?
            itemString += ", ";
          } else {
