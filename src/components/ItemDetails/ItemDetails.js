@@ -211,9 +211,10 @@ class ItemDetails extends Component {
       var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       var dateTime = date+' '+time;
       var winningBids = [];
+      var that = this;
+      var itemString = '';
+      var bu = '';
       var biduser = '';
-       var that = this;
-       var itemString = '';
 
       auctionDB.child(auction.itemKey).child('/bids/').orderByChild('owner').on('value', function(snap){
            snap.forEach(function(childNodes){
@@ -225,11 +226,14 @@ class ItemDetails extends Component {
              }
            });
 
-        });
+
 
         for (var i = 0; i < winningBids.length; i++){
          itemString += winningBids[i].title;
-         biduser = winningBids[i].ownerUser;
+         bu = JSON.parse(JSON.stringify(winningBids[i]));
+         biduser = bu.userid;
+
+
          userItems.child(biduser).child('/inventory/').child(winningBids[i].itemKey).remove();
          if(i !== ((winningBids.length) - 1)){ //this part may not work?
            itemString += ", ";
@@ -239,11 +243,12 @@ class ItemDetails extends Component {
 
         }
 
+          });
+
 
         auctionDB.child(auction.itemKey).remove();
         userItems.child(auction.owner).child('/auction/').child(auction.itemKey).remove();
 
-        that.props.history.push('/'); //PUSH TO HOME OR NOTIFICATION PAGE
         var auctionowner = auction.owner;
         var winnerbidder = bidderid;
 
@@ -253,6 +258,10 @@ class ItemDetails extends Component {
         //SET NOTIFICATION FOR BIDDER
         var bnotes = '[' + dateTime + ']: ' +'You won: ' + auction.name + ' from: ' + bidder + ' in exchange for: ' + itemString + ' \n';
         firebase.database().ref('userItems/' + biduser + '/log/bWin/' ).push(bnotes);
+        console.log("BIDDER ID");
+        console.log(bidderid);
+        console.log(biduser);
+        that.props.history.push('/'); //PUSH TO HOME OR NOTIFICATION PAGE
 
 
 

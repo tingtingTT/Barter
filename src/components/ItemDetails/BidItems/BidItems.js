@@ -59,7 +59,7 @@ const bidItems = (props) => {
         <div className={classes.BidItems}>
             <div className={classes.content}>
                 <div className={classes.name}>Current Bids</div>
-                {props.isOwner ? null
+                {props.isOwner ? null 
                     :<div className={classes.bidbtn} onClick={props.toggleModal}>Add Bid(s)</div>
                 }
             </div>
