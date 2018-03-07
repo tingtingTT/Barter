@@ -247,10 +247,10 @@ class ItemDetails extends Component {
              snap.forEach(function(childNodes){
                  if(childNodes.val().owner === this.state.auctionOwner){ //NOTIFICATION FOR OWNER
                    var onotes = 'You auctioned off: ' + auction.name + ' for: ' + itemString + ' from: ' + bidder + ' \n';
-                   firebase.database().ref('userItems/' + auction.owner + '/log/win/' ).push(onotes);
+                   firebase.database().ref('userItems/' + auction.owner + '/log/aWin/' ).push(onotes);
                  } else if(childNodes.val().owner === bidder){ // NOTIFICATION FOR WINNING BIDDER
                    var bnotes = 'You won: ' + auction.name + ' from: ' + bidder + ' in exchange for: ' + itemString + ' \n';
-                   firebase.database().ref('userItems/' + bidderid + '/log/bid/' ).push(bnotes);
+                   firebase.database().ref('userItems/' + bidderid + '/log/bWin/' ).push(bnotes);
                  } else{ //NOTIFICATION FOR EVERYONE ELSE
                    var lnotes = 'The auction for: ' + auction.name + 'has ended! Unfortunately, you lost!';
                    firebase.database().ref('userItems/' + childNodes.val().username + '/log/lose/').push(lnotes);
@@ -259,11 +259,11 @@ class ItemDetails extends Component {
 
           });
         //SET NOTIFICATION FOR AUCTION OWNER
-        var onotes = 'You auctioned off: ' + auction.name + ' for: ' + itemString + ' from: ' + bidder + ' \n';
-        firebase.database().ref('userItems/' + auction.owner + '/log/' ).push(onotes);
-        //SET NOTIFICATION FOR BIDDER
-        var bnotes = 'You won: ' + auction.name + ' from: ' + bidder + ' in exchange for: ' + itemString + ' \n';
-        firebase.database().ref('userItems/' + bidderid + '/log/' ).push(bnotes);
+        // var onotes = 'You auctioned off: ' + auction.name + ' for: ' + itemString + ' from: ' + bidder + ' \n';
+        // firebase.database().ref('userItems/' + auction.owner + '/log/' ).push(onotes);
+        // //SET NOTIFICATION FOR BIDDER
+        // var bnotes = 'You won: ' + auction.name + ' from: ' + bidder + ' in exchange for: ' + itemString + ' \n';
+        // firebase.database().ref('userItems/' + bidderid + '/log/' ).push(bnotes);
 
 
     }
