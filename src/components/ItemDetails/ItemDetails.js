@@ -9,6 +9,7 @@ import BidItems from './BidItems/BidItems';
 import SelectBidChart from '../SelectBid/SelectBidChart/SelectBidChart';
 import Modal from '../UI/Modal/Modal';
 
+
 const config = {
 
     apiKey: "AIzaSyDfRWLuvzYmSV3TwmLOppZT0ZZbtIZRlrs",
@@ -28,7 +29,7 @@ let userInfo = fb.database().ref('userInfo/');
 // ZIP CODE: this.state.item.zipCode
 
 class ItemDetails extends Component {
-    
+
     state = {
         item: {},
         auctionOwner: 'none',
@@ -69,7 +70,6 @@ class ItemDetails extends Component {
             let info = snapshot.val();
             this.setState({auctionOwner: info.username});
 
-
         });
 
 
@@ -105,6 +105,8 @@ class ItemDetails extends Component {
 
             this.setState({userInventory: returnArr});
         });
+
+
 
     }
 
@@ -171,7 +173,6 @@ class ItemDetails extends Component {
         let bidsToAdd = this.state.addedBids;
         let ownerUsername = '';
         let bidcount = 0;
-
         //grab all bids from addedBids and push them to
         for (let index in bidsToAdd){
             let item = bidsToAdd[index];
@@ -183,9 +184,11 @@ class ItemDetails extends Component {
                 console.log(info.username);
                 ownerUsername = info.username;
                 // ADD item to bids list
+
                 auctionDB.child(this.state.item.itemKey).child('/bids/').child(item.itemKey).set({
                     itemKey: item.itemKey,
                     owner: ownerUsername,
+                    userid: item.ownerUser,
                     title: item.itemName,
                     zipcode: item.location
                 });
@@ -202,26 +205,37 @@ class ItemDetails extends Component {
     setWinner(bidder, bidderid, auction){
       console.log('winner!');
       console.log(bidder);
-      var winningBids = [];
-      console.log(bidder);
-      var biduser = '';
       console.log(bidderid);
-       var that = this;
-       var itemString = '';
-      // console.log(this.auctionOwner);
-      auctionDB.child(auction.itemKey).child('/bids/').orderByChild('owner').equalTo(bidder).on('value', function(snap){
+      var today = new Date();
+      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      var dateTime = date+' '+time;
+      var winningBids = [];
+      var that = this;
+      var itemString = '';
+      var bu = '';
+      var biduser = '';
+
+      auctionDB.child(auction.itemKey).child('/bids/').orderByChild('owner').on('value', function(snap){
            snap.forEach(function(childNodes){
+             if(childNodes.val().owner === bidder){
                winningBids.push(childNodes.val());
+             } else {
+               var lnotes = '[' + dateTime + ']: ' + 'The auction for: ' + auction.name + 'has ended! Unfortunately, you lost!' + '\n';
+               firebase.database().ref('userItems/' + childNodes.val().userid + '/log/lBid/').push(lnotes);
+             }
            });
 
-        });
+
 
         for (var i = 0; i < winningBids.length; i++){
-         userItems.child(bidderid).child('/inventory/').child(winningBids[i].itemKey).remove();
          itemString += winningBids[i].title;
-         biduser = winningBids[i].ownerUser;
-         console.log(winningBids[i].title);
-         if(i !== ((winningBids.length) - 1)){
+         bu = JSON.parse(JSON.stringify(winningBids[i]));
+         biduser = bu.userid;
+
+
+         userItems.child(biduser).child('/inventory/').child(winningBids[i].itemKey).remove();
+         if(i !== ((winningBids.length) - 1)){ //this part may not work?
            itemString += ", ";
          } else {
            itemString += " ";
@@ -229,20 +243,26 @@ class ItemDetails extends Component {
 
         }
 
+          });
+
 
         auctionDB.child(auction.itemKey).remove();
-
         userItems.child(auction.owner).child('/auction/').child(auction.itemKey).remove();
-        console.log(winningBids);
-        console.log(auction);
-        that.props.history.push('/'); //PUSH TO HOME OR NOTIFICATION PAGE
+
+        var auctionowner = auction.owner;
+        var winnerbidder = bidderid;
 
         //SET NOTIFICATION FOR AUCTION OWNER
-        var onotes = 'You auctioned off: ' + auction.name + ' for: ' + itemString + ' from: ' + bidder + ' \n';
-        firebase.database().ref('userItems/' + auction.owner + '/log/' ).push(onotes);
+        var onotes = '[' + dateTime + ']: ' + 'You auctioned off: ' + auction.name + ' for: ' + itemString + ' from: ' + bidder + ' \n';
+        firebase.database().ref('userItems/' + auction.owner + '/log/aWin/' ).push(onotes);
         //SET NOTIFICATION FOR BIDDER
-        var bnotes = 'You won: ' + auction.name + ' from: ' + bidder + ' in exchange for: ' + itemString + ' \n';
-        firebase.database().ref('userItems/' + bidderid + '/log/' ).push(bnotes);
+        var bnotes = '[' + dateTime + ']: ' +'You won: ' + auction.name + ' from: ' + bidder + ' in exchange for: ' + itemString + ' \n';
+        firebase.database().ref('userItems/' + biduser + '/log/bWin/' ).push(bnotes);
+        console.log("BIDDER ID");
+        console.log(bidderid);
+        console.log(biduser);
+        that.props.history.push('/'); //PUSH TO HOME OR NOTIFICATION PAGE
+
 
 
     }
@@ -265,7 +285,7 @@ class ItemDetails extends Component {
             owner: 'PennyMonster38'
         }
         //console.log('this.state.item');
-        //console.log(this.state.item);   
+        //console.log(this.state.item);
 
         return (
 
