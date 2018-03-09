@@ -1,0 +1,48 @@
+.box{
+    height: 20rem;
+    width: 40rem;
+    text-align: center;
+    background-color: #f6bdc3;
+    border: 2px solid  #E54A59;
+    border-radius: 10px;
+    padding-top: .5rem;
+    box-sizing: border-box;
+    position: relative;
+}   
+.delete{
+    background: #f9e5e7;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+    border: 2px solid #E54A59;
+    font-size: 1.3rem;
+    color: #E54A59;
+    text-align: center;
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    cursor: pointer;
+}
+h3{
+    margin-top: 1rem;
+    margin-bottom: .3rem;
+}
+.mainText {
+    font-size: 1.6rem;
+
+}
+.importantText {
+    font-size: 2.3rem;
+}
+.itemText {
+    font-size: 2.6rem;
+}
+.small{
+    font-size: 1.3rem;
+}
+.email{
+    color: rgb(229, 46, 64);
+    font-size: 1.4rem;
+    display: block;
+    margin-top: 3rem;
+}
