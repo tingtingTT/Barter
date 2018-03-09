@@ -134,27 +134,20 @@ class ItemDetails extends Component {
             console.log(snapshotArr);
             let ownerList = [];
             let arrLen = snapshotArr.length;
-            if(arrLen >= 1){
-                for(var i = 0; i < arrLen-1; ++i){
+            for(var i = 0; i < arrLen; ++i){
+                if(!ownerList.includes(snapshotArr[i].owner)){
                     ownerList.push(snapshotArr[i].owner);
                 }
-            } 
+            }
             console.log(ownerList);
-            if (!ownerList.includes(snapshotArr[arrLen-1].owner)){
                 //get the current bid count in the auctionDb item
                 let bidcount = '';
                 let ownerName = '';
                 auctionDB.child(keyToIncrement).once('value', snapshot=>{
                     let item = snapshot.val();
                     bidcount = item.bidcount;
-                    if(bidcount == null){
-                        bidcount = 1;
-                    }else{
-                        bidcount = bidcount + 1;
-                    }
+                    bidcount = ownerList.length;
                     ownerName = item.ownerUser;
-
-
                 }).then(()=>{
                     console.log('incrementing bid count to:', bidcount);
                     auctionDB.child(keyToIncrement).child('bidcount').set(bidcount);
@@ -163,8 +156,7 @@ class ItemDetails extends Component {
                         .child('auction')
                         .child(keyToIncrement)
                         .child('bidcount').set(bidcount);
-                });
-            }        
+                });       
         })
 
 
