@@ -34,13 +34,22 @@ const ProfileLogs = (props) => {
             <div className={classes.banner}>
                 <h1>Notification Log</h1>
             </div>
-            <EmailBox 
-                won
-                otherUsername="Catlady225"
-                item1="Dollhouse"
-                item2="Tiger statue"
-                email="cats4ever@gmail.com"
-            />
+            <div className={classes.container}>
+                <div className={classes.mainArea}>
+                    LIST OF LOGS HERE
+                </div>
+                <div className={classes.sideArea}>
+                    <EmailBox 
+                        won
+                        otherUsername="Catlady225"
+                        item1="Dollhouse"
+                        item2="Tiger statue"
+                        email="cats4ever@gmail.com"
+                    />
+                </div>
+                
+            </div>
+            
         </Auxiliary>
         
 
