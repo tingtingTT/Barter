@@ -1,0 +1,20 @@
+.Log {
+    margin-top: 50px;
+    border: 2px solid #E54A59;
+    background: #E54A59;
+    border-radius: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    min-height: 7rem;
+}
+
+
+.Log:nth-child(1){
+    background-color:rgb(200,200,200);
+
+}
+
+.content {
+   padding-top: 2rem;
+   padding-bottom: 2rem;
+}
