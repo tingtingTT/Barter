@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import firebase, { auth, User } from 'firebase';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 import NavigationItem from './NavigationItem/NavigationItem';
 
@@ -25,7 +26,9 @@ class NavigationItems extends Component {
                     <NavigationItem show={this.props.userId === 'none'} link='/login' >Login</NavigationItem>
                     {console.log(this.props.userId)}
                     <NavigationItem show={this.props.userId !== 'none'} link='/' >Home</NavigationItem>
+                    <NavigationItem show={this.props.userId !== 'none'} link='/logs'><FontAwesomeIcon icon='bell' size="1x"/></NavigationItem>
                     <NavigationItem show={this.props.userId !== 'none'} link='/profile' >Profile</NavigationItem>
+                    
                     <NavigationItem clicked={this.logout} show={this.props.userId !== 'none'} link='/'>Logout
                     </NavigationItem>
                     
