@@ -129,30 +129,46 @@ class ItemDetails extends Component {
 
     updateBidCount = (keyToIncrement, owner) =>{
 
+        auctionDB.child(this.state.item.itemKey).child('/bids/').once("value", snapshot =>{
+            let snapshotArr = this.snapshotToArray(snapshot);
+            console.log(snapshotArr);
+            let ownerList = [];
+            let arrLen = snapshotArr.length;
+            if(arrLen >= 1){
+                for(var i = 0; i < arrLen-1; ++i){
+                    ownerList.push(snapshotArr[i].owner);
+                }
+            } 
+            console.log(ownerList);
+            if (!ownerList.includes(snapshotArr[arrLen-1].owner)){
+                //get the current bid count in the auctionDb item
+                let bidcount = '';
+                let ownerName = '';
+                auctionDB.child(keyToIncrement).once('value', snapshot=>{
+                    let item = snapshot.val();
+                    bidcount = item.bidcount;
+                    if(bidcount == null){
+                        bidcount = 1;
+                    }else{
+                        bidcount = bidcount + 1;
+                    }
+                    ownerName = item.ownerUser;
 
-        //get the current bid count in the auctionDb item
-        let bidcount = '';
-        let ownerName = '';
-        auctionDB.child(keyToIncrement).once('value', snapshot=>{
-            let item = snapshot.val();
-            bidcount = item.bidcount;
-            if(bidcount == null){
-                bidcount = 1;
-            }else{
-                bidcount = bidcount + 1;
-            }
-            ownerName = item.ownerUser;
+
+                }).then(()=>{
+                    console.log('incrementing bid count to:', bidcount);
+                    auctionDB.child(keyToIncrement).child('bidcount').set(bidcount);
+                    userItems
+                        .child(ownerName)
+                        .child('auction')
+                        .child(keyToIncrement)
+                        .child('bidcount').set(bidcount);
+                });
+            }        
+        })
 
 
-        }).then(()=>{
-            console.log('incrementing bid count to:', bidcount);
-            auctionDB.child(keyToIncrement).child('bidcount').set(bidcount);
-            userItems
-                .child(ownerName)
-                .child('auction')
-                .child(keyToIncrement)
-                .child('bidcount').set(bidcount);
-        });
+        
 
         //check for null
 
@@ -198,29 +214,8 @@ class ItemDetails extends Component {
         }
 
 
-        console.log("OWNER USER NAME");
-
-        console.log(ownerUsername);
-
-        auctionDB.child(this.state.item.itemKey).child('/bids/').once("value", snapshot =>{
-            let snapshotArr = this.snapshotToArray(snapshot);
-            if(snapshotArr.length > 1){
-                console.log("Snap shot array is");
-                console.log(snapshotArr);
-                for(let item of snapshotArr){
-                    console.log(item.owner);
-                    console.log(ownerUsername);
-                    if(item.owner === ownerUsername){
-                        return;
-                    }
-                }
-            this.updateBidCount(this.state.item.itemKey,'');
-            }
-            else{
-                this.updateBidCount(this.state.item.itemKey,'');
-            }            
-        })
-
+        
+        this.updateBidCount(this.state.item.itemKey,'');
         this.toggleModal();
 
 
