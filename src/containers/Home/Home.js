@@ -4,6 +4,8 @@ import Button from '../../components/UI/Button/Button';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Inventory from '../../components/Inventory/Inventory';
 import ListingHome from '../../components/ListingHome/ListingHome';
+import ListingHomeHot from '../../components/ListingHomeHot/ListingHomeHot';
+
 
 import {connect} from 'react-redux';
 import classes from './Home.css'
@@ -217,11 +219,11 @@ class Home extends Component {
                 </div> }
                 <div>
                     <h1>Hot Listings!</h1>
-                    <ListingHome listing={this.state.hotListings}/>
-                <hr/><hr/><hr/>
+                    <ListingHomeHot listing={this.state.hotListings}/>
                 </div>
 
                 <div>
+                    <h1>Auction Items</h1>
                     <ListingHome listing={this.state.listing.reverse()} />
                 </div>
             </div>
