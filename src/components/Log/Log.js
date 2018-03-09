@@ -42,7 +42,7 @@ const log = (props) => {
         notificationlogs.map((log) => (
                 <ActivityLog
                 user={log.user}
-                date = {log.date}
+                date={log[0].date}
                 action1 = {log.action1}
                 item1 = {log.item1}
                 item2 = {log.item2}
