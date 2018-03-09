@@ -202,9 +202,9 @@ class ItemDetails extends Component {
 
         console.log(ownerUsername);
 
-        auctionDB.child(this.state.item.itemKey).child('/bids/').orderByChild("ID").once("value", snapshot =>{
+        auctionDB.child(this.state.item.itemKey).child('/bids/').once("value", snapshot =>{
             let snapshotArr = this.snapshotToArray(snapshot);
-            if(snapshotArr !== 1){
+            if(snapshotArr.length > 1){
                 console.log("Snap shot array is");
                 console.log(snapshotArr);
                 for(let item of snapshotArr){
@@ -216,7 +216,9 @@ class ItemDetails extends Component {
                 }
             this.updateBidCount(this.state.item.itemKey,'');
             }
-            
+            else{
+                this.updateBidCount(this.state.item.itemKey,'');
+            }            
         })
 
         this.toggleModal();
