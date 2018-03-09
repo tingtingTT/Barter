@@ -216,13 +216,13 @@ class ItemDetails extends Component {
 
 
         this.updateBidCount(this.state.item.itemKey,'');
-        var bidnotification = [{
+        var bidnotification = {
           user: biduser.username,
           date: dateTime,
           action1: 'Bid on ',
           item1: auction.name,
           item2: itemString
-        }];
+        };
         firebase.database().ref('userItems/' + auction.owner + '/log/notifications/' ).push(bidnotification);
 
         this.toggleModal();
@@ -253,13 +253,13 @@ class ItemDetails extends Component {
              } else {
 
                var lnotes = '[' + dateTime + ']: ' + 'The auction for: ' + auction.name + 'has ended! Unfortunately, you lost!' + '\n';
-               var lObj = [{
+               var lObj = {
                  user: 'YOU',
                  date: dateTime,
                  action1: '',
                  item1: 'Ended',
                  item2: auction.name
-               }];
+               };
                firebase.database().ref('userItems/' + childNodes.val().userid + '/log/notifications/').push(lObj);
              }
            });
@@ -316,42 +316,42 @@ class ItemDetails extends Component {
 
         //SET NOTIFICATION FOR AUCTION OWNER
         var onotes = '[' + dateTime + ']: ' + 'You auctioned off: ' + auction.name + ' for: ' + itemString + ' from: ' + bidder + ' \n';
-        var oObjN = [{
+        var oObjN = {
           user: 'YOU',
           date: dateTime,
           action1: 'TRADED',
           item1: auction.name,
           item2: itemString
-        }];
+        };
         var oContactS = 'contact ' + bidder + ' to set up an exchange.';
 
-        var oObjC = [{
+        var oObjC = {
           msg: 'You chose a winner!',
           contact: oContactS,
           item1: auction.name,
           item2: itemString,
           contactinfo: bidderemail
-        }];
+        };
 
         firebase.database().ref('userItems/' + auction.owner + '/log/contacts/' ).push(oObjC);
         firebase.database().ref('userItems/' + auction.owner + '/log/notifications/' ).push(oObjN);
         //SET NOTIFICATION FOR BIDDER
         var bnotes = '[' + dateTime + ']: ' +'You won: ' + auction.name + ' from: ' + bidder + ' in exchange for: ' + itemString + ' \n';
-        var bObjN = [{
+        var bObjN = {
           user: 'YOU',
           date: dateTime,
           action1: 'WON',
           item1: auction.name,
           item2: itemString
-        }];
+        };
         var bContactS = 'contact ' + auctioneerusername + ' to set up an exchange.';
-        var bObjC = [{
+        var bObjC = {
           msg: 'You chose a winner!',
           contact: bContactS,
           item1: auction.name,
           item2: itemString,
           contactinfo: auctioneeremail
-        }];
+        };
         firebase.database().ref('userItems/' + auction.owner + '/log/contacts/' ).push(bObjC);
         firebase.database().ref('userItems/' + biduser + '/log/notifications/' ).push(bObjN);
         console.log("BIDDER ID");

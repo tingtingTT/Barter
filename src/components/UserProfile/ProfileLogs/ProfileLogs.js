@@ -7,24 +7,41 @@ import {database} from 'firebase';
 
 import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
 import EmailBox from '../../UI/EmailBox/EmailBox';
+import Log from '../../Log/Log';
 
 import classes from './ProfileLogs.css';
 
 const ProfileLogs = (props) => {
 
-    var log = [];
-    let myLogs = [];
-    firebase.database().ref("/userItems/" + props.userId + '/log/').on('value', function(snap){
-        snap.forEach(function(childNodes){
+    var notificationlogs = [];
+    var contactinfologs = [];
 
-            log.push(childNodes.val());
+    let myLogs = [];
+    firebase.database().ref("/userItems/" + props.userId + '/log/notifications/').on('value', function(snap){
+        snap.forEach(function(childNodes){
+            notificationlogs.push(childNodes.val());
         });
 
-        for (var i = 0; i < log.length; i++){
-            console.log(log[i]);
-        }
-        
-        
+        // for (var i = 0; i < notificationlogs.length; i++){
+        //     console.log(notificationlogs[i]);
+        // }
+        console.log(notificationlogs);
+
+
+
+    });
+    //THIS IS IMPORTANT FOR THE RIGHT SIDE NOTIFICATIONS
+    firebase.database().ref("/userItems/" + props.userId + '/log/contacts/').on('value', function(snap){
+        snap.forEach(function(childNodes){
+            contactinfologs.push(childNodes.val());
+        });
+
+        // for (var i = 0; i < contactinfologs.length; i++){
+        //     console.log(contactinfologs[i]);
+        // }
+        console.log(contactinfologs);
+
+
 
     });
 
@@ -37,9 +54,10 @@ const ProfileLogs = (props) => {
             <div className={classes.container}>
                 <div className={classes.mainArea}>
                     LIST OF LOGS HERE
+                    <Log/>
                 </div>
                 <div className={classes.sideArea}>
-                    <EmailBox 
+                    <EmailBox
                         won
                         otherUsername="Catlady225"
                         item1="Dollhouse"
@@ -47,11 +65,11 @@ const ProfileLogs = (props) => {
                         email="cats4ever@gmail.com"
                     />
                 </div>
-                
+
             </div>
-            
+
         </Auxiliary>
-        
+
 
     );
 }
