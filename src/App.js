@@ -8,7 +8,7 @@ import fontawesome from '@fortawesome/fontawesome';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import brands from '@fortawesome/fontawesome-free-brands';
 import { faGamepad, faEdit, faTrashAlt, faTv, faBriefcase, faWrench, faImages, faFemale, faFutbol, faGem,
-         faHome, faBath, faMapMarker} from '@fortawesome/fontawesome-free-solid';
+         faHome, faBath, faMapMarker, faStar} from '@fortawesome/fontawesome-free-solid';
 // electronics, game, service, appliance, craft, clothing, sporting good, jewery, home goods, furniture
 
 
@@ -22,7 +22,7 @@ import ProfileLogs from './components/UserProfile/ProfileLogs/ProfileLogs';
 
 // Add icons to library
 fontawesome.library.add(brands, faGamepad, faEdit, faTrashAlt, faTv, faBriefcase, faWrench, faImages, faFemale, faFutbol, faGem,
-  faHome, faBath, faMapMarker);
+  faHome, faBath, faMapMarker, faStar);
 
 class App extends Component {
   render() {
