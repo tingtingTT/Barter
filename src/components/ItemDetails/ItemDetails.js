@@ -171,7 +171,7 @@ class ItemDetails extends Component {
     addBid = () => {
 
         let bidsToAdd = this.state.addedBids;
-        let ownerUsername = '';
+        let ownerUsername = '...';
         let bidcount = 0;
         //grab all bids from addedBids and push them to
         for (let index in bidsToAdd){
@@ -196,8 +196,33 @@ class ItemDetails extends Component {
 
 
         }
-        this.updateBidCount(this.state.item.itemKey,'');
+
+
+        console.log("OWNER USER NAME");
+
+        console.log(ownerUsername);
+
+        auctionDB.child(this.state.item.itemKey).child('/bids/').orderByChild("ID").once("value", snapshot =>{
+            let snapshotArr = this.snapshotToArray(snapshot);
+            if(snapshotArr !== 1){
+                console.log("Snap shot array is");
+                console.log(snapshotArr);
+                for(let item of snapshotArr){
+                    console.log(item.owner);
+                    console.log(ownerUsername);
+                    if(item.owner === ownerUsername){
+                        return;
+                    }
+                }
+            this.updateBidCount(this.state.item.itemKey,'');
+            }
+            
+        })
+
         this.toggleModal();
+
+
+      
     }
 
 
@@ -267,6 +292,19 @@ class ItemDetails extends Component {
 
     }
 
+
+    snapshotToArray(snapshot) {
+        var returnArr = [];
+    
+        snapshot.forEach(function(childSnapshot) {
+            var item = childSnapshot.val();
+            item.key = childSnapshot.key;
+    
+            returnArr.push(item);
+        });
+    
+        return returnArr;
+    };
 
     toggleModal = () => {
         let newState = (this.state.showModal ? false : true);
