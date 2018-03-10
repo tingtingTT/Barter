@@ -5,9 +5,9 @@ import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {database} from 'firebase';
 
-import Auxiliary from '../../../hoc/Auxiliary/Auxiliary';
-import EmailBox from '../../UI/EmailBox/EmailBox';
-import Log from '../../Log/Log';
+import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
+import EmailBox from '../UI/EmailBox/EmailBox';
+import Log from './Log/Log';
 
 import classes from './ProfileLogs.css';
 
@@ -25,6 +25,7 @@ const ProfileLogs = (props) => {
         // for (var i = 0; i < notificationlogs.length; i++){
         //     console.log(notificationlogs[i]);
         // }
+        console.log("...");
         console.log(notificationlogs);
 
 
@@ -54,7 +55,7 @@ const ProfileLogs = (props) => {
             <div className={classes.container}>
                 <div className={classes.mainArea}>
                     LIST OF LOGS HERE
-                    <Log/>
+                    <Log logs={notificationlogs}></Log>
                 </div>
                 <div className={classes.sideArea}>
                     <EmailBox

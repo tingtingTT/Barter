@@ -8,12 +8,6 @@
     min-height: 7rem;
 }
 
-
-.Log:nth-child(1){
-    background-color:rgb(200,200,200);
-
-}
-
 .content {
    padding-top: 2rem;
    padding-bottom: 2rem;
