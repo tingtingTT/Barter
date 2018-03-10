@@ -11,20 +11,40 @@ import {database} from 'firebase';
 
 
 const log = (props) => {
-    console.log("props.");
-    console.log(props.logs);
- 
-    var propLogs = [];
-    props.logs.forEach(function(item){
-        console.log("Item");
-        console.log(item);
-        propLogs.append(item);
+
+    var notificationlogs = [];
+    var contactinfologs = [];
+
+    let myLogs = [];
+    firebase.database().ref("/userItems/" + props.userId + '/log/notifications/').on('value', function(snap){
+        snap.forEach(function(childNodes){
+            console.log(childNodes.val);
+            notificationlogs.push(childNodes.val());
+        });
+
+        // for (var i = 0; i < notificationlogs.length; i++){
+        //     console.log(notificationlogs[i]);
+        // }
+        console.log(props.id);
+        console.log(notificationlogs);
+
+
 
     });
-    console.log(propLogs);
+    // console.log("props.");
+    // console.log(props.logs);
+ 
+    // var propLogs = [];
+    // props.logs.forEach(item => {
+    //     console.log("Item");
+    //     console.log(item);
+    //     propLogs.append(item);
+
+    // });
+    // console.log(propLogs);
 
     let activityLogs = (
-        propLogs.map((log) => (
+        notificationlogs.map((log) => (
                 <ActivityLog
                 user={log.activity}
                 date={log.date}

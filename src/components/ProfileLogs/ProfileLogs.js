@@ -19,13 +19,14 @@ const ProfileLogs = (props) => {
     let myLogs = [];
     firebase.database().ref("/userItems/" + props.userId + '/log/notifications/').on('value', function(snap){
         snap.forEach(function(childNodes){
+            console.log(childNodes.val);
             notificationlogs.push(childNodes.val());
         });
 
         // for (var i = 0; i < notificationlogs.length; i++){
         //     console.log(notificationlogs[i]);
         // }
-        console.log("...");
+        console.log(props.userId);
         console.log(notificationlogs);
 
 
@@ -55,7 +56,7 @@ const ProfileLogs = (props) => {
             <div className={classes.container}>
                 <div className={classes.mainArea}>
                     LIST OF LOGS HERE
-                    <Log logs={notificationlogs}></Log>
+                    <Log id={props.userId}></Log>
                 </div>
                 <div className={classes.sideArea}>
                     <EmailBox
