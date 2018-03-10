@@ -12,7 +12,7 @@ import {database} from 'firebase';
 
 const log = (props) => {
     console.log("props.");
-    console.log(props.notificationlogs);
+    console.log(props.notifications);
 
     var logs = [{activity: 'AAA bid on BBB with CCC', date: '3/2/18'}, {activity: 'BBB bid on CCC with AAA', date: '3/3/18'}, {activity: 'BBB bid on CCC with AAA', date: '3/3/18'},{activity: 'BBB bid on CCC with AAA', date: '3/3/18'}];
  
