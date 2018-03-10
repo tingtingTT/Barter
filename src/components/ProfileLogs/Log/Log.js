@@ -24,6 +24,7 @@ const log = (props) => {
                 // action1 = {log.action1}
                 // item1 = {log.item1}
                 // item2 = {log.item2}
+
             />
 
         ))
