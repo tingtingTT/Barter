@@ -1,41 +1,45 @@
 import React from 'react';
-
+import EmailBoxes from './EmailBoxes/EmailBoxes';
 import classes from './EmailBox.css';
+import { withRouter } from 'react-router-dom';
+import firebase from 'firebase';
+import {connect} from 'react-redux';
+import {database} from 'firebase';
 
 
-/*
 
-PROPS:
 
-won ===>                    True if user won an auction
-otherUsername ===>          username of other party
-item1 ===>                  item the user won || user's chosen winning bid
-item2 ===>                  users winning bid || item user auctioned off
-email ===>                  email address of other party
-clicked ===>                action when x is clicked
-*/ 
-const emailBox = (props) => {
-    let type = null;
-    if(props.won){
-        type = 'WON!!!';
-    }
-    else{
-        type = 'CHOSE A WINNER';
-    }
-    let emailTo = "mailto:" + props.email;
 
-    return (
+const EmailBox = (props) => {
+    console.log("props.");
+    console.log(props.notifications);
 
-        <div className={classes.box}>
-            <div className={classes.delete} onClick={props.clicked}>X</div>
-            <h3 className={classes.mainText}>You <span className={classes.importantText}>{type}</span></h3>
-            <h3 className={classes.mainText}>Contact <span className={classes.importantText}>{props.otherUsername} </span>to set up the exchange</h3>
-            <h3><span className={classes.itemText}>{props.item1} </span><span className={classes.small}> for </span><span className={classes.itemText}>{props.item2}</span></h3>
-            <a href={emailTo} className={classes.email}>{props.email}</a>
-        </div>
+    var logs = [{activity: 'AAA bid on BBB with CCC', date: '3/2/18'}, {activity: 'BBB bid on CCC with AAA', date: '3/3/18'}, {activity: 'BBB bid on CCC with AAA', date: '3/3/18'},{activity: 'BBB bid on CCC with AAA', date: '3/3/18'}];
 
+    let emailBoxes = (
+        props.notifications.map((log) => (
+                <EmailBoxes
+                  msg = {log.msg}
+                  contact = {log.contact}
+                  item1 = {log.item1}
+                  item2 = {log.item2}
+                  contactinfo = {log.contactinfo}
+
+
+            />
+
+        ))
     );
 
+    return (
+        <div className={classes.box}>
+            <div className={classes.mainText}>
+            {emailBoxes}
+            </div>
+        </div>
+
+    )
 }
 
-export default emailBox;
+
+export default EmailBox;

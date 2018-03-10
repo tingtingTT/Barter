@@ -34,7 +34,7 @@ class ProfileLogs extends Component {
         currentUser: ''
     };
 
-   
+
     componentDidMount(){
         this.setState({currentUser: this.props.userId});
         let name = this.props.userId;
@@ -44,16 +44,16 @@ class ProfileLogs extends Component {
             snapshot.forEach(childsnapshot =>{
                 noteLogs.push(childsnapshot.val());
             });
-    
+
             // for (var i = 0; i < notificationlogs.length; i++){
             //     console.log(notificationlogs[i]);
             // }
             this.setState({notificationlogs: noteLogs});
             console.log("...");
             console.log(this.state.notificationlogs);
-    
-    
-    
+
+
+
         });
 
         let contLogs = [];
@@ -62,23 +62,29 @@ class ProfileLogs extends Component {
             snapshot.forEach(function(childNodes){
                 contLogs.push(childNodes.val());
             });
-    
+
             // for (var i = 0; i < contactinfologs.length; i++){
             //     console.log(contactinfologs[i]);
             // }
-            
+
             this.setState({contactinfologs: contLogs});
             console.log(this.state.contactinfologs);
-    
-    
-    
+
+
+
         });
     }
-    
+    // var oObjC = {
+    //   msg: 'You chose a winner!',
+    //   contact: oContactS,
+    //   item1: auction.name,
+    //   item2: itemString,
+    //   contactinfo: bidderemail
+    // };
     render(){
         console.log('in render');
         console.log(this.state.notificationlogs);
-  
+
         return (
             <Auxiliary>
                 <div className={classes.banner}>
@@ -89,24 +95,17 @@ class ProfileLogs extends Component {
                         <Log notifications={this.state.notificationlogs}/>
                     </div>
                     <div className={classes.sideArea}>
-                        <EmailBox
-                            won
-                            otherUsername="Catlady225"
-                            item1="Dollhouse"
-                            item2="Tiger statue"
-                            email="cats4ever@gmail.com"
-                        />
+                        <EmailBox notifications ={this.state.contactinfologs}/>
                     </div>
-    
-                </div>
-    
+                  </div>
+
             </Auxiliary>
-    
-    
+
+
         );
     }
 
-  
+
 }
 
 

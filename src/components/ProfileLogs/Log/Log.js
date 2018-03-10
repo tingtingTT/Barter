@@ -15,11 +15,11 @@ const log = (props) => {
     console.log(props.notifications);
 
     var logs = [{activity: 'AAA bid on BBB with CCC', date: '3/2/18'}, {activity: 'BBB bid on CCC with AAA', date: '3/3/18'}, {activity: 'BBB bid on CCC with AAA', date: '3/3/18'},{activity: 'BBB bid on CCC with AAA', date: '3/3/18'}];
- 
+
     let activityLogs = (
-        logs.map((log) => (
+        props.notifications.map((log) => (
                 <ActivityLog
-                user={log.activity}
+                user={log.action1}
                 date={log.date}
                 // action1 = {log.action1}
                 // item1 = {log.item1}
