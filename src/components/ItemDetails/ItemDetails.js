@@ -275,27 +275,27 @@ class ItemDetails extends Component {
              }
            });
 
-
-
-        for (var i = 0; i < winningBids.length; i++){
-            //itemString += winningBids[i].title;
+           // Get bidder's user ID
             console.log(winningBids);
-            bu = JSON.parse(JSON.stringify(winningBids[i]));
+            bu = JSON.parse(JSON.stringify(winningBids[0]));
             biduser = bu.userid;
 
-
-            userItems.child(biduser).child('/inventory/').child(winningBids[i].itemKey).remove();
-            if(i === 0){
-            itemString += winningBids[i].title + ' ';
-            } else if (i != (winningBids.length - 1)){
-            itemString += ', ' + winningBids[i].title;
-            } else {
-            itemString += ' ' + winningBids[i].title;
+           // Remove bidder's items from their inventory
+            for (var i = 0; i < winningBids.length; i++){
+                userItems.child(biduser).child('/inventory/').child(winningBids[i].itemKey).remove();
             }
 
-      }
+            itemString = winningBids[0].title;
 
-          });
+            // Indicate multiple winning bids if their are more than one
+            if (winningBids.length > 1){
+                itemString = itemString + ' ...etc.'
+            }
+
+
+        });
+
+
         var em = '';
         var bidderemail = '';
         userInfo.child(biduser + '/').on('value', snapshot =>{
