@@ -129,30 +129,38 @@ class ItemDetails extends Component {
 
     updateBidCount = (keyToIncrement, owner) =>{
 
-
-        //get the current bid count in the auctionDb item
-        let bidcount = '';
-        let ownerName = '';
-        auctionDB.child(keyToIncrement).once('value', snapshot=>{
-            let item = snapshot.val();
-            bidcount = item.bidcount;
-            if(bidcount == null){
-                bidcount = 1;
-            }else{
-                bidcount = bidcount + 1;
+        auctionDB.child(this.state.item.itemKey).child('/bids/').once("value", snapshot =>{
+            let snapshotArr = this.snapshotToArray(snapshot);
+            console.log(snapshotArr);
+            let ownerList = [];
+            let arrLen = snapshotArr.length;
+            for(var i = 0; i < arrLen; ++i){
+                if(!ownerList.includes(snapshotArr[i].owner)){
+                    ownerList.push(snapshotArr[i].owner);
+                }
             }
-            ownerName = item.ownerUser;
+            console.log(ownerList);
+                //get the current bid count in the auctionDb item
+                let bidcount = '';
+                let ownerName = '';
+                auctionDB.child(keyToIncrement).once('value', snapshot=>{
+                    let item = snapshot.val();
+                    bidcount = item.bidcount;
+                    bidcount = ownerList.length;
+                    ownerName = item.ownerUser;
+                }).then(()=>{
+                    console.log('incrementing bid count to:', bidcount);
+                    auctionDB.child(keyToIncrement).child('bidcount').set(bidcount);
+                    userItems
+                        .child(ownerName)
+                        .child('auction')
+                        .child(keyToIncrement)
+                        .child('bidcount').set(bidcount);
+                });       
+        })
 
 
-        }).then(()=>{
-            console.log('incrementing bid count to:', bidcount);
-            auctionDB.child(keyToIncrement).child('bidcount').set(bidcount);
-            userItems
-                .child(ownerName)
-                .child('auction')
-                .child(keyToIncrement)
-                .child('bidcount').set(bidcount);
-        });
+        
 
         //check for null
 
@@ -171,7 +179,7 @@ class ItemDetails extends Component {
     addBid = () => {
 
         let bidsToAdd = this.state.addedBids;
-        let ownerUsername = '';
+        let ownerUsername = '...';
         let bidcount = 0;
         //grab all bids from addedBids and push them to
         for (let index in bidsToAdd){
@@ -196,8 +204,14 @@ class ItemDetails extends Component {
 
 
         }
+
+
+        
         this.updateBidCount(this.state.item.itemKey,'');
         this.toggleModal();
+
+
+      
     }
 
 
@@ -267,6 +281,19 @@ class ItemDetails extends Component {
 
     }
 
+
+    snapshotToArray(snapshot) {
+        var returnArr = [];
+    
+        snapshot.forEach(function(childSnapshot) {
+            var item = childSnapshot.val();
+            item.key = childSnapshot.key;
+    
+            returnArr.push(item);
+        });
+    
+        return returnArr;
+    };
 
     toggleModal = () => {
         let newState = (this.state.showModal ? false : true);
