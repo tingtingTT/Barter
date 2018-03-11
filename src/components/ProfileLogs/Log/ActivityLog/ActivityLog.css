@@ -19,6 +19,14 @@
     font-size: 1.5rem;
     padding: 0.5rem 5rem 0.5rem 2rem; 
     border-bottom: 1px solid black;
+    /* display: inline-block; */
+    /* overflow-y: scroll; */
+}
+
+.smallText{
+    font-size: 1.3rem;
+    margin: 0 3rem 0 3rem;
+    display: inline-block;
 }
 
 
