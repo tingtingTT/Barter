@@ -237,8 +237,8 @@ class ItemDetails extends Component {
 
 
         }
-        console.log(biduser);
-        console.log(itemcopy.username);
+        // console.log(biduser);
+        // console.log(itemcopy.username);
 
         //firebase.database().ref('/userItems/' + auction.owner+'/log/notifications/').push(bidnotification);
 
@@ -444,18 +444,19 @@ class ItemDetails extends Component {
 
                     <div className = {classes.col1of2}>
                         {/*pass in this.state.item.zipCode as props to the map*/}
-                        MAP
+                        <div className={classes.desBox}>
+                            <div className = {classes.row}>
+                                <h3>Item Description</h3>
+                                <div className = {classes.description}>
+                                    <p className = {classes.descText}>{this.state.item.desc}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
 
-                <div className = {classes.row}>
-                    <h3>Item Description</h3>
-                    <div className = {classes.description}>
-                        <p className = {classes.descText}>{this.state.item.desc}</p>
-                    </div>
-
-                </div>
+                
 
                 <div className={classes.row2}>
 

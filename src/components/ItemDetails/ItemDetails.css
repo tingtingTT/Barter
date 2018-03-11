@@ -98,7 +98,12 @@ h3 {
     border-radius: 2rem;
     padding: 1.4rem;
     min-height: 7rem;
+    margin-top: 2rem;
 }
 .descText {
     font-size: 1.6rem;
+}
+
+.desBox{
+    margin-top: 6rem;
 }
