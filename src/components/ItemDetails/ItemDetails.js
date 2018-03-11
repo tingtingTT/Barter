@@ -39,7 +39,7 @@ class ItemDetails extends Component {
         currentUser: 'none',
         addedBids: [],
         isOwner: false,
-
+        ownerPicture: ''
 
 
     }
@@ -68,7 +68,7 @@ class ItemDetails extends Component {
 
         userInfo.child(this.state.item.owner).on('value', snapshot => {
             let info = snapshot.val();
-            this.setState({auctionOwner: info.username});
+            this.setState({auctionOwner: info.username, ownerPicture: info.picture});
 
         });
 
@@ -333,8 +333,8 @@ class ItemDetails extends Component {
           contactinfo: bidderemail
         };
 
-        firebase.database().ref('userItems/' + auction.owner + '/log/contacts/' ).push(oObjC);
-        firebase.database().ref('userItems/' + auction.owner + '/log/notifications/' ).push(oObjN);
+        firebase.database().ref('userItems/').child(auction.owner+'/').child('log/').child('contacts/').push(oObjC);
+        firebase.database().ref('userItems/').child(auction.owner+'/').child('log/').child('notifications/').push(oObjN);
         //SET NOTIFICATION FOR BIDDER
         var bnotes = '[' + dateTime + ']: ' +'You won: ' + auction.name + ' from: ' + bidder + ' in exchange for: ' + itemString + ' \n';
         var bObjN = {
@@ -372,6 +372,18 @@ class ItemDetails extends Component {
 
 
     render() {
+        let pic = null;
+        console.log('PIC');
+        console.log(this.state.ownerPicture);
+        if(this.state.ownerPicture === undefined){
+            pic = 'https://i.imgur.com/A9uKXOG.png';
+        }
+        else{
+            pic = this.state.ownerPicture;
+        }
+        const image = (
+            {'background-image': 'url(' + pic + ')'}
+        );
 
         return (
 
@@ -383,7 +395,7 @@ class ItemDetails extends Component {
                         <img src={this.state.item.img} className={classes.image}/>
                         <div className={classes.ownerDetails}>
                             {/* this is a placeholder for now, it should be the userIcon */}
-                            <div className={classes.userIcon}></div>
+                            <div className={classes.userIcon} style={image}></div>
                             <p className = {classes.owner}>{this.state.auctionOwner}</p>
                             {/* <p className = {classes.owner}>[rating]</p> */}
                         </div>
