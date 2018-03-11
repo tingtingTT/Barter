@@ -156,11 +156,11 @@ class ItemDetails extends Component {
                         .child('auction')
                         .child(keyToIncrement)
                         .child('bidcount').set(bidcount);
-                });       
+                });
         })
 
 
-        
+
 
         //check for null
 
@@ -181,10 +181,12 @@ class ItemDetails extends Component {
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         var dateTime = date+' '+time;
-
+        console.log('AUCTION');
+        console.log(auction.owner);
         let bidsToAdd = this.state.addedBids;
         let ownerUsername = '...';
         let bidcount = 0;
+        var bu = '';
         var biduser = '';
         var itemString = '';
         //grab all bids from addedBids and push them to
@@ -204,10 +206,23 @@ class ItemDetails extends Component {
             userInfo.child(item.ownerUser+'/').on('value', snapshot => {
                 // GET real username
                 const info = snapshot.val();
-                biduser = JSON.parse(JSON.stringify(info));
+
+                console.log(info);
+                bu = JSON.parse(JSON.stringify(info));
+                biduser = bu.username;
+                console.log(biduser);
                 console.log('USERNAME...');
                 console.log(info.username);
                 ownerUsername = info.username;
+
+                var bidnotification = {
+                  user: biduser,
+                  date: dateTime,
+                  action1: 'Bid on ',
+                  item1: auction.name,
+                  item2: itemString
+                };
+                firebase.database().ref('/userItems/' + auction.owner+'/log/notifications/').push(bidnotification);
                 // ADD item to bids list
 
                 auctionDB.child(this.state.item.itemKey).child('/bids/').child(item.itemKey).set({
@@ -218,25 +233,23 @@ class ItemDetails extends Component {
                     zipcode: item.location
                 });
             });
+        //firebase.database().ref('/userItems/' + auction.owner+'/log/notifications/').push();
 
 
         }
+        console.log(biduser);
+        console.log(itemcopy.username);
 
+        //firebase.database().ref('/userItems/' + auction.owner+'/log/notifications/').push(bidnotification);
 
         this.updateBidCount(this.state.item.itemKey,'');
-        var bidnotification = {
-          user: biduser.username,
-          date: dateTime,
-          action1: 'Bid on ',
-          item1: auction.name,
-          item2: itemString
-        };
-        firebase.database().ref('userItems/').child(auction.owner+'/').child('log/').child('notifications/' ).push(bidnotification);
+
+///').child(auction.owner+'/').child('log/').child('notifications/').
 
         this.toggleModal();
 
 
-      
+
     }
 
 
@@ -367,7 +380,7 @@ class ItemDetails extends Component {
         // firebase.database().ref('userItems/' + biduser + '/log/notifications/' ).push(bObjN);
         firebase.database().ref('userItems/').child(biduser+'/').child('log/').child('contacts/').push(bObjC);
         firebase.database().ref('userItems/').child(biduser+'/').child('log/').child('notifications/').push(bObjN);
-        
+
         console.log("BIDDER ID");
         console.log(bidderid);
         console.log(biduser);
@@ -380,14 +393,14 @@ class ItemDetails extends Component {
 
     snapshotToArray(snapshot) {
         var returnArr = [];
-    
+
         snapshot.forEach(function(childSnapshot) {
             var item = childSnapshot.val();
             item.key = childSnapshot.key;
-    
+
             returnArr.push(item);
         });
-    
+
         return returnArr;
     };
 
