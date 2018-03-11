@@ -17,6 +17,7 @@ const EmailBox = (props) => {
     let emailBoxes = (
         props.notifications.map((log) => (
                 <EmailBoxes
+                  key = {log.key}
                   msg = {log.msg}
                   contact = {log.contact}
                   item1 = {log.item1}

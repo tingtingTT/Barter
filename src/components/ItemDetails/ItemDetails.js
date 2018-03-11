@@ -260,27 +260,27 @@ class ItemDetails extends Component {
                  item1: 'Ended',
                  item2: auction.name
                };
-               firebase.database().ref('userItems/' + childNodes.val().userid + '/log/notifications/').push(lObj);
+               firebase.database().ref('userItems/').child(childNodes.val().userid+'/').child('log/').child('notifications/').push(lObj);
              }
            });
 
 
 
         for (var i = 0; i < winningBids.length; i++){
-         //itemString += winningBids[i].title;
-         console.log(winningBids);
-         bu = JSON.parse(JSON.stringify(winningBids[i]));
-         biduser = bu.userid;
+            //itemString += winningBids[i].title;
+            console.log(winningBids);
+            bu = JSON.parse(JSON.stringify(winningBids[i]));
+            biduser = bu.userid;
 
 
-         userItems.child(biduser).child('/inventory/').child(winningBids[i].itemKey).remove();
-         if(i === 0){
-           itemString += winningBids[i].title + ' ';
-         } else if (i != (winningBids.length - 1)){
-           itemString += ', ' + winningBids[i].title;
-         } else {
-           itemString += ' ' + winningBids[i].title;
-         }
+            userItems.child(biduser).child('/inventory/').child(winningBids[i].itemKey).remove();
+            if(i === 0){
+            itemString += winningBids[i].title + ' ';
+            } else if (i != (winningBids.length - 1)){
+            itemString += ', ' + winningBids[i].title;
+            } else {
+            itemString += ' ' + winningBids[i].title;
+            }
 
       }
 
@@ -346,14 +346,17 @@ class ItemDetails extends Component {
         };
         var bContactS = 'contact ' + auctioneerusername + ' to set up an exchange.';
         var bObjC = {
-          msg: 'You chose a winner!',
+          msg: 'You WON!!',
           contact: bContactS,
           item1: auction.name,
           item2: itemString,
           contactinfo: auctioneeremail
         };
-        firebase.database().ref('userItems/' + auction.owner + '/log/contacts/' ).push(bObjC);
-        firebase.database().ref('userItems/' + biduser + '/log/notifications/' ).push(bObjN);
+        // firebase.database().ref('userItems/' + auction.owner + '/log/contacts/' ).push(bObjC);
+        // firebase.database().ref('userItems/' + biduser + '/log/notifications/' ).push(bObjN);
+        firebase.database().ref('userItems/').child(biduser+'/').child('log/').child('contacts/').push(bObjC);
+        firebase.database().ref('userItems/').child(biduser+'/').child('log/').child('notifications/').push(bObjN);
+        
         console.log("BIDDER ID");
         console.log(bidderid);
         console.log(biduser);

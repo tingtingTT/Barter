@@ -41,8 +41,12 @@ class ProfileLogs extends Component {
         let noteLogs = [];
         userItems.child(name+'/').child('/log').child('/notifications').on('value', snapshot =>{
             let logs = snapshot.val();
+            let index = 0;
             snapshot.forEach(childsnapshot =>{
+                console.log(childsnapshot);
                 noteLogs.push(childsnapshot.val());
+                noteLogs[index].key = childsnapshot.key;
+                index ++;
             });
 
          
@@ -57,8 +61,11 @@ class ProfileLogs extends Component {
         let contLogs = [];
         //THIS IS IMPORTANT FOR THE RIGHT SIDE NOTIFICATIONS
         userItems.child(name+'/').child('/log').child('/contacts').on('value', snapshot =>{
-            snapshot.forEach(function(childNodes){
-                contLogs.push(childNodes.val());
+            let index = 0;
+            snapshot.forEach(childsnapshot =>{
+                contLogs.push(childsnapshot.val());
+                contLogs[index].key = childsnapshot.key;
+                index ++;
             });
 
             // for (var i = 0; i < contactinfologs.length; i++){
@@ -93,7 +100,7 @@ class ProfileLogs extends Component {
                         <Log notifications={this.state.notificationlogs}/>
                     </div>
                     <div className={classes.sideArea}>
-                        <EmailBox notifications = {this.state.contactinfologs}/>
+                        <EmailBox notifications = {this.state.contactinfologs.reverse()} />
                     </div>
                   </div>
 
