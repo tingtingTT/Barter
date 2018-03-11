@@ -19,11 +19,11 @@ const log = (props) => {
     let activityLogs = (
         props.notifications.map((log) => (
                 <ActivityLog
-                user={log.action1}
+                user={log.user}
                 date={log.date}
-                // action1 = {log.action1}
-                // item1 = {log.item1}
-                // item2 = {log.item2}
+                action1 = {log.action1}
+                item1 = {log.item1}
+                item2 = {log.item2}
 
             />
 
