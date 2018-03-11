@@ -9,6 +9,9 @@
     box-sizing: border-box;
     position: relative;
 }
+.box:not(:last-child){
+    margin-bottom: 3rem;
+}
 .delete{
     background: #f9e5e7;
     width: 1.7rem;

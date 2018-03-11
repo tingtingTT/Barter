@@ -14,8 +14,6 @@ const EmailBox = (props) => {
     console.log("props.");
     console.log(props.notifications);
 
-    var logs = [{activity: 'AAA bid on BBB with CCC', date: '3/2/18'}, {activity: 'BBB bid on CCC with AAA', date: '3/3/18'}, {activity: 'BBB bid on CCC with AAA', date: '3/3/18'},{activity: 'BBB bid on CCC with AAA', date: '3/3/18'}];
-
     let emailBoxes = (
         props.notifications.map((log) => (
                 <EmailBoxes
@@ -24,19 +22,15 @@ const EmailBox = (props) => {
                   item1 = {log.item1}
                   item2 = {log.item2}
                   contactinfo = {log.contactinfo}
-
-
-            />
+                />
 
         ))
     );
 
     return (
-        <div className={classes.box}>
-            <div className={classes.mainText}>
-            {emailBoxes}
+            <div>
+                {emailBoxes}
             </div>
-        </div>
 
     )
 }

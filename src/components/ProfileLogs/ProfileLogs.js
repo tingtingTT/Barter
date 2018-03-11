@@ -45,9 +45,7 @@ class ProfileLogs extends Component {
                 noteLogs.push(childsnapshot.val());
             });
 
-            // for (var i = 0; i < notificationlogs.length; i++){
-            //     console.log(notificationlogs[i]);
-            // }
+         
             this.setState({notificationlogs: noteLogs});
             console.log("...");
             console.log(this.state.notificationlogs);
@@ -88,14 +86,14 @@ class ProfileLogs extends Component {
         return (
             <Auxiliary>
                 <div className={classes.banner}>
-                    <h1>Notification Log</h1>
+                    <h1 className={classes.notificationBanner}>Notification Log</h1>
                 </div>
                 <div className={classes.container}>
                     <div className={classes.mainArea}>
                         <Log notifications={this.state.notificationlogs}/>
                     </div>
                     <div className={classes.sideArea}>
-                        <EmailBox notifications ={this.state.contactinfologs}/>
+                        <EmailBox notifications = {this.state.contactinfologs}/>
                     </div>
                   </div>
 
