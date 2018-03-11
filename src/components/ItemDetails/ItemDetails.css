@@ -69,7 +69,8 @@
     border-radius: 2.5rem;
     display: inline-block;
     background-position: center;
-    background-size: contain;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 .owner {
     padding: 0;
