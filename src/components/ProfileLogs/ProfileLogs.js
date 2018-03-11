@@ -79,6 +79,11 @@ class ProfileLogs extends Component {
 
         });
     }
+
+    deleteContactLog = (logKey) => {
+        let ref = userItems.child(this.state.currentUser+'/').child('/log').child('/contacts');
+        ref.child(logKey + '/').remove();
+    }
     // var oObjC = {
     //   msg: 'You chose a winner!',
     //   contact: oContactS,
@@ -100,7 +105,7 @@ class ProfileLogs extends Component {
                         <Log notifications={this.state.notificationlogs}/>
                     </div>
                     <div className={classes.sideArea}>
-                        <EmailBox notifications = {this.state.contactinfologs.reverse()} />
+                        <EmailBox notifications = {this.state.contactinfologs.reverse()} clicked={this.deleteContactLog} />
                     </div>
                   </div>
 

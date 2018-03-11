@@ -23,6 +23,7 @@ const EmailBox = (props) => {
                   item1 = {log.item1}
                   item2 = {log.item2}
                   contactinfo = {log.contactinfo}
+                  clicked={() => props.clicked(log.key)}
                 />
 
         ))
