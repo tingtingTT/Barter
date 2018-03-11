@@ -84,13 +84,7 @@ class ProfileLogs extends Component {
         let ref = userItems.child(this.state.currentUser+'/').child('/log').child('/contacts');
         ref.child(logKey + '/').remove();
     }
-    // var oObjC = {
-    //   msg: 'You chose a winner!',
-    //   contact: oContactS,
-    //   item1: auction.name,
-    //   item2: itemString,
-    //   contactinfo: bidderemail
-    // };
+
     render(){
         console.log('in render');
         console.log(this.state.notificationlogs);
