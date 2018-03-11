@@ -75,6 +75,7 @@ class Profile extends Component {
 
         this.setState({currentUser: this.props.userId});
         let name = this.props.userId;
+        
 
         userItems.child(name+ '/').child('/auction').on('value', snapshot=>{
             const items = snapshot.val();

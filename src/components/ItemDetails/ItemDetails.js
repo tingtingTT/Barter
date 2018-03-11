@@ -39,7 +39,7 @@ class ItemDetails extends Component {
         currentUser: 'none',
         addedBids: [],
         isOwner: false,
-
+        ownerPicture: ''
 
 
     }
@@ -68,7 +68,7 @@ class ItemDetails extends Component {
 
         userInfo.child(this.state.item.owner).on('value', snapshot => {
             let info = snapshot.val();
-            this.setState({auctionOwner: info.username});
+            this.setState({auctionOwner: info.username, ownerPicture: info.picture});
 
         });
 
@@ -176,18 +176,35 @@ class ItemDetails extends Component {
 
     };
 
-    addBid = () => {
+    addBid = (auction) => {
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
 
         let bidsToAdd = this.state.addedBids;
         let ownerUsername = '...';
         let bidcount = 0;
+        var biduser = '';
+        var itemString = '';
         //grab all bids from addedBids and push them to
         for (let index in bidsToAdd){
             let item = bidsToAdd[index];
+            var itemcopy = JSON.parse(JSON.stringify(bidsToAdd[index]));
+            if(index === 0){
+            itemString += itemcopy.itemName + ' ';
+          } else if (index != (bidsToAdd.length - 1)){
+            itemString += ', ' + itemcopy.itemName;
+          } else {
+            itemString += ' ' + itemcopy.itemName;
+          }
+
+
             console.log('Item being bid on:',this.state.item);
             userInfo.child(item.ownerUser+'/').on('value', snapshot => {
                 // GET real username
                 const info = snapshot.val();
+                biduser = JSON.parse(JSON.stringify(info));
                 console.log('USERNAME...');
                 console.log(info.username);
                 ownerUsername = info.username;
@@ -206,8 +223,16 @@ class ItemDetails extends Component {
         }
 
 
-        
         this.updateBidCount(this.state.item.itemKey,'');
+        var bidnotification = {
+          user: biduser.username,
+          date: dateTime,
+          action1: 'Bid on ',
+          item1: auction.name,
+          item2: itemString
+        };
+        firebase.database().ref('userItems/').child(auction.owner+'/').child('log/').child('notifications/' ).push(bidnotification);
+
         this.toggleModal();
 
 
@@ -230,34 +255,68 @@ class ItemDetails extends Component {
       var bu = '';
       var biduser = '';
 
+
+
       auctionDB.child(auction.itemKey).child('/bids/').orderByChild('owner').on('value', function(snap){
            snap.forEach(function(childNodes){
              if(childNodes.val().owner === bidder){
                winningBids.push(childNodes.val());
              } else {
+
                var lnotes = '[' + dateTime + ']: ' + 'The auction for: ' + auction.name + 'has ended! Unfortunately, you lost!' + '\n';
-               firebase.database().ref('userItems/' + childNodes.val().userid + '/log/lBid/').push(lnotes);
+               var lObj = {
+                 user: 'YOU',
+                 date: dateTime,
+                 action1: '',
+                 item1: 'Ended',
+                 item2: auction.name
+               };
+               firebase.database().ref('userItems/').child(childNodes.val().userid+'/').child('log/').child('notifications/').push(lObj);
              }
            });
 
 
 
         for (var i = 0; i < winningBids.length; i++){
-         itemString += winningBids[i].title;
-         bu = JSON.parse(JSON.stringify(winningBids[i]));
-         biduser = bu.userid;
+            //itemString += winningBids[i].title;
+            console.log(winningBids);
+            bu = JSON.parse(JSON.stringify(winningBids[i]));
+            biduser = bu.userid;
 
 
-         userItems.child(biduser).child('/inventory/').child(winningBids[i].itemKey).remove();
-         if(i !== ((winningBids.length) - 1)){ //this part may not work?
-           itemString += ", ";
-         } else {
-           itemString += " ";
-         }
+            userItems.child(biduser).child('/inventory/').child(winningBids[i].itemKey).remove();
+            if(i === 0){
+            itemString += winningBids[i].title + ' ';
+            } else if (i != (winningBids.length - 1)){
+            itemString += ', ' + winningBids[i].title;
+            } else {
+            itemString += ' ' + winningBids[i].title;
+            }
 
-        }
+      }
 
           });
+        var em = '';
+        var bidderemail = '';
+        userInfo.child(biduser + '/').on('value', snapshot =>{
+            const info = snapshot.val();
+            em = JSON.parse(JSON.stringify(info));
+            bidderemail = em.email;
+        });
+
+        var ema = '';
+        var auctioneeremail = '';
+        var au = '';
+        var auctioneerusername = '';
+
+        userInfo.child(auction.owner + '/').on('value', snapshot =>{
+            const info = snapshot.val();
+            ema = JSON.parse(JSON.stringify(info));
+            auctioneeremail = ema.email;
+            au = JSON.parse(JSON.stringify(info));
+            auctioneerusername = au.username;
+        });
+
 
 
         auctionDB.child(auction.itemKey).remove();
@@ -268,10 +327,47 @@ class ItemDetails extends Component {
 
         //SET NOTIFICATION FOR AUCTION OWNER
         var onotes = '[' + dateTime + ']: ' + 'You auctioned off: ' + auction.name + ' for: ' + itemString + ' from: ' + bidder + ' \n';
-        firebase.database().ref('userItems/' + auction.owner + '/log/aWin/' ).push(onotes);
+        var oObjN = {
+          user: 'YOU',
+          date: dateTime,
+          action1: 'TRADED',
+          item1: auction.name,
+          item2: itemString
+        };
+        var oContactS = 'contact ' + bidder + ' to set up an exchange.';
+
+        var oObjC = {
+          msg: 'You chose a winner!',
+          contact: oContactS,
+          item1: auction.name,
+          item2: itemString,
+          contactinfo: bidderemail
+        };
+
+        firebase.database().ref('userItems/').child(auction.owner+'/').child('log/').child('contacts/').push(oObjC);
+        firebase.database().ref('userItems/').child(auction.owner+'/').child('log/').child('notifications/').push(oObjN);
         //SET NOTIFICATION FOR BIDDER
         var bnotes = '[' + dateTime + ']: ' +'You won: ' + auction.name + ' from: ' + bidder + ' in exchange for: ' + itemString + ' \n';
-        firebase.database().ref('userItems/' + biduser + '/log/bWin/' ).push(bnotes);
+        var bObjN = {
+          user: 'YOU',
+          date: dateTime,
+          action1: 'WON',
+          item1: auction.name,
+          item2: itemString
+        };
+        var bContactS = 'contact ' + auctioneerusername + ' to set up an exchange.';
+        var bObjC = {
+          msg: 'You WON!!',
+          contact: bContactS,
+          item1: auction.name,
+          item2: itemString,
+          contactinfo: auctioneeremail
+        };
+        // firebase.database().ref('userItems/' + auction.owner + '/log/contacts/' ).push(bObjC);
+        // firebase.database().ref('userItems/' + biduser + '/log/notifications/' ).push(bObjN);
+        firebase.database().ref('userItems/').child(biduser+'/').child('log/').child('contacts/').push(bObjC);
+        firebase.database().ref('userItems/').child(biduser+'/').child('log/').child('notifications/').push(bObjN);
+        
         console.log("BIDDER ID");
         console.log(bidderid);
         console.log(biduser);
@@ -300,19 +396,21 @@ class ItemDetails extends Component {
         this.setState({showModal: newState});
     }
 
-    // //Dummy Item
 
-    // Once this is implemented using Props, need to change everything that gets info from Items
+
     render() {
-        const item = {
-            title: 'DVD Collection',
-            desc: 'This is my extensive DVD collection. I have a multitude of genres. They are very rare. wow.',
-            img: 'https://i.ytimg.com/vi/0S-gteTLcko/maxresdefault.jpg',
-            zipCode: 92004,
-            owner: 'PennyMonster38'
+        let pic = null;
+        console.log('PIC');
+        console.log(this.state.ownerPicture);
+        if(this.state.ownerPicture === undefined){
+            pic = 'https://i.imgur.com/A9uKXOG.png';
         }
-        //console.log('this.state.item');
-        //console.log(this.state.item);
+        else{
+            pic = this.state.ownerPicture;
+        }
+        const image = (
+            {'background-image': 'url(' + pic + ')'}
+        );
 
         return (
 
@@ -324,7 +422,7 @@ class ItemDetails extends Component {
                         <img src={this.state.item.img} className={classes.image}/>
                         <div className={classes.ownerDetails}>
                             {/* this is a placeholder for now, it should be the userIcon */}
-                            <div className={classes.userIcon}></div>
+                            <div className={classes.userIcon} style={image}></div>
                             <p className = {classes.owner}>{this.state.auctionOwner}</p>
                             {/* <p className = {classes.owner}>[rating]</p> */}
                         </div>
@@ -349,7 +447,7 @@ class ItemDetails extends Component {
                 <div className={classes.row2}>
 
                     <Modal show={this.state.showModal} modalClosed={this.toggleModal}>
-                        <SelectBidChart bidItems={this.state.userInventory} addBid={this.addBid} setSelected={this.setSelected}></SelectBidChart>
+                        <SelectBidChart bidItems={this.state.userInventory} addBid={() => this.addBid(this.state.item)} setSelected={this.setSelected}></SelectBidChart>
                     </Modal>
 
                     <BidItems bidItems={this.state.bidItems} isOwner={this.state.isOwner} onClick={(bidder, bidderid) => this.setWinner(bidder, bidderid, this.state.item)} itemOwner={this.state.item.owner} toggleModal={this.toggleModal}></BidItems> {/*item.owner*/};
