@@ -223,7 +223,7 @@ class ItemDetails extends Component {
           item1: auction.name,
           item2: itemString
         };
-        firebase.database().ref('userItems/' + auction.owner + '/log/notifications/' ).push(bidnotification);
+        firebase.database().ref('userItems/').child(auction.owner+'/').child('log/').child('notifications/' ).push(bidnotification);
 
         this.toggleModal();
     }
@@ -369,19 +369,9 @@ class ItemDetails extends Component {
         this.setState({showModal: newState});
     }
 
-    // //Dummy Item
 
-    // Once this is implemented using Props, need to change everything that gets info from Items
+
     render() {
-        const item = {
-            title: 'DVD Collection',
-            desc: 'This is my extensive DVD collection. I have a multitude of genres. They are very rare. wow.',
-            img: 'https://i.ytimg.com/vi/0S-gteTLcko/maxresdefault.jpg',
-            zipCode: 92004,
-            owner: 'PennyMonster38'
-        }
-        //console.log('this.state.item');
-        //console.log(this.state.item);
 
         return (
 
