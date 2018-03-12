@@ -1,3 +1,6 @@
+/*
+Image uploader component
+*/
 import React from 'react';
 import firebase from 'firebase';
 import FileUploader from 'react-firebase-file-uploader';

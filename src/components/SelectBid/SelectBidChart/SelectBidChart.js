@@ -1,15 +1,12 @@
+/*
+Current list of items for user to choose to bid on other's item
+*/
 import React from 'react';
 import BidItem from './SelectBidList/SelectBidList';
 import classes from './SelectBidChart.css';
 import { withRouter } from 'react-router-dom';
 
-
-
-
-
 const selectBidChart = (props) => {
-
-
     let bidItems = null
     var that = this;
     if(props.bidItems){
@@ -28,7 +25,6 @@ const selectBidChart = (props) => {
             <div className={classes.content}>{bidItems}</div>
             <div className={classes.bidbtn} onClick={props.addBid}>Bid Item(s)</div>
         </div>
-
     )
 }
 

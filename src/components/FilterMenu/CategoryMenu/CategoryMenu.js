@@ -1,3 +1,7 @@
+
+/*
+Filetr category menu on home page
+*/
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import axios from 'axios';
@@ -20,7 +24,7 @@ const categoryList = [
   {value: 'gem', displayValue: 'Jewelry'},
   {value: 'home', displayValue: 'Home Goods'},
   {value: 'bath', displayValue: 'Furniture'}
-        ];
+  ];
 
   return (
       <div className={classes.dropdown}>
@@ -31,7 +35,6 @@ const categoryList = [
           }
           </select>
         </div>
-
     )
 }
 

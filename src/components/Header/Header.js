@@ -1,7 +1,7 @@
+/* Header of the page
+*/
 import React from 'react';
-
 import NavigationItems from './NavigationItems/NavigationItems';
-
 import classes from './Header.css';
 
 const Header = (props) => (
@@ -15,7 +15,6 @@ const Header = (props) => (
             </nav>
         </div>
     </header>
-
 );
 
 export default Header;

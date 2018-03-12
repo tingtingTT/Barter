@@ -1,9 +1,9 @@
+/* Activity log for user
+*/
 import React from 'react';
-
 import classes from './ActivityLog.css'
 
 const activityLog = (props) => {
-    console.log("activity log");
     return(
         <div className={classes.ActivityLog}>
             <div className={classes.textnBorder}>

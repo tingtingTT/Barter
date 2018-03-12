@@ -1,18 +1,15 @@
+/*
+List of bid items for current auction items
+*/
 import React from 'react';
 import BidItem from './BidItem/BidItem';
 import classes from './BidItems.css';
 import { withRouter } from 'react-router-dom';
 
-
-
-
-
 const bidItems = (props) => {
 
     // check if the owner already exists in the target object
     function isInTarget(targetObj, owner){
-        //console.log(targetObj);
-        //console.log(owner);
         for (var i=0; i< targetObj.length; i++){
             if(targetObj[i].owner === owner){
                 return true;
@@ -33,14 +30,10 @@ const bidItems = (props) => {
                 bidItemsComb.push(newItem);
             }
             else{
-                //console.log(bidItemsComb);
-                //console.log(item.title);
                 newItem['isNew'] = false;
                 bidItemsComb.push(newItem);
             }
         });
-
-        //console.log(bidItemsComb);
 
         bidItems = (
             bidItemsComb.map((item, index) => (
