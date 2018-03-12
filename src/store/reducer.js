@@ -31,7 +31,6 @@ const initialState = {
 const reducer = (state = initialState, action) =>{
     switch (action.type) {
         case 'LOGIN':
-            console.log("setting userId to:", action.val);
             localStorage.setItem("logged",action.val); 
             return {
                 userId: action.val};

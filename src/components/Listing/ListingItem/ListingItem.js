@@ -16,7 +16,7 @@ const listingItem = (props) => (
         <div className={classes.Inside}>
             <div> <FontAwesomeIcon icon={props.category} size="3x"/></div>
             <div className={classes.Line}>{props.name}</div>
-            <div className={classes.Line}>{props.bidcount}</div>
+            <div className={classes.Line}>{props.bidcount} bids</div>
             <div className={classes.Button2} style={{bottom: "100px"}} onClick={props.clicked}><FontAwesomeIcon icon="edit"/></div>
             <div className={classes.Button2} key={props.key} onClick={props.delclicked}><FontAwesomeIcon icon="trash-alt"/></div>
         </div>
