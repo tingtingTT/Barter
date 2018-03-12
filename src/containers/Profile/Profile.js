@@ -5,16 +5,12 @@ import React, { Component } from 'react';
 import AddListing from '../../components/AddListing/AddListing';
 import Modal from '../../components/UI/Modal/Modal';
 import Button from '../../components/UI/Button/Button';
-import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Inventory from '../../components/Inventory/Inventory';
 import Listing from '../../components/Listing/Listing';
 import UserProfile from '../../components/UserProfile/UserProfile';
 import {connect} from 'react-redux';
 import classes from './Profile.css';
-import axios from 'axios';
-import { Route } from 'react-router-dom';
 import firebase from 'firebase';
-import {database} from 'firebase';
 
 const config = {
     apiKey: "AIzaSyDfRWLuvzYmSV3TwmLOppZT0ZZbtIZRlrs",
@@ -142,7 +138,6 @@ class Profile extends Component {
     };
 
     editItemHandler = (itemID, type) => {
-        const items = {};
         let itemToEdit = {};
         if(type === 'bidItem'){
             // Its in bidItems
@@ -157,7 +152,6 @@ class Profile extends Component {
             itemToEdit.pushKey = this.state.inventory[itemID];
         }
 
-        const itemObj = {...items[itemID]};
         this.setState({itemToEdit: itemToEdit, editingItem: true});
     };
 

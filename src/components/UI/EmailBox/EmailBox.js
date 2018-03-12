@@ -3,11 +3,6 @@ Notification email box
 */
 import React from 'react';
 import EmailBoxes from './EmailBoxes/EmailBoxes';
-import classes from './EmailBox.css';
-import { withRouter } from 'react-router-dom';
-import firebase from 'firebase';
-import {connect} from 'react-redux';
-import {database} from 'firebase';
 
 const EmailBox = (props) => {
     let emailBoxes = (

@@ -19,7 +19,6 @@ const bidItems = (props) => {
     }
 
     let bidItems = null
-    var that = this;
     if(props.bidItems){
         var bidItemsComb = []
         props.bidItems.forEach(function(item){

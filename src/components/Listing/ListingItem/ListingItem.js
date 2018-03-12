@@ -3,7 +3,6 @@ Auction item on profile listing page
 */
 import React from 'react';
 import classes from './ListingItem.css'
-import Button from '../../UI/Button/Button';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 

@@ -1,11 +1,8 @@
 /*
 Zip code option for filtering on teh home page
 */
-import React, { Component } from 'react';
-import firebase from 'firebase';
-import axios from 'axios';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
-import {connect} from 'react-redux';
 import classes from './ZipCodeMenu.css';
 
 

@@ -3,10 +3,8 @@ if nay bidding is successful, it will show contact intfo in the contact box
 */
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
-import {database} from 'firebase';
 import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import EmailBox from '../UI/EmailBox/EmailBox';
 import Log from './Log/Log';
@@ -37,7 +35,7 @@ class ProfileLogs extends Component {
         let name = this.props.userId;
         let noteLogs = [];
         userItems.child(name+'/').child('/log').child('/notifications').on('value', snapshot =>{
-            let logs = snapshot.val();
+            // let logs = snapshot.val();
             let index = 0;
             snapshot.forEach(childsnapshot =>{
                 noteLogs.push(childsnapshot.val());

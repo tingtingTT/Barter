@@ -8,7 +8,6 @@ import { withRouter } from 'react-router-dom';
 
 const selectBidChart = (props) => {
     let bidItems = null
-    var that = this;
     if(props.bidItems){
         bidItems = (
             props.bidItems.map((item, index) => (

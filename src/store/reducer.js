@@ -34,14 +34,14 @@ const reducer = (state = initialState, action) =>{
             localStorage.setItem("logged",action.val); 
             return {
                 userId: action.val};
-            break;
 
         case 'LOGOUT':
             saveLogged('none');
             return {
                 userId: 'none'
             }
-            break;
+        default:
+            break;    
 
     }
         if(action.type === 'login'){

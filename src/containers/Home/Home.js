@@ -4,20 +4,14 @@ and view current auction items on hoem page. User can also navigate
 to different pages of the web app
 */
 import React, { Component } from 'react';
-import Button from '../../components/UI/Button/Button';
-import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
-import Inventory from '../../components/Inventory/Inventory';
 import ListingHome from '../../components/ListingHome/ListingHome';
 import ListingHomeHot from '../../components/ListingHomeHot/ListingHomeHot';
 import {connect} from 'react-redux';
 import classes from './Home.css'
 import axios from 'axios';
-import { Route } from 'react-router-dom';
 import firebase from 'firebase';
-import {database} from 'firebase';
 import Banner from '../../components/Banner/Banner';
 import FilterMenu from '../../components/FilterMenu/FilterMenu';
-import ItemDetails from '../../components/ItemDetails/ItemDetails';
 
 class Home extends Component {
     state = {
@@ -42,7 +36,7 @@ class Home extends Component {
         // let userItems = firebase.database().ref('/userItems');
         var maxListings = 12; //can be modified later.
         this.setState({currentUser: this.props.userId});
-        var that = this;
+        // var that = this;
         var fetchedItems = [];
         var hotItems = [];
         var itemType = 'auction'; //can be modified later
@@ -138,7 +132,6 @@ class Home extends Component {
             that.setState({listing: fetchedItems});
         });
 
-        var that = this;
         if(zc === ""){ //if no filter, want to still show listings
             firebase.database().ref("/auctionDB").orderByChild('ItemType').equalTo(itemType).limitToLast(maxListings).on('value', function(snap){
                 snap.forEach(function(item){

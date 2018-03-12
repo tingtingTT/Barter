@@ -3,11 +3,8 @@ current bids for the item. User can plcae bis on this page using their inventory
 */
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import {database} from 'firebase';
-import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import classes from './ItemDetails.css';
-import WinningBidButton from './WinningBidButton/WinningBidButton';
 import BidItems from './BidItems/BidItems';
 import SelectBidChart from '../SelectBid/SelectBidChart/SelectBidChart';
 import Modal from '../UI/Modal/Modal';
@@ -63,7 +60,7 @@ class ItemDetails extends Component {
 
         // GET actual bids
         auctionDB.child(this.state.item.itemKey).child('/bids/').on('value', snapshot=>{
-            let bids = snapshot.val();
+            // let bids = snapshot.val();
             let returnArr = [];
             snapshot.forEach(childSnapshot => {
                 let item = childSnapshot.val();
@@ -75,7 +72,7 @@ class ItemDetails extends Component {
 
         // GET users inventory to pass to bid select component
         userItems.child(name+'/').child('/inventory').on('value', snapshot=>{
-            let inv = snapshot.val()
+            // let inv = snapshot.val()
             let returnArr = [];
             snapshot.forEach(childSnapshot => {
                 let item = childSnapshot.val();
@@ -89,7 +86,7 @@ class ItemDetails extends Component {
     setSelected = (itemKey) => {
         let bids = this.state.addedBids;
         let inventory = {};
-        this.state.userInventory.map(item => {
+        this.state.userInventory.map((item) => {
             inventory[item.itemKey] = item;
         });
         let selected = inventory[itemKey]
@@ -133,7 +130,7 @@ class ItemDetails extends Component {
         var dateTime = date+' '+time;
         let bidsToAdd = this.state.addedBids;
         let ownerUsername = '...';
-        let bidcount = 0;
+        // let bidcount = 0;
         var bu = '';
         var biduser = '';
         var itemString = '';
@@ -144,7 +141,7 @@ class ItemDetails extends Component {
             var itemcopy = JSON.parse(JSON.stringify(bidsToAdd[index]));
             if(index === 0){
             itemString += itemcopy.itemName + ' ';
-            } else if (index != (bidsToAdd.length - 1)){
+            } else if (index !== (bidsToAdd.length - 1)){
             itemString += ', ' + itemcopy.itemName;
             } else {
             itemString += ' ' + itemcopy.itemName;
@@ -199,7 +196,7 @@ class ItemDetails extends Component {
                 winningBids.push(childNodes.val());
                 } else {
 
-                var lnotes = '[' + dateTime + ']: ' + 'The auction for: ' + auction.name + 'has ended! Unfortunately, you lost!' + '\n';
+                // var lnotes = '[' + dateTime + ']: ' + 'The auction for: ' + auction.name + 'has ended! Unfortunately, you lost!' + '\n';
                 var lObj = {
                     user: 'YOU',
                     date: dateTime,
@@ -253,11 +250,7 @@ class ItemDetails extends Component {
         auctionDB.child(auction.itemKey).remove();
         userItems.child(auction.owner).child('/auction/').child(auction.itemKey).remove();
 
-        var auctionowner = auction.owner;
-        var winnerbidder = bidderid;
-
         //SET NOTIFICATION FOR AUCTION OWNER
-        var onotes = '[' + dateTime + ']: ' + 'You auctioned off: ' + auction.name + ' for: ' + itemString + ' from: ' + bidder + ' \n';
         var oObjN = {
             user: 'YOU',
             date: dateTime,
@@ -279,7 +272,6 @@ class ItemDetails extends Component {
         firebase.database().ref('userItems/').child(auction.owner+'/').child('log/').child('notifications/').push(oObjN);
 
         //SET NOTIFICATION FOR BIDDER
-        var bnotes = '[' + dateTime + ']: ' +'You won: ' + auction.name + ' from: ' + bidder + ' in exchange for: ' + itemString + ' \n';
         var bObjN = {
             user: 'YOU',
             date: dateTime,

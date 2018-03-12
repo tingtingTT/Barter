@@ -1,13 +1,11 @@
 /* Filter menu for home page. User can filter items by ites
 category for zipcoode, or both
 */
-import React, { Component } from 'react';
-import axios from 'axios';
+import React from 'react';
 import CategoryMenu from './CategoryMenu/CategoryMenu';
 import classes from './FilterMenu.css';
 import ZipCodeMenu from './ZipCodeMenu/ZipCodeMenu';
 import { withRouter } from 'react-router-dom';
-import firebase, {database} from 'firebase';
 
 class FilterMenu extends React.Component {
   constructor(props){

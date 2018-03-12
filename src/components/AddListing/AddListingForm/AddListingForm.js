@@ -5,7 +5,6 @@ to upload picture, name, description, catagory and the item type
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import FileUploader from 'react-firebase-file-uploader';
-import axios from 'axios';
 import { withRouter } from 'react-router-dom'
 import {connect} from 'react-redux';
 import Button from '../../UI/Button/Button';
@@ -24,16 +23,6 @@ const config = {
 let fb = firebase.initializeApp(config, 'listingDb');
 let userItems = fb.database().ref('userItems/');
 
-//given the old listing array as retrieved from the server,
-//push the new listing onto it, and post it to the server
-//over the top of the old listing
-function getUserListingsArray(userId){
-    let items = null;
-    userItems.child(userId).on('value', snapshot =>{
-        items = snapshot.val();
-    });
-    return items;
-}
 class AddListingForm extends Component {
     state = {
         itemForm: {
@@ -208,7 +197,6 @@ class AddListingForm extends Component {
         //ADDING A NEW ITEM
         }else{
             //WE ADD A NEW ITEM
-            var tempKey = '';
             if(listing.ItemType === 'auction'){
                 // PUSH to public AuctionDB
                 let aucRef = firebase.database().ref('auctionDB/').push();

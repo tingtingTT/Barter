@@ -1,11 +1,10 @@
 /*
 New can create their new accont by enter their information
 */
-import React, { Component } from 'react';
-import axios from 'axios';
+import React from 'react';
 import classes from './CreateAccount.css';
 import { NavLink, withRouter } from 'react-router-dom';
-import firebase, {database} from 'firebase';
+import firebase from 'firebase';
 class CreateAccount extends React.Component {
   constructor(props){
       super(props);;

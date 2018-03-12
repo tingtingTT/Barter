@@ -3,7 +3,6 @@ List of items on user rpofile page. This listing contains user
 items that are currently for auction
 */
 import React from 'react';
-import firebase from 'firebase';
 import ListingItem from './ListingItem/ListingItem';
 import classes from './Listing.css';
 

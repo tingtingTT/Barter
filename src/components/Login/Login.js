@@ -1,8 +1,7 @@
 /* Login page for user. If user has registered before, it will confirm user info in Firebase.
 If user has not signed up, it will take user to the sign up page
 */ 
-import React, { Component } from 'react';
-import axios from 'axios';
+import React from 'react';
 import LogInForm from './LogInForm/LogInForm';
 import classes from './Login.css';
 

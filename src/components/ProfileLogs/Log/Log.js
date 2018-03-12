@@ -4,10 +4,7 @@ user bidding logs
 import React from 'react';
 import ActivityLog from './ActivityLog/ActivityLog';
 import classes from './Log.css';
-import { withRouter } from 'react-router-dom';
-import firebase from 'firebase';
-import {connect} from 'react-redux';
-import {database} from 'firebase';
+
 
 const log = (props) => {
     let activityLogs = (

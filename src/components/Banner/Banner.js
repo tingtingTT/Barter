@@ -2,8 +2,8 @@
 Banner for home page. It reminds user to sign up if they have not done so
 */
 import React, { Component } from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
-import firebase, { auth, User } from 'firebase';
+import { NavLink} from 'react-router-dom';
+import { auth } from 'firebase';
 import BigButton from '../UI/BigButton/BigButton';
 import {connect} from 'react-redux';
 import classes from './Banner.css'

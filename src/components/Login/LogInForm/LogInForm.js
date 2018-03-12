@@ -2,11 +2,10 @@
 Login form page for user. It will also direct user 
 to sign up page if they have not register
 */
-import React, { Component } from 'react';
-import axios from 'axios';
+import React from 'react';
 import classes from './LogInForm.css';
 import { NavLink, withRouter } from 'react-router-dom';
-import firebase, {database} from 'firebase';
+import firebase from 'firebase';
 import {connect} from 'react-redux';
 class LogInForm extends React.Component {
   constructor(props){

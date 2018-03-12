@@ -5,7 +5,6 @@ import React from 'react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { withRouter } from 'react-router-dom';
 import classes from './ListingItemHome.css';
-import Button from '../../UI/Button/Button';
 
 const listingItemHome = (props) => {
     const openDetails = () => {

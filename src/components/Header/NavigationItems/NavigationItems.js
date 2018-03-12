@@ -2,7 +2,7 @@
 Navigation item on header
 */
 import React, {Component} from 'react';
-import firebase, { auth, User } from 'firebase';
+import { auth } from 'firebase';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import NavigationItem from './NavigationItem/NavigationItem';
 import classes from './NavigationItems.css';

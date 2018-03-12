@@ -2,12 +2,9 @@
 Usre profile UI component
 */
 import React from 'react';
-import fontawesome from '@fortawesome/fontawesome';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import FileUploader from 'react-firebase-file-uploader';
 import firebase from 'firebase';
-import brands from '@fortawesome/fontawesome-free-brands';
-import { faEnvelopeSquare, faMapPin} from '@fortawesome/fontawesome-free-solid';
 import classes from './UserProfile.css';
 
 const config = {
