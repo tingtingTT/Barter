@@ -1,7 +1,7 @@
 /*
-Current auction items on home page. Each item contains its name, catagory, number of bids and 
-description
+List of hot items on the home page, got items are selected by number of bids
 */
+
 import React from 'react';
 import ListingItemHome from './ListingitemHome/ListingItemHome';
 import classes from '../Listing/Listing.css';

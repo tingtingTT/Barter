@@ -1,0 +1,13 @@
+.Log {
+    border: 2px solid #E54A59;
+    background: #E54A59;
+    border-radius: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    min-height: 7rem;
+}
+
+.content {
+   padding-top: 2rem;
+   padding-bottom: 2rem;
+}

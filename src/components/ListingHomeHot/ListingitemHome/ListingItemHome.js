@@ -1,5 +1,5 @@
 /*
-Home page item tile
+Hot listing item on home page
 */
 import React from 'react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
@@ -30,7 +30,10 @@ const listingItemHome = (props) => {
             <div className={classes.Textnum}>{props.bidcount} </div>
             <div className={classes.Textbid}> Bid </div>
         </div>
+        <div> <FontAwesomeIcon icon="star"  size="4x" style={{position: 'absolute', top: '-1.5rem', right: '-2.5rem', color: '#E54A59'}}/></div>
         </div>
     );
 }
+
+
 export default withRouter(listingItemHome);

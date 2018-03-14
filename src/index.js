@@ -5,7 +5,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import {createStore} from 'redux';
 import { BrowserRouter } from 'react-router-dom';
-import firebase, {database} from 'firebase';
+import firebase from 'firebase';
 import reducer from './store/reducer';
 import { Provider } from 'react-redux'
 const store = createStore(reducer);

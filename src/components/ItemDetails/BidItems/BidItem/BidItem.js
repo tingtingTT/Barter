@@ -1,26 +1,21 @@
+/*
+Item tiles for list of items that have been placed to bid on current auction item
+*/
 import React from 'react';
-
 import classes from './BidItem.css'
-
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import WinningBidButton from '../../WinningBidButton/WinningBidButton';
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 
 function isOwner(owner,loggeduser){
-  console.log("isowner");
-  console.log(owner);
-  console.log(loggeduser);
-  if (loggeduser === owner){
-    return true;
-  }
-  return false;
-  //return true;
+    if (loggeduser === owner){
+        return true;
+    }
+    return false;
 }
 
 const bidItem = (props) => {
-    console.log(props.isNew);
-
     return(
         <div className={classes.BidItem}>
         {props.isNew

@@ -1,3 +1,7 @@
+/*
+Inventory item tile for user items for bidding
+*/
+
 import React from 'react';
 
 import classes from './InventoryItem.css'
