@@ -27,11 +27,13 @@ class CreateAccount extends React.Component {
     var username = document.getElementById("username");
     var password = document.getElementById("password");
     var zipcode = document.getElementById("zipcode");
+    var noerroremail = (email.value).toLowerCase();
+    console.log(noerroremail);
 
     if(email.validity.valid && username.validity.valid &&
     password.validity.valid && zipcode.validity.valid){
       var isSuccessful = "true";
-      firebase.auth().createUserWithEmailAndPassword(email.value, password.value).catch(function(error) {
+      firebase.auth().createUserWithEmailAndPassword(noerroremail, password.value).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -43,7 +45,7 @@ class CreateAccount extends React.Component {
         }
         });
         if (isSuccessful === "true"){
-          this.createUser(email.value,username.value,password.value,zipcode.value);
+          this.createUser(noerroremail,username.value,password.value,zipcode.value);
           this.props.history.push('/login');
 
         }
@@ -62,7 +64,7 @@ class CreateAccount extends React.Component {
           <p className={classes.lead}>
             Create an account with Barter.
           </p>
-          <form id='NormalSignUp'> 
+          <form id='NormalSignUp'>
           <div className={classes.formGroup}>
             <label className={classes.label} htmlFor="username">
               Username:
