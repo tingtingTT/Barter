@@ -23,6 +23,17 @@
     height: 100%;
 }
 
+.barter  {
+  color: white;
+  text-decoration: none;
+  text-decoration-line: none;
+
+}
+
+.barter a {
+  text-decoration: none;
+  color: white;
+}
 .Logo {
     display: flex;
     align-items: center;
