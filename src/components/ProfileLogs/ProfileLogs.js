@@ -1,4 +1,4 @@
-/* Log page for current user. It will show all relative logs for current user and 
+/* Log page for current user. It will show all relative logs for current user and
 if nay bidding is successful, it will show contact intfo in the contact box
 */
 import React, { Component } from 'react';
@@ -62,6 +62,20 @@ class ProfileLogs extends Component {
     deleteContactLog = (logKey) => {
         let ref = userItems.child(this.state.currentUser+'/').child('/log').child('/contacts');
         ref.child(logKey + '/').remove();
+
+        let contLogs = [];
+        //THIS IS IMPORTANT FOR THE RIGHT SIDE NOTIFICATIONS
+        userItems.child(this.state.currentUser+'/').child('/log').child('/contacts').on('value', snapshot =>{
+            let index = 0;
+            snapshot.forEach(childsnapshot =>{
+                contLogs.push(childsnapshot.val());
+                contLogs[index].key = childsnapshot.key;
+                index ++;
+            });
+            this.setState({contactinfologs: contLogs});
+        });
+
+
     }
 
     render(){
