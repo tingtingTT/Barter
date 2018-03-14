@@ -1,12 +1,12 @@
+/*
+Banner for home page. It reminds user to sign up if they have not done so
+*/
 import React, { Component } from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
-import firebase, { auth, User } from 'firebase';
-
-
+import { NavLink} from 'react-router-dom';
+import { auth } from 'firebase';
 import BigButton from '../UI/BigButton/BigButton';
 import {connect} from 'react-redux';
 import classes from './Banner.css'
- 
 class Banner extends Component{
     // logout function, pass it as a prop to logout button 
     logout = () => {
@@ -22,8 +22,6 @@ class Banner extends Component{
         else{
             LoggedIn = true;
         }
-
-    
         let banner = (
             
             <div className={classes.Banner}>
@@ -34,8 +32,6 @@ class Banner extends Component{
                 <NavLink exact to="/join?source=login">
                     <BigButton text="Sign-Up" />    
                 </NavLink>
-                
-
             </div>
         );
 

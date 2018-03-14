@@ -1,23 +1,19 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+/*
+New can create their new accont by enter their information
+*/
+import React from 'react';
 import classes from './CreateAccount.css';
 import { NavLink, withRouter } from 'react-router-dom';
-import firebase, {database} from 'firebase';
-
-
+import firebase from 'firebase';
 class CreateAccount extends React.Component {
   constructor(props){
       super(props);;
       this.onLogin = this.onLogin.bind(this);
       this.createUser = this.createUser.bind(this);
-
-
-      //this.signOut();
   }
 
   createUser(email, user, pass, zip){
     var strippedemail = email.replace(/\W/g, '');
-    console.log(strippedemail);
     firebase.database().ref('userInfo/' + strippedemail).set({
       username: user,
       email: email,
@@ -31,34 +27,25 @@ class CreateAccount extends React.Component {
     var username = document.getElementById("username");
     var password = document.getElementById("password");
     var zipcode = document.getElementById("zipcode");
+    var noerroremail = (email.value).toLowerCase();
+    console.log(noerroremail);
 
     if(email.validity.valid && username.validity.valid &&
     password.validity.valid && zipcode.validity.valid){
       var isSuccessful = "true";
-      firebase.auth().createUserWithEmailAndPassword(email.value, password.value).catch(function(error) {
+      firebase.auth().createUserWithEmailAndPassword(noerroremail, password.value).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
 
         if(errorCode === 'auth/email-already-in-use'){
           email.value = "";
-          /*this.email.value = "";
-          document.getElementById("signin").click(); */
           isSuccessful = "false";
           alert(errorMessage);
-          console.log(errorCode);
-          console.log(isSuccessful);
-
         }
-        console.log(errorCode);
-        console.log(errorMessage);
-        // ...
         });
-
-        console.log(isSuccessful);
         if (isSuccessful === "true"){
-          console.log(isSuccessful);
-          this.createUser(email.value,username.value,password.value,zipcode.value);
+          this.createUser(noerroremail,username.value,password.value,zipcode.value);
           this.props.history.push('/login');
 
         }
@@ -77,7 +64,7 @@ class CreateAccount extends React.Component {
           <p className={classes.lead}>
             Create an account with Barter.
           </p>
-          <form id='NormalSignUp'> {/* change later to databaseinfo and router */}
+          <form id='NormalSignUp'>
           <div className={classes.formGroup}>
             <label className={classes.label} htmlFor="username">
               Username:
@@ -88,11 +75,11 @@ class CreateAccount extends React.Component {
                 name="username"
                 placeholder="Pick a username"
                 pattern="[^()/><\][\\\x22,;|.#$]+"
-                autoFocus // eslint-disable-line jsx-a11y/no-autofocus
+                autoFocus
                 required
               />
             </label>
-             Username cannot contain: ".", "#", "$", "[", or "]"
+              Username cannot contain: ".", "#", "$", "[", or "]"
           </div>
           <div className={classes.formGroup}>
             <label className={classes.label} htmlFor="Email">
@@ -145,16 +132,14 @@ class CreateAccount extends React.Component {
           </form>
           <div className={classes.terms}>
             <p> By signing up you agree to our
-               <NavLink exact to="/terms"> terms of service.</NavLink>
+                <NavLink exact to="/terms"> terms of service.</NavLink>
 
             </p>
           </div>
         </div>
       </div>
     )
-
   }
-
 }
 
 export default withRouter(CreateAccount);

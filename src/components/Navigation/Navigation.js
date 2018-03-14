@@ -1,3 +1,5 @@
+/* Navigation to different main component of the web app
+*/
 import React, { Component } from 'react';
 import s from './Navigation.css';
 
@@ -15,7 +17,6 @@ class Navigation extends React.Component {
         <div className={s.link} to="/login">
           Log in
         </div>
-
       </div>
     );
   }

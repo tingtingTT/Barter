@@ -1,17 +1,15 @@
+/*
+Home page item tile
+*/
 import React from 'react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-
 import { withRouter } from 'react-router-dom';
-
 import classes from './ListingItemHome.css';
-import Button from '../../UI/Button/Button';
 
 const listingItemHome = (props) => {
-
     const openDetails = () => {
         const queryParams = [];
         for (let info in props){
-            console.log(info);
             queryParams.push(encodeURIComponent(info) + '=' + encodeURIComponent(props[info]));
         }
         const queryString = queryParams.join('&');
@@ -22,7 +20,6 @@ const listingItemHome = (props) => {
     }
 
     return (
-
         <div className={classes.Item} onClick={props.clicked}>
         <img src={props.img} className={classes.Image} alt=''/>
         <div> <FontAwesomeIcon icon={props.category} size="3x"/></div>
@@ -35,8 +32,5 @@ const listingItemHome = (props) => {
         </div>
         </div>
     );
-
 }
-
-
 export default withRouter(listingItemHome);

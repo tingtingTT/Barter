@@ -1,50 +1,30 @@
+/* User profile component. This page container user profiule, picture,
+inventory and current auction item listing
+*/
 import React, { Component } from 'react';
-
 import AddListing from '../../components/AddListing/AddListing';
 import Modal from '../../components/UI/Modal/Modal';
 import Button from '../../components/UI/Button/Button';
-import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 import Inventory from '../../components/Inventory/Inventory';
 import Listing from '../../components/Listing/Listing';
 import UserProfile from '../../components/UserProfile/UserProfile';
-
 import {connect} from 'react-redux';
 import classes from './Profile.css';
-
-import axios from 'axios';
-import { Route } from 'react-router-dom';
 import firebase from 'firebase';
-import {database} from 'firebase';
-
-
-
-/*
-TODO:
-    1. Style Profile Layout
-    2. Add User info section
-    3. Add functionality to Auction Item tiles
-*/
-
-//create
 
 const config = {
-
     apiKey: "AIzaSyDfRWLuvzYmSV3TwmLOppZT0ZZbtIZRlrs",
     authDomain: "barterbuddy-4b41a.firebaseapp.com",
     databaseURL: "https://barterbuddy-4b41a.firebaseio.com",
     projectId: "barterbuddy-4b41a",
     storageBucket: "barterbuddy-4b41a.appspot.com",
     messagingSenderId: "879139739414"
-
 };
 
 let fb = firebase.initializeApp(config, 'profile');
 let userInfo = fb.database().ref('userInfo/');
 let userItems = fb.database().ref('userItems/');
 
-
-//debug
-//const currentUser = 'backEndDevWithWrench';
 class Profile extends Component {
 
     state = {
@@ -69,29 +49,18 @@ class Profile extends Component {
 
 
     componentDidMount () {
-        // let userItems = firebase.database().ref('/userItems');
-
-        console.log('setting uderId to', this.props.userId);
-
         this.setState({currentUser: this.props.userId});
         let name = this.props.userId;
-        
-
+    
         userItems.child(name+ '/').child('/auction').on('value', snapshot=>{
             const items = snapshot.val();
-            //console.log('in promise .on userid is', name)
-            //console.log('items in compdidmount');
-            //console.log(items)
             let returnArr = [];
             snapshot.forEach(childSnapshot => {
                 let item = childSnapshot.val();
                 item.key = childSnapshot.key;
                 returnArr.push(item);
             });
-
-
             if(items != null){
-                console.log(returnArr);
                 this.setState({listing: returnArr});
             }else{
                 var emptyArray = [];
@@ -103,7 +72,6 @@ class Profile extends Component {
 
         userItems.child(name+ '/').child('/inventory').on('value', snapshot =>{
             const items = snapshot.val();
-
             let returnArr = [];
 
             snapshot.forEach(childSnapshot => {
@@ -122,52 +90,37 @@ class Profile extends Component {
         });
         userInfo.child(name+ '/').on('value', snapshot =>{
             const info = snapshot.val();
-            console.log('userInfo:');
-            console.log(info);
-
             this.setState({userName: info['username'], userEmail: info['email'], userZip: info['zipcode'], profilePic: info['picture']});
             this.forceUpdate()
 
         });
-
     }
 
     removeFromAllbuckets = (pushKey) =>{
         //delete from auction DB
         firebase.database().ref('/auctionDB/').child(pushKey).remove().then(() =>{
-            console.log(pushKey);
             this.forceUpdate();
         });
 
         userItems.child(this.props.userId).child('/auction/').child(pushKey).remove().then(() =>{
-            console.log(pushKey);
             this.forceUpdate();
         });;
         userItems.child(this.props.userId).child('/inventory/').child(pushKey).remove().then(() =>{
-            console.log(pushKey);
             this.forceUpdate();
         });
 
     };
 
-
     removeAuction =(itemID)=> {
-      console.log("remove Auction");
-      let key = this.state.listing[itemID].key;
-      this.removeFromAllbuckets(key);
+        let key = this.state.listing[itemID].key;
+        this.removeFromAllbuckets(key);
         window.setTimeout(()=>{
             window.location.reload(true);
         }, 200);
-
-      // delay then force update
     };
 
     removeBid=(pushKey)=>{
-       console.log("remove Bid item");
-       //console.log(user);
-        console.log(this.props.userId);
-       console.log(pushKey.key);
-       firebase.database().ref('/auctionDB/').child(pushKey.key).remove();
+        firebase.database().ref('/auctionDB/').child(pushKey.key).remove();
         userItems.child(this.props.userId).child('auction').child(pushKey.key).remove();
         userItems.child(this.props.userId).child('inventory').child(pushKey.key).remove();
         this.setState({editingItem: false});
@@ -181,17 +134,13 @@ class Profile extends Component {
 
     //made this while crying about how components didn't like the way I passed data between them
     getKeyById = (id) =>{
-        //console.log('key for listing at index :'+id + ' key:'+this.state.listing[id].key);
         return this.state.listing[id].key;
     };
 
     editItemHandler = (itemID, type) => {
-
-        const items = {};
         let itemToEdit = {};
         if(type === 'bidItem'){
             // Its in bidItems
-            // makes an items object of the form --> itemID: {name: '', desc: '' ...}
             itemToEdit = this.state.listing[itemID];
             itemToEdit.id = itemID; //Really just an index location
             itemToEdit.key = this.getKeyById(itemID);
@@ -203,22 +152,11 @@ class Profile extends Component {
             itemToEdit.pushKey = this.state.inventory[itemID];
         }
 
-        console.log('itemToedit.key:', itemToEdit.pushKey);
-        const itemObj = {...items[itemID]};
         this.setState({itemToEdit: itemToEdit, editingItem: true});
-
-
     };
 
 
     deleteItemHandler = (itemID) => {
-
-        //this is going to delete an item from the users inventory/ auction/ auctionDb
-        //get the key
-
-
-        console.log(itemID);
-
         firebase.database().ref('inventory/' + itemID).remove();
     };
 
@@ -229,10 +167,10 @@ class Profile extends Component {
 	render () {
 
         let extraButton = null;
-         if (this.state.listing.length > 0 && this.state.inventory.length === 0){
-             extraButton = (
-                 <div>
-                     <div className={classes.addItemButton}>
+            if (this.state.listing.length > 0 && this.state.inventory.length === 0){
+                extraButton = (
+                    <div>
+                        <div className={classes.addItemButton}>
                     <Button label="+ ITEM" clicked={this.addingItemHandler} />
                     </div>
                     <Modal show={this.state.addingItem || this.state.editingItem} modalClosed={() => this.closeHandler(true)}>
@@ -251,14 +189,13 @@ class Profile extends Component {
                     />
 
                 </Modal>
-                 </div>
+                    </div>
                 
             );
-       }
+        }
 
         let inventory = null;
         if(this.state.inventory.length > 0){
-
             inventory = (
                 <div>
                     <h1 className={classes.sectionTitle}>Bid items</h1>
@@ -268,9 +205,7 @@ class Profile extends Component {
                     </div>
                     <div className={classes.spacer}></div>
                     <Inventory inventory={this.state.inventory} editItemHandler={this.editItemHandler} type='inv'/>
-
                 </div>
-
             );
 
         }

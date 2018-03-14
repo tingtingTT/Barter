@@ -1,22 +1,14 @@
 import React, { Component } from 'react'
-
 import Layout from './hoc/Layout/Layout';
-
-import { Route, Switch, IndexRoute } from 'react-router-dom';
-// Icon import
+import { Route, Switch} from 'react-router-dom';
 import fontawesome from '@fortawesome/fontawesome';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import brands from '@fortawesome/fontawesome-free-brands';
 import { faGamepad, faEdit, faTrashAlt, faTv, faBriefcase, faWrench, faImages, faFemale, faFutbol, faGem,
-         faHome, faBath, faMapMarker, faStar} from '@fortawesome/fontawesome-free-solid';
-// electronics, game, service, appliance, craft, clothing, sporting good, jewery, home goods, furniture
-
-
+          faHome, faBath, faMapMarker, faStar} from '@fortawesome/fontawesome-free-solid';
 import Profile from './containers/Profile/Profile';
 import ItemDetails from './components/ItemDetails/ItemDetails';
 import Login from './components/Login/Login';
 import SignUp from './components/Login/SignUp/SignUp';
-import Banner from './components/Banner/Banner';
 import Home from './containers/Home/Home';
 import ProfileLogs from './components/ProfileLogs/ProfileLogs';
 

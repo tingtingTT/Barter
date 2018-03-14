@@ -1,19 +1,12 @@
+/* Logs for users' activity. It will record the trade logs and 
+user bidding logs
+*/
 import React from 'react';
 import ActivityLog from './ActivityLog/ActivityLog';
 import classes from './Log.css';
-import { withRouter } from 'react-router-dom';
-import firebase from 'firebase';
-import {connect} from 'react-redux';
-import {database} from 'firebase';
-
-
-
 
 
 const log = (props) => {
-    console.log("props.");
-    console.log(props.notifications);
-
     let activityLogs = (
         props.notifications.map((log) => (
                 <ActivityLog
@@ -23,9 +16,7 @@ const log = (props) => {
                 action1 = {log.action1}
                 item1 = {log.item1}
                 item2 = {log.item2}
-
             />
-
         ))
     );
 
@@ -35,7 +26,6 @@ const log = (props) => {
             {activityLogs}
             </div>
         </div>
-
     )
 }
 

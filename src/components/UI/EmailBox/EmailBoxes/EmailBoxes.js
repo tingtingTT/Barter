@@ -1,11 +1,9 @@
 import React from 'react';
-
 import classes from './EmailBoxes.css'
 
 const EmailBoxes = (props) => {
 
     let emailTo = 'mailto:' + props.contactinfo;
-    console.log("activity log");
     return (
     <div className={classes.box}>
       <div className={classes.delete} onClick={props.clicked}>X</div>

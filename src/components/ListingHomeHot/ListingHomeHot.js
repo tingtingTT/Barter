@@ -1,14 +1,12 @@
-//Haven't tested any of this but it should be legit
+/*
+List of hot items on the home page, got items are selected by number of bids
+*/
+
 import React from 'react';
-
 import ListingItemHome from './ListingitemHome/ListingItemHome';
-
 import classes from '../Listing/Listing.css';
 
 const listingHome = (props)=> {
-
-   
-
     const listingItemsHome = (
         props.listing.map(item => (
             <ListingItemHome
@@ -21,7 +19,6 @@ const listingHome = (props)=> {
                 itemKey={item.itemKey}
                 owner={item.ownerUser}
                 zipCode={item.location}
-                // clicked={() => this.itemClicked(item.id)}
             />
         ))
     )
@@ -30,7 +27,6 @@ const listingHome = (props)=> {
         <div className={classes.ListingHome}>
             {listingItemsHome}
         </div>
-
     )
 }
 

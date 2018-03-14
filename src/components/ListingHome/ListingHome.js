@@ -1,14 +1,12 @@
-//Haven't tested any of this but it should be legit
+/*
+Current auction items on home page. Each item contains its name, catagory, number of bids and 
+description
+*/
 import React from 'react';
-
 import ListingItemHome from './ListingitemHome/ListingItemHome';
-
 import classes from '../Listing/Listing.css';
 
 const listingHome = (props)=> {
-
-   
-
     const listingItemsHome = (
         props.listing.map(item => (
             <ListingItemHome
@@ -21,7 +19,6 @@ const listingHome = (props)=> {
                 itemKey={item.itemKey}
                 owner={item.ownerUser}
                 zipCode={item.location}
-                // clicked={() => this.itemClicked(item.id)}
             />
         ))
     )
@@ -30,7 +27,6 @@ const listingHome = (props)=> {
         <div className={classes.ListingHome}>
             {listingItemsHome}
         </div>
-
     )
 }
 
