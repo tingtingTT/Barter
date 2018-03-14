@@ -9,9 +9,9 @@ const activityLog = (props) => {
             <div className={classes.textnBorder}>
                 {props.user}
                 <div className={classes.smallText}>{props.action1}</div>
-                {props.item2}
-                <div className={classes.smallText}>with</div>
                 {props.item1}
+                <div className={classes.smallText}>with</div>
+                {props.item2}
                 <div className={classes.date}>{props.date}</div>
             </div>
         </div>
