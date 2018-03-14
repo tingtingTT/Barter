@@ -1,4 +1,4 @@
-/* Auction item detail page. It contains item picture, description, seller info and 
+/* Auction item detail page. It contains item picture, description, seller info and
 current bids for the item. User can plcae bis on this page using their inventory items
 */
 import React, { Component } from 'react';
@@ -200,9 +200,9 @@ class ItemDetails extends Component {
                 var lObj = {
                     user: 'YOU',
                     date: dateTime,
-                    action1: '',
-                    item1: 'Ended',
-                    item2: auction.name
+                    action1: 'Lost',
+                    item1: auction.name,
+                    item2: ''
                 };
                 firebase.database().ref('userItems/').child(childNodes.val().userid+'/').child('log/').child('notifications/').push(lObj);
                 }
@@ -290,7 +290,7 @@ class ItemDetails extends Component {
         firebase.database().ref('userItems/').child(biduser+'/').child('log/').child('contacts/').push(bObjC);
         firebase.database().ref('userItems/').child(biduser+'/').child('log/').child('notifications/').push(bObjN);
         //PUSH TO HOME OR NOTIFICATION PAGE
-        that.props.history.push('/'); 
+        that.props.history.push('/');
     }
 
 
